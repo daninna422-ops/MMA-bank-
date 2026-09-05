@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MMA Bank</title>
+
+<style>
+:root{
+  --blue:#0066FF;
+  --darkblue:#0044B3;
+  --light:#F4F7FE;
+  --white:#FFFFFF;
+  --text:#202B55;
+  --gray:#8993AD;
+  --green:#05B989;
+  --red:#E94F45;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Segoe UI,sans-serif;
+}
+
+body{
+  background:var(--light);
+  color:var(--text);
+}
+
+/* HEADER */
+.header{
+  background:linear-gradient(135deg,#0066FF,#0044B3);
+  color:white;
+  padding:20px;
+  border-bottom-left-radius:28px;
+  border-bottom-right-radius:28px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.profile{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:white;
+  color:#0066FF;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+/* WELCOME */
+.welcome{
+  margin-top:20px;
+}
+
+.welcome small{
+  opacity:.8;
+}
+
+.welcome h2{
+  margin-top:5px;
+}
+
+/* BALANCE */
+.balance-card{
+  margin-top:18px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.2);
+  padding:20px;
+  border-radius:20px;
+}
+
+.balance-title{
+  font-size:13px;
+  opacity:.8;
+}
+
+.balance{
+  font-size:30px;
+  font-weight:bold;
+  margin:8px 0 18px;
+}
+
+.account{
+  font-size:12px;
+  opacity:.85;
+}
+
+/* QUICK ACTIONS */
+.quick{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:15px;
+}
+
+.quick button{
+  border:none;
+  border-radius:12px;
+  padding:12px 5px;
+  background:rgba(255,255,255,.18);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* SERVICES */
+.title{
+  margin:22px 20px 12px;
+  font-size:17px;
+  font-weight:bold;
+}
+
+.services{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  padding:0 20px;
+}
+
+.service{
+  background:white;
+  border-radius:15px;
+  padding:14px 5px;
+  text-align:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.04);
+  cursor:pointer;
+}
+
+.service-icon{
+  font-size:23px;
+  display:block;
+  margin-bottom:6px;
+}
+
+.service-name{
+  font-size:10px;
+  font-weight:bold;
+  color:var(--gray);
+}
+
+/* TRANSACTIONS */
+.transactions{
+  background:white;
+  margin:0 20px 25px;
+  border-radius:18px;
+  padding:15px;
+}
+
+.transaction{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid #eee;
+}
+
+.transaction:last-child{
+  border-bottom:none;
+}
+
+.tx-name{
+  font-weight:bold;
+  font-size:14px;
+}
+
+.tx-date{
+  font-size:11px;
+  color:var(--gray);
+  margin-top:3px;
+}
+
+.in{
+  color:var(--green);
+  font-weight:bold;
+}
+
+.out{
+  color:var(--red);
+  font-weight:bold;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.55);
+  z-index:9999;
+  align-items:flex-end;
+}
+
+.modal-box{
+  background:white;
+  width:100%;
+  padding:25px;
+  border-radius:25px 25px 0 0;
+}
+
+.modal-box h3{
+  margin-bottom:18px;
+}
+
+.input{
+  width:100%;
+  padding:13px;
+  margin-bottom:13px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  outline:none;
+}
+
+.submit{
+  width:100%;
+  padding:14px;
+  background:var(--blue);
+  color:white;
+  border:none;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.close{
+  float:right;
+  font-size:25px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+
+  <div class="top">
+    <div class="logo">🏦 MMA BANK</div>
+    <div class="profile">M</div>
+  </div>
+
+  <div class="welcome">
+    <small>Barka da zuwa</small>
+    <h2>Mubarak 👋</h2>
+  </div>
+
+  <div class="balance-card">
+
+    <div class="balance-title">
+      Wallet Balance
+    </div>
+
+    <div class="balance">
+      ₦0.00
+    </div>
+
+    <div class="account">
+      Account Number: 8123456789
+    </div>
+
+    <div class="quick">
+
+      <button onclick="openModal('deposit')">
+        📥<br>Add Money
+      </button>
+
+      <button onclick="openModal('transfer')">
+        💸<br>Transfer
+      </button>
+
+      <button onclick="openModal('withdraw')">
+        📤<br>Withdraw
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- SERVICES -->
+<div class="title">
+  Ayyukan Banki
+</div>
+
+<div class="services">
+
+  <div class="service" onclick="openModal('transfer')">
+    <span class="service-icon">💸</span>
+    <span class="service-name">Transfer</span>
+  </div>
+
+  <div class="service" onclick="openModal('deposit')">
+    <span class="service-icon">📥</span>
+    <span class="service-name">Deposit</span>
+  </div>
+
+  <div class="service" onclick="openModal('withdraw')">
+    <span class="service-icon">📤</span>
+    <span class="service-name">Withdraw</span>
+  </div>
+
+  <div class="service">
+    <span class="service-icon">📜</span>
+    <span class="service-name">History</span>
+  </div>
+
+  <div class="service">
+    <span class="service-icon">📱</span>
+    <span class="service-name">Airtime</span>
+  </div>
+
+  <div class="service">
+    <span class="service-icon">📶</span>
+    <span class="service-name">Data</span>
+  </div>
+
+  <div class="service">
+    <span class="service-icon">💡</span>
+    <span class="service-name">Electricity</span>
+  </div>
+
+  <div class="service">
+    <span class="service-icon">📺</span>
+    <span class="service-name">TV</span>
+  </div>
+
+  <div class="service">
+    <span class="service-icon">💳</span>
+    <span class="service-name">Cards</span>
+  </div>
+
+  <div class="service">
+    <span class="service-icon">💰</span>
+    <span class="service-name">Savings</span>
+  </div>
+
+  <div class="service">
+    <span class="service-icon">🏦</span>
+    <span class="service-name">Loan</span>
+  </div>
+
+  <div class="service">
+    <span class="service-icon">🎧</span>
+    <span class="service-name">Support</span>
+  </div>
+
+</div>
+
+
+<!-- RECENT TRANSACTIONS -->
+<div class="title">
+  Recent Transactions
+</div>
+
+<div class="transactions">
+
+  <div class="transaction">
+    <div>
+      <div class="tx-name">Babu Transaction</div>
+      <div class="tx-date">Babu mu'amala</div>
+    </div>
+    <div class="in">+₦0.00</div>
+  </div>
+
+  <div class="transaction">
+    <div>
+      <div class="tx-name">Babu Transaction</div>
+      <div class="tx-date">Babu mu'amala</div>
+    </div>
+    <div class="out">-₦0.00</div>
+  </div>
+
+</div>
+
+
+<!-- TRANSFER MODAL -->
+<div class="modal" id="transfer">
+
+  <div class="modal-box">
+
+    <span class="close" onclick="closeModal('transfer')">×</span>
+
+    <h3>💸 Transfer Money</h3>
+
+    <input class="input"
+           type="number"
+           placeholder="Account Number">
+
+    <input class="input"
+           type="number"
+           placeholder="Amount ₦">
+
+    <button class="submit"
+            onclick="demoMessage()">
+      Continue
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- DEPOSIT MODAL -->
+<div class="modal" id="deposit">
+
+  <div class="modal-box">
+
+    <span class="close" onclick="closeModal('deposit')">×</span>
+
+    <h3>📥 Add Money</h3>
+
+    <input class="input"
+           type="number"
+           placeholder="Amount ₦">
+
+    <button class="submit"
+            onclick="demoMessage()">
+      Continue
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- WITHDRAW MODAL -->
+<div class="modal" id="withdraw">
+
+  <div class="modal-box">
+
+    <span class="close" onclick="closeModal('withdraw')">×</span>
+
+    <h3>📤 Withdraw Money</h3>
+
+    <input class="input"
+           type="number"
+           placeholder="Amount ₦">
+
+    <button class="submit"
+            onclick="demoMessage()">
+      Continue
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function openModal(id){
+  document.getElementById(id).style.display="flex";
+}
+
+function closeModal(id){
+  document.getElementById(id).style.display="none";
+}
+
+function demoMessage(){
+  alert("Wannan sabis ɗin yana cikin DEMO. Za mu haɗa shi da backend/payment system daga baya.");
+}
+
+</script>
+
+</body>
+</html>
