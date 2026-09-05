@@ -526,7 +526,50 @@ body{
 
 <script>
 
-function openModal(id){
+function openModal(id)function buyAirtime(event) {
+  event.preventDefault();
+
+  let phone = document.getElementById('airtimePhone').value;
+  let network = document.getElementById('airtimeNetwork').value;
+  let amount = parseFloat(document.getElementById('airtimeAmount').value);
+
+  if (!network) {
+    alert("Da fatan zaɓi Network.");
+    return;
+  }
+
+  if (!amount || amount <= 0) {
+    alert("Shigar da adadin kuɗi daidai.");
+    return;
+  }
+
+  let balanceEl = document.getElementById('userBalance');
+
+  let currentBalance = parseFloat(
+    balanceEl.innerText.replace('₦', '').replace(/,/g, '')
+  );
+
+  if (amount > currentBalance) {
+    alert("Kuɗin da ke wallet ɗinka bai isa ba!");
+    return;
+  }
+
+  let newBalance = currentBalance - amount;
+
+  balanceEl.innerText =
+    '₦' + newBalance.toLocaleString('en-US', {
+      minimumFractionDigits: 2
+    });
+
+  alert(
+    "An karɓi umarnin Airtime!\n\n" +
+    "Network: " + network + "\n" +
+    "Lamba: " + phone + "\n" +
+    "Adadi: ₦" + amount.toLocaleString()
+  );
+
+  closeModal('airtimeModal');
+  }{
   document.getElementById(id).style.display="flex";
 }
 
