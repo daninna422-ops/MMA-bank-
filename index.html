@@ -194,118 +194,7 @@ body{
   font-weight:bold;
 }
 
-/* MODAL */
-.modal{
-  display:none;
-  position:fixed;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,.55);
-  z-index:9999;
-  align-items:flex-end;
-}
-
-.modal-box{
-  background:white;
-  width:100%;
-  padding:25px;
-  border-radius:25px 25px 0 0;
-}
-
-.modal-box h3{
-  margin-bottom:18px;
-}
-
-.input{
-  width:100%;
-  padding:13px;
-  margin-bottom:13px;
-  border:1px solid #ddd;
-  border-radius:12px;
-  outline:none;
-}
-
-.submit{
-  width:100%;
-  padding:14px;
-  background:var(--blue);
-  color:white;
-  border:none;
-  border-radius:12px;
-  font-weight:bold;
-}
-
-.close{
-  float:right;
-  font-size:25px;
-  cursor:pointer;
-}
-/* AIRTIME FORM DESIGN */
-#airtimeModal .modal-content {
-  background: #ffffff;
-  width: 92%;
-  max-width: 420px;
-  margin: auto;
-  padding: 25px 20px;
-  border-radius: 22px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-}
-
-#airtimeModal h3 {
-  color: #0066FF;
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-
-#airtimeModal .form-group {
-  margin-bottom: 16px;
-}
-
-#airtimeModal .form-group label {
-  display: block;
-  color: #2B3674;
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
-
-#airtimeModal .form-group input,
-#airtimeModal .form-group select {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #DDE3F0;
-  border-radius: 12px;
-  background: #F8FAFF;
-  font-size: 15px;
-  color: #2B3674;
-  outline: none;
-}
-
-#airtimeModal .form-group input:focus,
-#airtimeModal .form-group select:focus {
-  border-color: #0066FF;
-}
-
-#airtimeModal .submit-btn {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 14px;
-  background: #0066FF;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-#airtimeModal .close-btn {
-  float: right;
-  font-size: 28px;
-  color: #999;
-/* =========================
-   MODAL
-========================= */
+/* AIRTIME MODAL */
 
 .modal {
   display: none;
@@ -314,7 +203,8 @@ body{
   inset: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.55);
+
+  background: rgba(0,0,0,0.55);
 
   align-items: center;
   justify-content: center;
@@ -323,7 +213,7 @@ body{
 }
 
 .modal-content {
-  background: #ffffff;
+  background: white;
   width: 92%;
   max-width: 420px;
 
@@ -333,13 +223,13 @@ body{
 
   position: relative;
 
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
 .close-btn {
   position: absolute;
   right: 18px;
-  top: 12px;
+  top: 10px;
 
   font-size: 32px;
   color: #999;
@@ -350,7 +240,6 @@ body{
 .modal-content h3 {
   color: #0066FF;
   font-size: 28px;
-
   margin: 5px 0 20px;
 }
 
@@ -360,17 +249,14 @@ body{
 
 .form-group label {
   display: block;
-
   font-weight: bold;
   color: #203B72;
-
   margin-bottom: 8px;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-
   padding: 16px;
 
   border: 2px solid #dce3f0;
@@ -382,14 +268,8 @@ body{
   outline: none;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-  border-color: #0066FF;
-}
-
 .submit-btn {
   width: 100%;
-
   padding: 17px;
 
   border: none;
@@ -402,7 +282,9 @@ body{
   font-weight: bold;
 
   cursor: pointer;
-}</style>
+  }
+
+</style>
 </head>
 
 <body>
