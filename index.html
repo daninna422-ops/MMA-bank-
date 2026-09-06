@@ -194,76 +194,100 @@ body{
   font-weight:bold;
 }
 
-/* AIRTIME MODAL */
-#airtimeModal {
+/* =========================
+   ALL MODALS
+========================= */
+
+.modal {
   display: none;
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   z-index: 99999;
+
   align-items: center;
   justify-content: center;
+
   padding: 20px;
 }
 
-#airtimeModal .modal-content {
-  background: white;
+.modal-content {
   width: 100%;
   max-width: 500px;
-  padding: 25px;
+
+  background: #fff;
   border-radius: 25px;
+
+  padding: 25px;
+
   position: relative;
   box-sizing: border-box;
+
   box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
-#airtimeModal .close-btn {
+.close-btn {
   position: absolute;
+  top: 12px;
   right: 20px;
-  top: 15px;
+
   font-size: 32px;
   color: #999;
+
   cursor: pointer;
 }
 
-#airtimeModal h3 {
+.modal-content h3 {
   color: #0066FF;
   font-size: 28px;
   margin: 5px 0 20px;
 }
 
-#airtimeModal .form-group {
+.form-group {
   margin-bottom: 18px;
 }
 
-#airtimeModal .form-group label {
+.form-group label {
   display: block;
+
   font-weight: bold;
   color: #203B72;
+
   margin-bottom: 8px;
 }
 
-#airtimeModal input,
-#airtimeModal select {
+.form-group input,
+.form-group select {
   width: 100%;
+
   padding: 16px;
+
   border: 2px solid #dce3f0;
   border-radius: 18px;
+
   font-size: 18px;
+
   box-sizing: border-box;
+  outline: none;
 }
 
-#airtimeModal .submit-btn {
+.submit-btn {
   width: 100%;
+
   padding: 17px;
+
   border: none;
   border-radius: 18px;
+
   background: #0066FF;
   color: white;
+
   font-size: 18px;
   font-weight: bold;
+
+  cursor: pointer;
   }
 
 </style>
@@ -345,10 +369,7 @@ body{
   <span class="grid-label">Airtime</span>
   </div>
 
-<div class="service" onclick="openModal('airtimeModal')">
-  <span class="service-icon">📱</span>
-  <span class="service-name">Airtime</span>
-</div>
+
 
   <div class="service">
     <span class="service-icon">📶</span>
@@ -644,37 +665,7 @@ function buyAirtime(event) {
         >
       </div>
 
-      <div class="form-group">
-        <label>Network</label>
-        <select id="airtimeNetwork" required>
-          <option value="">-- Zaɓi Network --</option>
-          <option value="MTN">MTN</option>
-          <option value="Airtel">Airtel</option>
-          <option value="Glo">Glo</option>
-          <option value="9mobile">9mobile</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Adadin Kuɗi (₦)</label>
-        <input
-          type="number"
-          id="airtimeAmount"
-          placeholder="100"
-          min="50"
-          required
-        >
-      </div>
-
-      <button type="submit" class="submit-btn">
-        Sayi Airtime
-      </button>
-
-    </form>
-
-  </div>
-
-          </div>
+      
 
       <div class="form-group">
         <label>Network</label>
