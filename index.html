@@ -697,19 +697,64 @@ function buyAirtime(event) {
   
 
 <!-- AIRTIME MODAL -->
-
-          <div id="airtimeModal" class="modal">
+<div id="airtimeModal" class="modal">
 
   <div class="modal-content">
 
-    <span class="close-btn"
-          onclick="closeModal('airtimeModal')">×</span>
+    <span
+      class="close-btn"
+      onclick="closeModal('airtimeModal')">
+      ×
+    </span>
 
     <h3>📱 Sayi Airtime</h3>
 
->
+    <form onsubmit="buyAirtime(event)">
 
-      <button type="submit" class="submit-btn">
+      <div class="form-group">
+        <label>Lambar Waya</label>
+
+        <input
+          id="airtimePhone"
+          type="tel"
+          placeholder="08012345678"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label>Network</label>
+
+        <select id="airtimeNetwork" required>
+
+          <option value="">
+            -- Zaɓi Network --
+          </option>
+
+          <option value="MTN">MTN</option>
+
+          <option value="Airtel">Airtel</option>
+
+          <option value="Glo">Glo</option>
+
+          <option value="9mobile">9mobile</option>
+
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Adadin Kuɗi (₦)</label>
+
+        <input
+          id="airtimeAmount"
+          type="number"
+          placeholder="100"
+          min="50"
+          required>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn">
         Sayi Airtime
       </button>
 
@@ -718,6 +763,7 @@ function buyAirtime(event) {
   </div>
 
 </div>
+    
 <script>
 
 function openModal(id) {
