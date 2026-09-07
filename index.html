@@ -2074,7 +2074,461 @@ function demoService(service){
 updateBalance();
 
 
-</script>
+</script><script>
+
+async function loadAccount() {
+
+  try {
+
+    const response = await fetch("/api/account");
+
+    const data = await response.json();
+
+    if (!data.success) {
+      alert("An samu matsala.");
+      return;
+    }
+
+    document.getElementById("userName").textContent =
+      data.user.name;
+
+    document.getElementById("userBalance").textContent =
+      "₦" + data.user.balance.toLocaleString("en-NG", {
+        minimumFractionDigits: 2
+      });
+
+    document.getElementById("accountNumber").textContent =
+      data.user.accountNumber;
+
+    displayTransactions(data.transactions);
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("An kasa haɗawa da server.");
+
+  }
+
+}
+
+
+// ===============================
+// AIRTIME
+// ===============================
+
+async function buyAirtime(event) {
+
+  event.preventDefault();
+
+  const phone =
+    document.getElementById("airtimePhone").value;
+
+  const network =
+    document.getElementById("airtimeNetwork").value;
+
+  const amount =
+    Number(document.getElementById("airtimeAmount").value);
+
+
+  if (!phone) {
+    alert("Shigar da lambar waya.");
+    return;
+  }
+
+  if (!network) {
+    alert("Zaɓi Network.");
+    return;
+  }
+
+  if (!amount || amount <= 0) {
+    alert("Shigar da adadin kuɗi.");
+    return;
+  }
+
+
+  try {
+
+    const response = await fetch("/api/airtime", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        phone,
+        network,
+        amount
+      })
+
+    });
+
+
+    const data = await response.json();
+
+
+    if (!response.ok) {
+
+      alert(data.message);
+
+      return;
+
+    }
+
+
+    alert(
+      "An karɓi umarnin Airtime!\n\n" +
+      "Network: " + data.network + "\n" +
+      "Lamba: " + data.phone + "\n" +
+      "Adadi: ₦" + data.amount.toLocaleString()
+    );
+
+
+    closeModal("airtimeModal");
+
+    loadAccount();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("An kasa haɗawa da server.");
+
+  }
+
+}
+
+
+// ===============================
+// ADD MONEY
+// ===============================
+
+async function depositMoney(event) {
+
+  event.preventDefault();
+
+  const amount =
+    Number(document.getElementById("depositAmount").value);
+
+
+  if (!amount || amount <= 0) {
+
+    alert("Shigar da adadin kuɗi.");
+
+    return;
+
+  }
+
+
+  try {
+
+    const response = await fetch("/api/deposit", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        amount
+      })
+
+    });
+
+
+    const data = await response.json();
+
+
+    if (!response.ok) {
+
+      alert(data.message);
+
+      return;
+
+    }
+
+
+    alert(data.message);
+
+    closeModal("depositModal");
+
+    loadAccount();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("An kasa haɗawa da server.");
+
+  }
+
+}
+
+
+// ===============================
+// TRANSFER
+// ===============================
+
+async function transferMoney(event) {
+
+  event.preventDefault();
+
+
+  const accountNumber =
+    document.getElementById("transferAccount").value;
+
+  const amount =
+    Number(document.getElementById("transferAmount").value);
+
+
+  if (!accountNumber) {
+
+    alert("Shigar da Account Number.");
+
+    return;
+
+  }
+
+
+  if (!amount || amount <= 0) {
+
+    alert("Shigar da adadin kuɗi.");
+
+    return;
+
+  }
+
+
+  try {
+
+    const response = await fetch("/api/transfer", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        accountNumber,
+        amount
+      })
+
+    });
+
+
+    const data = await response.json();
+
+
+    if (!response.ok) {
+
+      alert(data.message);
+
+      return;
+
+    }
+
+
+    alert(
+      data.message +
+      "\n\nAccount: " +
+      data.accountNumber +
+      "\nAdadi: ₦" +
+      data.amount.toLocaleString()
+    );
+
+
+    closeModal("transferModal");
+
+    loadAccount();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("An kasa haɗawa da server.");
+
+  }
+
+}
+
+
+// ===============================
+// WITHDRAW
+// ===============================
+
+async function withdrawMoney(event) {
+
+  event.preventDefault();
+
+
+  const amount =
+    Number(document.getElementById("withdrawAmount").value);
+
+
+  if (!amount || amount <= 0) {
+
+    alert("Shigar da adadin kuɗi.");
+
+    return;
+
+  }
+
+
+  try {
+
+    const response = await fetch("/api/withdraw", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        amount
+      })
+
+    });
+
+
+    const data = await response.json();
+
+
+    if (!response.ok) {
+
+      alert(data.message);
+
+      return;
+
+    }
+
+
+    alert(data.message);
+
+    closeModal("withdrawModal");
+
+    loadAccount();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("An kasa haɗawa da server.");
+
+  }
+
+}
+
+
+// ===============================
+// TRANSACTIONS
+// ===============================
+
+function displayTransactions(transactions) {
+
+  const container =
+    document.getElementById("transactionsList");
+
+
+  container.innerHTML = "";
+
+
+  transactions.forEach(tx => {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "transaction";
+
+
+    const sign =
+      tx.type === "credit" ? "+" : "-";
+
+
+    const colorClass =
+      tx.type === "credit" ? "in" : "out";
+
+
+    div.innerHTML = `
+
+      <div>
+
+        <div class="tx-name">
+          ${tx.name}
+        </div>
+
+        <div class="tx-date">
+          ${tx.description}
+        </div>
+
+      </div>
+
+      <div class="${colorClass}">
+        ${sign}₦${tx.amount.toLocaleString("en-NG", {
+          minimumFractionDigits: 2
+        })}
+      </div>
+
+    `;
+
+
+    container.appendChild(div);
+
+  });
+
+}
+
+
+// ===============================
+// MODALS
+// ===============================
+
+function openModal(id) {
+
+  const modal =
+    document.getElementById(id);
+
+  if (modal) {
+
+    modal.style.display = "flex";
+
+  }
+
+}
+
+
+function closeModal(id) {
+
+  const modal =
+    document.getElementById(id);
+
+  if (modal) {
+
+    modal.style.display = "none";
+
+  }
+
+}
+
+
+// ===============================
+// START
+// ===============================
+
+document.addEventListener(
+  "DOMContentLoaded",
+  loadAccount
+);
+
+          </script>
 
 
 </body>
