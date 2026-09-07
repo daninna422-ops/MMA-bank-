@@ -1,34 +1,53 @@
 <!DOCTYPE html>
 <html lang="ha">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MMA Bank</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>MMA BANK</title>
 
 <style>
+
+/* =========================
+   VARIABLES
+========================= */
+
+:root{
+  --blue:#0066FF;
+  --darkblue:#0044B3;
+  --light:#F4F7FE;
+  --white:#FFFFFF;
+  --text:#202B55;
+  --gray:#8993AD;
+  --green:#05B989;
+  --red:#E94F45;
+}
+
 
 /* =========================
    RESET
 ========================= */
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, "Segoe UI", sans-serif;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Segoe UI,sans-serif;
 }
 
 html,
-body {
-  width: 100%;
-  min-height: 100%;
-  overflow-x: hidden;
+body{
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
 }
 
-body {
-  background: #F4F7FE;
-  color: #202B55;
+body{
+  background:var(--light);
+  color:var(--text);
 }
 
 
@@ -36,43 +55,53 @@ body {
    HEADER
 ========================= */
 
-.header {
-  width: 100%;
-  background: linear-gradient(135deg, #0066FF, #0044B3);
-  color: white;
+.header{
+  width:100%;
+  background:linear-gradient(
+    135deg,
+    var(--blue),
+    var(--darkblue)
+  );
 
-  padding: 25px 20px 35px;
+  color:white;
 
-  border-bottom-left-radius: 35px;
-  border-bottom-right-radius: 35px;
+  padding:25px 20px 35px;
+
+  border-bottom-left-radius:45px;
+  border-bottom-right-radius:45px;
 }
 
-.top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+/* =========================
+   TOP
+========================= */
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
+.logo{
+  font-size:22px;
+  font-weight:bold;
 }
 
-.profile {
-  width: 48px;
-  height: 48px;
+.profile{
+  width:48px;
+  height:48px;
 
-  border-radius: 50%;
+  border-radius:50%;
 
-  background: white;
-  color: #0066FF;
+  background:white;
+  color:var(--blue);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  font-size: 20px;
-  font-weight: bold;
+  font-size:20px;
+  font-weight:bold;
 }
 
 
@@ -80,18 +109,18 @@ body {
    WELCOME
 ========================= */
 
-.welcome {
-  margin-top: 35px;
+.welcome{
+  margin-top:35px;
 }
 
-.welcome small {
-  font-size: 16px;
-  opacity: 0.85;
+.welcome small{
+  font-size:17px;
+  opacity:.8;
 }
 
-.welcome h2 {
-  margin-top: 8px;
-  font-size: 34px;
+.welcome h2{
+  margin-top:8px;
+  font-size:36px;
 }
 
 
@@ -99,35 +128,41 @@ body {
    BALANCE CARD
 ========================= */
 
-.balance-card {
-  margin-top: 25px;
+.balance-card{
 
-  background: rgba(255,255,255,0.14);
+  margin-top:25px;
 
-  border: 1px solid rgba(255,255,255,0.25);
+  background:rgba(255,255,255,.14);
 
-  padding: 25px;
+  border:1px solid rgba(255,255,255,.25);
 
-  border-radius: 25px;
+  padding:25px;
 
-  backdrop-filter: blur(5px);
+  border-radius:25px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
 }
 
-.balance-title {
-  font-size: 17px;
-  opacity: 0.85;
+.balance-title{
+  font-size:18px;
+  opacity:.85;
 }
 
-.balance {
-  font-size: 42px;
-  font-weight: bold;
+.balance{
 
-  margin: 10px 0 20px;
+  font-size:44px;
+
+  font-weight:bold;
+
+  margin:10px 0 20px;
 }
 
-.account {
-  font-size: 15px;
-  opacity: 0.9;
+.account{
+
+  font-size:16px;
+
+  opacity:.9;
 }
 
 
@@ -135,41 +170,41 @@ body {
    QUICK BUTTONS
 ========================= */
 
-.quick {
-  display: grid;
+.quick{
 
-  grid-template-columns: repeat(3, 1fr);
+  display:grid;
 
-  gap: 12px;
+  grid-template-columns:
+    repeat(3,1fr);
 
-  margin-top: 20px;
+  gap:12px;
+
+  margin-top:22px;
 }
 
-.quick button {
-  border: none;
+.quick button{
 
-  border-radius: 16px;
+  border:none;
 
-  padding: 15px 5px;
+  border-radius:18px;
 
-  background: rgba(255,255,255,0.18);
+  padding:16px 5px;
 
-  color: white;
+  background:rgba(255,255,255,.18);
 
-  font-size: 15px;
-  font-weight: bold;
+  color:white;
 
-  cursor: pointer;
+  font-size:15px;
 
-  transition: 0.2s;
+  font-weight:bold;
+
+  cursor:pointer;
+
+  transition:.2s;
 }
 
-.quick button:hover {
-  background: rgba(255,255,255,0.28);
-}
-
-.quick button:active {
-  transform: scale(0.97);
+.quick button:active{
+  transform:scale(.96);
 }
 
 
@@ -177,11 +212,13 @@ body {
    SECTION TITLE
 ========================= */
 
-.title {
-  margin: 30px 20px 15px;
+.title{
 
-  font-size: 24px;
-  font-weight: bold;
+  margin:30px 20px 15px;
+
+  font-size:27px;
+
+  font-weight:bold;
 }
 
 
@@ -189,66 +226,71 @@ body {
    SERVICES
 ========================= */
 
-.services {
-  width: 100%;
+.services{
 
-  display: grid;
+  width:100%;
 
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display:grid;
 
-  gap: 12px;
+  grid-template-columns:
+    repeat(4,minmax(0,1fr));
 
-  padding: 0 20px;
+  gap:14px;
+
+  padding:0 20px;
 }
 
-.service {
-  width: 100%;
-  min-width: 0;
 
-  height: 145px;
+.service{
 
-  background: white;
+  min-width:0;
 
-  border-radius: 22px;
+  height:180px;
 
-  display: flex;
+  background:white;
 
-  flex-direction: column;
+  border-radius:25px;
 
-  align-items: center;
-  justify-content: center;
+  padding:20px 5px;
 
-  text-align: center;
+  display:flex;
 
-  cursor: pointer;
+  flex-direction:column;
 
-  box-shadow: 0 5px 18px rgba(0,0,0,0.04);
+  align-items:center;
 
-  transition: 0.2s;
+  justify-content:center;
+
+  text-align:center;
+
+  box-shadow:
+    0 5px 18px rgba(0,0,0,.04);
+
+  cursor:pointer;
+
+  transition:.2s;
 }
 
-.service:hover {
-  transform: translateY(-3px);
+.service:active{
+  transform:scale(.96);
 }
 
-.service:active {
-  transform: scale(0.96);
+.service-icon{
+
+  display:block;
+
+  font-size:40px;
+
+  margin-bottom:15px;
 }
 
-.service-icon {
-  display: block;
+.service-name{
 
-  font-size: 38px;
+  font-size:16px;
 
-  margin-bottom: 10px;
-}
+  font-weight:bold;
 
-.service-name {
-  font-size: 14px;
-
-  font-weight: bold;
-
-  color: #8993AD;
+  color:var(--gray);
 }
 
 
@@ -256,64 +298,68 @@ body {
    TRANSACTIONS
 ========================= */
 
-.transactions {
-  width: calc(100% - 40px);
+.transactions{
 
-  margin: 0 20px 35px;
+  background:white;
 
-  background: white;
+  width:calc(100% - 40px);
 
-  border-radius: 22px;
+  margin:0 20px 30px;
 
-  padding: 15px 20px;
+  border-radius:25px;
 
-  box-shadow: 0 5px 18px rgba(0,0,0,0.04);
+  padding:20px;
 }
 
-.transaction {
-  display: flex;
+.transaction{
 
-  justify-content: space-between;
+  display:flex;
 
-  align-items: center;
+  justify-content:space-between;
 
-  padding: 18px 0;
+  align-items:center;
 
-  border-bottom: 1px solid #eeeeee;
+  padding:18px 0;
+
+  border-bottom:1px solid #eee;
 }
 
-.transaction:last-child {
-  border-bottom: none;
+.transaction:last-child{
+  border-bottom:none;
 }
 
-.tx-name {
-  font-size: 16px;
+.tx-name{
 
-  font-weight: bold;
+  font-weight:bold;
+
+  font-size:17px;
 }
 
-.tx-date {
-  font-size: 12px;
+.tx-date{
 
-  color: #8993AD;
+  font-size:13px;
 
-  margin-top: 5px;
+  color:var(--gray);
+
+  margin-top:5px;
 }
 
-.in {
-  color: #05B989;
+.in{
 
-  font-weight: bold;
+  color:var(--green);
 
-  font-size: 16px;
+  font-size:17px;
+
+  font-weight:bold;
 }
 
-.out {
-  color: #E94F45;
+.out{
 
-  font-weight: bold;
+  color:var(--red);
 
-  font-size: 16px;
+  font-size:17px;
+
+  font-weight:bold;
 }
 
 
@@ -321,68 +367,89 @@ body {
    MODAL
 ========================= */
 
-.modal {
-  display: none;
+.modal{
 
-  position: fixed;
+  display:none;
 
-  inset: 0;
+  position:fixed;
 
-  width: 100%;
-  height: 100%;
+  inset:0;
 
-  background: rgba(0,0,0,0.60);
+  width:100%;
+  height:100%;
 
-  z-index: 9999;
+  background:rgba(0,0,0,.60);
 
-  align-items: center;
-  justify-content: center;
+  z-index:99999;
 
-  padding: 20px;
-}
+  align-items:center;
 
-.modal-content {
-  width: 100%;
+  justify-content:center;
 
-  max-width: 520px;
-
-  max-height: 90vh;
-
-  overflow-y: auto;
-
-  background: white;
-
-  border-radius: 28px;
-
-  padding: 30px 25px;
-
-  position: relative;
-
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  padding:20px;
 }
 
 
 /* =========================
-   CLOSE BUTTON
+   MODAL CONTENT
 ========================= */
 
-.close-btn {
-  position: absolute;
+.modal-content{
 
-  top: 15px;
-  right: 22px;
+  width:100%;
 
-  font-size: 36px;
+  max-width:500px;
 
-  color: #999;
+  max-height:90vh;
 
-  cursor: pointer;
+  overflow-y:auto;
 
-  line-height: 1;
+  background:white;
+
+  border-radius:30px;
+
+  padding:30px;
+
+  position:relative;
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.3);
+
+  animation:modalOpen .2s ease;
 }
 
-.close-btn:hover {
-  color: #333;
+
+@keyframes modalOpen{
+
+  from{
+    transform:scale(.9);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+
+/* =========================
+   CLOSE
+========================= */
+
+.close-btn{
+
+  position:absolute;
+
+  top:15px;
+
+  right:20px;
+
+  font-size:38px;
+
+  color:#999;
+
+  cursor:pointer;
 }
 
 
@@ -390,12 +457,13 @@ body {
    MODAL TITLE
 ========================= */
 
-.modal-content h3 {
-  color: #0066FF;
+.modal-content h3{
 
-  font-size: 30px;
+  color:var(--blue);
 
-  margin: 5px 40px 25px 0;
+  font-size:32px;
+
+  margin:5px 40px 25px 0;
 }
 
 
@@ -403,42 +471,47 @@ body {
    FORM
 ========================= */
 
-.form-group {
-  margin-bottom: 20px;
+.form-group{
+
+  margin-bottom:20px;
 }
 
-.form-group label {
-  display: block;
+.form-group label{
 
-  font-size: 16px;
+  display:block;
 
-  font-weight: bold;
+  font-weight:bold;
 
-  color: #203B72;
+  font-size:18px;
 
-  margin-bottom: 9px;
+  color:#203B72;
+
+  margin-bottom:8px;
 }
+
 
 .form-group input,
-.form-group select {
-  width: 100%;
+.form-group select{
 
-  padding: 16px;
+  width:100%;
 
-  border: 2px solid #DCE3F0;
+  padding:17px;
 
-  border-radius: 18px;
+  border:2px solid #dce3f0;
 
-  font-size: 17px;
+  border-radius:18px;
 
-  outline: none;
+  font-size:18px;
 
-  background: white;
+  outline:none;
+
+  background:white;
 }
 
 .form-group input:focus,
-.form-group select:focus {
-  border-color: #0066FF;
+.form-group select:focus{
+
+  border-color:var(--blue);
 }
 
 
@@ -446,34 +519,31 @@ body {
    SUBMIT BUTTON
 ========================= */
 
-.submit-btn {
-  width: 100%;
+.submit-btn{
 
-  padding: 17px;
+  width:100%;
 
-  border: none;
+  padding:18px;
 
-  border-radius: 18px;
+  border:none;
 
-  background: #0066FF;
+  border-radius:18px;
 
-  color: white;
+  background:var(--blue);
 
-  font-size: 18px;
+  color:white;
 
-  font-weight: bold;
+  font-size:19px;
 
-  cursor: pointer;
+  font-weight:bold;
 
-  transition: 0.2s;
+  cursor:pointer;
+
+  margin-top:5px;
 }
 
-.submit-btn:hover {
-  background: #0055D6;
-}
-
-.submit-btn:active {
-  transform: scale(0.98);
+.submit-btn:active{
+  transform:scale(.98);
 }
 
 
@@ -481,34 +551,35 @@ body {
    MESSAGE
 ========================= */
 
-.message {
-  display: none;
+.message{
 
-  margin-top: 15px;
+  margin-top:15px;
 
-  padding: 12px;
+  padding:12px;
 
-  border-radius: 12px;
+  border-radius:12px;
 
-  font-weight: bold;
+  font-weight:bold;
 
-  text-align: center;
+  display:none;
 }
 
-.message.success {
-  display: block;
+.message.error{
 
-  background: #E5FAF3;
+  display:block;
 
-  color: #05B989;
+  background:#ffe9e7;
+
+  color:var(--red);
 }
 
-.message.error {
-  display: block;
+.message.success{
 
-  background: #FFF0EF;
+  display:block;
 
-  color: #E94F45;
+  background:#e5fff7;
+
+  color:var(--green);
 }
 
 
@@ -516,99 +587,169 @@ body {
    MOBILE
 ========================= */
 
-@media (max-width: 600px) {
+@media(max-width:600px){
 
-  .header {
-    padding: 22px 20px 30px;
+  .header{
+
+    padding:
+      25px
+      20px
+      35px;
   }
 
-  .logo {
-    font-size: 20px;
+  .logo{
+    font-size:20px;
   }
 
-  .welcome {
-    margin-top: 30px;
+  .profile{
+
+    width:45px;
+    height:45px;
   }
 
-  .welcome h2 {
-    font-size: 32px;
+  .welcome h2{
+    font-size:34px;
   }
 
-  .balance-card {
-    padding: 22px;
+  .balance{
+
+    font-size:40px;
   }
 
-  .balance {
-    font-size: 38px;
+  .quick{
+
+    gap:10px;
   }
 
-  .quick {
-    gap: 10px;
+  .quick button{
+
+    font-size:14px;
+
+    padding:15px 4px;
   }
 
-  .quick button {
-    font-size: 14px;
+  .title{
+
+    font-size:25px;
+
+    margin-left:20px;
   }
 
-  .title {
-    font-size: 22px;
+  .services{
+
+    grid-template-columns:
+      repeat(4,minmax(0,1fr));
+
+    gap:10px;
+
+    padding:
+      0 20px;
   }
 
-  .services {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  .service{
 
-    gap: 10px;
+    height:170px;
 
-    padding: 0 20px;
+    border-radius:23px;
+
+    padding:15px 3px;
   }
 
-  .service {
-    height: 135px;
+  .service-icon{
 
-    border-radius: 20px;
+    font-size:34px;
+
+    margin-bottom:13px;
   }
 
-  .service-icon {
-    font-size: 32px;
+  .service-name{
+
+    font-size:14px;
   }
 
-  .service-name {
-    font-size: 12px;
+  .transactions{
+
+    width:calc(100% - 40px);
+
+    margin-left:20px;
+    margin-right:20px;
   }
 
-  .transactions {
-    width: calc(100% - 40px);
+  .modal{
 
-    margin-left: 20px;
-    margin-right: 20px;
+    padding:12px;
   }
 
-  .modal {
-    padding: 15px;
+  .modal-content{
+
+    padding:25px 20px;
+
+    border-radius:28px;
   }
 
-  .modal-content {
-    padding: 28px 20px;
-    border-radius: 25px;
+  .modal-content h3{
+
+    font-size:29px;
   }
 
-  .modal-content h3 {
-    font-size: 27px;
+}
+
+
+/* =========================
+   SMALL PHONE
+========================= */
+
+@media(max-width:380px){
+
+  .services{
+
+    gap:7px;
+
+    padding:0 12px;
+  }
+
+  .service{
+
+    height:145px;
+  }
+
+  .service-icon{
+    font-size:29px;
+  }
+
+  .service-name{
+    font-size:12px;
+  }
+
+  .title{
+    margin-left:12px;
+  }
+
+  .transactions{
+
+    width:calc(100% - 24px);
+
+    margin-left:12px;
+    margin-right:12px;
   }
 }
 
 </style>
+
 </head>
 
 
 <body>
 
 
-<!-- =================================================
+<!-- ==================================================
      HEADER
-================================================= -->
+================================================== -->
 
-<header class="header">
+<div class="header">
+
+
+  <!-- TOP -->
 
   <div class="top">
 
@@ -622,6 +763,8 @@ body {
 
   </div>
 
+
+  <!-- WELCOME -->
 
   <div class="welcome">
 
@@ -646,57 +789,57 @@ body {
 
     <div
       class="balance"
-      id="userBalance"
-    >
+      id="userBalance">
       ₦1,000.00
     </div>
 
     <div class="account">
-      Account Number: 8123456789
+      Account Number:
+      8123456789
     </div>
 
 
-    <!-- QUICK ACTIONS -->
+    <!-- QUICK ACTION -->
 
     <div class="quick">
 
       <button
-        onclick="openModal('depositModal')"
-      >
-        📥
-        <br>
+        onclick="openModal('depositModal')">
+
+        📥<br>
         Add Money
+
       </button>
 
 
       <button
-        onclick="openModal('transferModal')"
-      >
-        💸
-        <br>
+        onclick="openModal('transferModal')">
+
+        💸<br>
         Transfer
+
       </button>
 
 
       <button
-        onclick="openModal('withdrawModal')"
-      >
-        📤
-        <br>
+        onclick="openModal('withdrawModal')">
+
+        📤<br>
         Withdraw
+
       </button>
 
     </div>
 
   </div>
 
-</header>
+</div>
 
 
 
-<!-- =================================================
+<!-- ==================================================
      SERVICES
-================================================= -->
+================================================== -->
 
 <div class="title">
   Ayyukan Banki
@@ -710,8 +853,7 @@ body {
 
   <div
     class="service"
-    onclick="openModal('transferModal')"
-  >
+    onclick="openModal('transferModal')">
 
     <span class="service-icon">
       💸
@@ -728,8 +870,7 @@ body {
 
   <div
     class="service"
-    onclick="openModal('depositModal')"
-  >
+    onclick="openModal('depositModal')">
 
     <span class="service-icon">
       📥
@@ -746,8 +887,7 @@ body {
 
   <div
     class="service"
-    onclick="openModal('withdrawModal')"
-  >
+    onclick="openModal('withdrawModal')">
 
     <span class="service-icon">
       📤
@@ -764,8 +904,7 @@ body {
 
   <div
     class="service"
-    onclick="openModal('airtimeModal')"
-  >
+    onclick="openModal('airtimeModal')">
 
     <span class="service-icon">
       📱
@@ -782,8 +921,7 @@ body {
 
   <div
     class="service"
-    onclick="demoMessage('Data')"
-  >
+    onclick="demoService('Data')">
 
     <span class="service-icon">
       📶
@@ -800,8 +938,7 @@ body {
 
   <div
     class="service"
-    onclick="demoMessage('Electricity')"
-  >
+    onclick="demoService('Electricity')">
 
     <span class="service-icon">
       💡
@@ -818,8 +955,7 @@ body {
 
   <div
     class="service"
-    onclick="demoMessage('TV')"
-  >
+    onclick="demoService('TV')">
 
     <span class="service-icon">
       📺
@@ -836,8 +972,7 @@ body {
 
   <div
     class="service"
-    onclick="demoMessage('Cards')"
-  >
+    onclick="demoService('Cards')">
 
     <span class="service-icon">
       💳
@@ -854,8 +989,7 @@ body {
 
   <div
     class="service"
-    onclick="demoMessage('Savings')"
-  >
+    onclick="demoService('Savings')">
 
     <span class="service-icon">
       💰
@@ -872,8 +1006,7 @@ body {
 
   <div
     class="service"
-    onclick="demoMessage('Loan')"
-  >
+    onclick="demoService('Loan')">
 
     <span class="service-icon">
       🏦
@@ -890,8 +1023,7 @@ body {
 
   <div
     class="service"
-    onclick="demoMessage('Support')"
-  >
+    onclick="demoService('Support')">
 
     <span class="service-icon">
       🎧
@@ -908,9 +1040,9 @@ body {
 
 
 
-<!-- =================================================
+<!-- ==================================================
      RECENT TRANSACTIONS
-================================================= -->
+================================================== -->
 
 <div class="title">
   Recent Transactions
@@ -919,8 +1051,8 @@ body {
 
 <div
   class="transactions"
-  id="transactions"
->
+  id="transactionsList">
+
 
   <div class="transaction">
 
@@ -963,26 +1095,29 @@ body {
 
   </div>
 
+
 </div>
 
 
 
-<!-- =================================================
+<!-- ==================================================
      TRANSFER MODAL
-================================================= -->
+================================================== -->
 
 <div
   class="modal"
-  id="transferModal"
->
+  id="transferModal">
+
 
   <div class="modal-content">
 
+
     <span
       class="close-btn"
-      onclick="closeModal('transferModal')"
-    >
+      onclick="closeModal('transferModal')">
+
       ×
+
     </span>
 
 
@@ -992,8 +1127,8 @@ body {
 
 
     <form
-      onsubmit="transferMoney(event)"
-    >
+      onsubmit="transferMoney(event)">
+
 
       <div class="form-group">
 
@@ -1006,8 +1141,7 @@ body {
           type="text"
           inputmode="numeric"
           placeholder="8123456789"
-          required
-        >
+          required>
 
       </div>
 
@@ -1023,24 +1157,24 @@ body {
           type="number"
           min="1"
           placeholder="100"
-          required
-        >
+          required>
 
       </div>
 
 
-      <button
-        type="submit"
-        class="submit-btn"
-      >
-        💸 Transfer
-      </button>
-
-
       <div
         id="transferMessage"
-        class="message"
-      ></div>
+        class="message">
+      </div>
+
+
+      <button
+        class="submit-btn"
+        type="submit">
+
+        💸 Transfer
+
+      </button>
 
     </form>
 
@@ -1050,22 +1184,24 @@ body {
 
 
 
-<!-- =================================================
+<!-- ==================================================
      DEPOSIT MODAL
-================================================= -->
+================================================== -->
 
 <div
   class="modal"
-  id="depositModal"
->
+  id="depositModal">
+
 
   <div class="modal-content">
 
+
     <span
       class="close-btn"
-      onclick="closeModal('depositModal')"
-    >
+      onclick="closeModal('depositModal')">
+
       ×
+
     </span>
 
 
@@ -1075,8 +1211,8 @@ body {
 
 
     <form
-      onsubmit="depositMoney(event)"
-    >
+      onsubmit="depositMoney(event)">
+
 
       <div class="form-group">
 
@@ -1089,24 +1225,24 @@ body {
           type="number"
           min="1"
           placeholder="1000"
-          required
-        >
+          required>
 
       </div>
 
 
-      <button
-        type="submit"
-        class="submit-btn"
-      >
-        📥 Add Money
-      </button>
-
-
       <div
         id="depositMessage"
-        class="message"
-      ></div>
+        class="message">
+      </div>
+
+
+      <button
+        class="submit-btn"
+        type="submit">
+
+        📥 Add Money
+
+      </button>
 
     </form>
 
@@ -1116,22 +1252,24 @@ body {
 
 
 
-<!-- =================================================
+<!-- ==================================================
      WITHDRAW MODAL
-================================================= -->
+================================================== -->
 
 <div
   class="modal"
-  id="withdrawModal"
->
+  id="withdrawModal">
+
 
   <div class="modal-content">
 
+
     <span
       class="close-btn"
-      onclick="closeModal('withdrawModal')"
-    >
+      onclick="closeModal('withdrawModal')">
+
       ×
+
     </span>
 
 
@@ -1141,8 +1279,8 @@ body {
 
 
     <form
-      onsubmit="withdrawMoney(event)"
-    >
+      onsubmit="withdrawMoney(event)">
+
 
       <div class="form-group">
 
@@ -1155,24 +1293,24 @@ body {
           type="number"
           min="1"
           placeholder="100"
-          required
-        >
+          required>
 
       </div>
 
 
-      <button
-        type="submit"
-        class="submit-btn"
-      >
-        📤 Withdraw
-      </button>
-
-
       <div
         id="withdrawMessage"
-        class="message"
-      ></div>
+        class="message">
+      </div>
+
+
+      <button
+        class="submit-btn"
+        type="submit">
+
+        📤 Withdraw
+
+      </button>
 
     </form>
 
@@ -1182,22 +1320,24 @@ body {
 
 
 
-<!-- =================================================
+<!-- ==================================================
      AIRTIME MODAL
-================================================= -->
+================================================== -->
 
 <div
   class="modal"
-  id="airtimeModal"
->
+  id="airtimeModal">
+
 
   <div class="modal-content">
 
+
     <span
       class="close-btn"
-      onclick="closeModal('airtimeModal')"
-    >
+      onclick="closeModal('airtimeModal')">
+
       ×
+
     </span>
 
 
@@ -1207,8 +1347,7 @@ body {
 
 
     <form
-      onsubmit="buyAirtime(event)"
-    >
+      onsubmit="buyAirtime(event)">
 
 
       <!-- PHONE -->
@@ -1225,8 +1364,7 @@ body {
           inputmode="numeric"
           maxlength="11"
           placeholder="08012345678"
-          required
-        >
+          required>
 
       </div>
 
@@ -1241,8 +1379,7 @@ body {
 
         <select
           id="airtimeNetwork"
-          required
-        >
+          required>
 
           <option value="">
             -- Zaɓi Network --
@@ -1282,26 +1419,24 @@ body {
           type="number"
           min="50"
           placeholder="100"
-          required
-        >
+          required>
 
       </div>
 
 
-      <!-- BUTTON -->
-
-      <button
-        type="submit"
-        class="submit-btn"
-      >
-        📱 Sayi Airtime
-      </button>
-
-
       <div
         id="airtimeMessage"
-        class="message"
-      ></div>
+        class="message">
+      </div>
+
+
+      <button
+        class="submit-btn"
+        type="submit">
+
+        📱 Sayi Airtime
+
+      </button>
 
 
     </form>
@@ -1314,48 +1449,81 @@ body {
 
 <script>
 
-/* =================================================
-   GLOBAL BALANCE
-================================================= */
+/* ==================================================
+   MMA BANK JAVASCRIPT
+================================================== */
+
+
+/* =========================
+   BALANCE
+========================= */
 
 let balance = 1000;
 
 
-/* =================================================
-   FORMAT MONEY
-================================================= */
+/* =========================
+   LOAD BALANCE
+========================= */
 
-function formatMoney(amount) {
+const savedBalance =
+  localStorage.getItem("mmaBankBalance");
 
-  return "₦" + amount.toLocaleString("en-NG", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+if(savedBalance !== null){
+
+  balance =
+    parseFloat(savedBalance);
 
 }
 
 
-/* =================================================
+/* =========================
+   FORMAT MONEY
+========================= */
+
+function formatMoney(amount){
+
+  return "₦" +
+    Number(amount).toLocaleString(
+      "en-NG",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
+}
+
+
+/* =========================
    UPDATE BALANCE
-================================================= */
+========================= */
 
-function updateBalance() {
+function updateBalance(){
 
-  document.getElementById("userBalance").innerText =
+  document.getElementById(
+    "userBalance"
+  ).innerText =
     formatMoney(balance);
 
+
+  localStorage.setItem(
+    "mmaBankBalance",
+    balance
+  );
+
 }
 
 
-/* =================================================
+/* =========================
    OPEN MODAL
-================================================= */
+========================= */
 
-function openModal(id) {
+function openModal(id){
 
-  const modal = document.getElementById(id);
+  const modal =
+    document.getElementById(id);
 
-  if (modal) {
+  if(modal){
 
     modal.style.display = "flex";
 
@@ -1364,15 +1532,16 @@ function openModal(id) {
 }
 
 
-/* =================================================
+/* =========================
    CLOSE MODAL
-================================================= */
+========================= */
 
-function closeModal(id) {
+function closeModal(id){
 
-  const modal = document.getElementById(id);
+  const modal =
+    document.getElementById(id);
 
-  if (modal) {
+  if(modal){
 
     modal.style.display = "none";
 
@@ -1381,43 +1550,53 @@ function closeModal(id) {
 }
 
 
-/* =================================================
-   CLOSE MODAL WHEN CLICK OUTSIDE
-================================================= */
+/* =========================
+   CLOSE WHEN CLICK OUTSIDE
+========================= */
 
-document.querySelectorAll(".modal").forEach(function(modal) {
+window.addEventListener(
+  "click",
+  function(event){
 
-  modal.addEventListener("click", function(event) {
+    if(event.target.classList.contains("modal")){
 
-    if (event.target === modal) {
-
-      modal.style.display = "none";
+      event.target.style.display = "none";
 
     }
 
-  });
+  }
+);
 
-});
 
-
-/* =================================================
+/* ==================================================
    ADD TRANSACTION
-================================================= */
+================================================== */
 
-function addTransaction(name, amount, type) {
+function addTransaction(
+  name,
+  description,
+  amount,
+  type
+){
 
-  const transactions =
-    document.getElementById("transactions");
+  const list =
+    document.getElementById(
+      "transactionsList"
+    );
 
 
   const transaction =
     document.createElement("div");
 
-  transaction.className = "transaction";
+
+  transaction.className =
+    "transaction";
 
 
   const sign =
-    type === "in" ? "+" : "-";
+    type === "in"
+      ? "+"
+      : "-";
 
 
   transaction.innerHTML = `
@@ -1429,7 +1608,7 @@ function addTransaction(name, amount, type) {
       </div>
 
       <div class="tx-date">
-        Yanzu
+        ${description}
       </div>
 
     </div>
@@ -1441,29 +1620,43 @@ function addTransaction(name, amount, type) {
   `;
 
 
-  transactions.prepend(transaction);
+  list.prepend(transaction);
 
 }
 
 
-/* =================================================
+/* ==================================================
    DEPOSIT
-================================================= */
+================================================== */
 
-function depositMoney(event) {
+function depositMoney(event){
 
   event.preventDefault();
 
 
-  const amount =
-    Number(
-      document.getElementById("depositAmount").value
+  const input =
+    document.getElementById(
+      "depositAmount"
     );
 
 
-  if (!amount || amount <= 0) {
+  const amount =
+    parseFloat(input.value);
 
-    alert("Shigar da adadin kuɗi daidai.");
+
+  const message =
+    document.getElementById(
+      "depositMessage"
+    );
+
+
+  if(!amount || amount <= 0){
+
+    message.className =
+      "message error";
+
+    message.innerText =
+      "Shigar da adadin kuɗi daidai.";
 
     return;
 
@@ -1478,58 +1671,83 @@ function depositMoney(event) {
 
   addTransaction(
     "Deposit",
+    "An ƙara kuɗi cikin wallet",
     amount,
     "in"
   );
 
 
-  alert(
-    "An ƙara kuɗi cikin wallet!\n\n" +
-    "Adadi: " +
+  message.className =
+    "message success";
+
+  message.innerText =
+    "An ƙara " +
     formatMoney(amount) +
-    "\n\n" +
-    "Sabon Balance: " +
-    formatMoney(balance)
+    " cikin wallet.";
+
+  input.value = "";
+
+
+  setTimeout(
+    function(){
+
+      closeModal("depositModal");
+
+      message.className =
+        "message";
+
+    },
+    1000
   );
-
-
-  document.getElementById("depositAmount").value = "";
-
-
-  closeModal("depositModal");
 
 }
 
 
-/* =================================================
+/* ==================================================
    WITHDRAW
-================================================= */
+================================================== */
 
-function withdrawMoney(event) {
+function withdrawMoney(event){
 
   event.preventDefault();
 
 
-  const amount =
-    Number(
-      document.getElementById("withdrawAmount").value
+  const input =
+    document.getElementById(
+      "withdrawAmount"
     );
 
 
-  if (!amount || amount <= 0) {
+  const amount =
+    parseFloat(input.value);
 
-    alert("Shigar da adadin kuɗi daidai.");
+
+  const message =
+    document.getElementById(
+      "withdrawMessage"
+    );
+
+
+  if(!amount || amount <= 0){
+
+    message.className =
+      "message error";
+
+    message.innerText =
+      "Shigar da adadin kuɗi daidai.";
 
     return;
 
   }
 
 
-  if (amount > balance) {
+  if(amount > balance){
 
-    alert(
-      "Kuɗin da ke wallet ɗinka bai isa ba!"
-    );
+    message.className =
+      "message error";
+
+    message.innerText =
+      "Kuɗin da ke wallet ɗinka bai isa ba!";
 
     return;
 
@@ -1544,34 +1762,43 @@ function withdrawMoney(event) {
 
   addTransaction(
     "Withdraw",
+    "An cire kuɗi daga wallet",
     amount,
     "out"
   );
 
 
-  alert(
-    "An cire kuɗi daga wallet!\n\n" +
-    "Adadi: " +
+  message.className =
+    "message success";
+
+  message.innerText =
+    "An cire " +
     formatMoney(amount) +
-    "\n\n" +
-    "Sabon Balance: " +
-    formatMoney(balance)
+    " daga wallet.";
+
+  input.value = "";
+
+
+  setTimeout(
+    function(){
+
+      closeModal("withdrawModal");
+
+      message.className =
+        "message";
+
+    },
+    1000
   );
-
-
-  document.getElementById("withdrawAmount").value = "";
-
-
-  closeModal("withdrawModal");
 
 }
 
 
-/* =================================================
+/* ==================================================
    TRANSFER
-================================================= */
+================================================== */
 
-function transferMoney(event) {
+function transferMoney(event){
 
   event.preventDefault();
 
@@ -1582,41 +1809,55 @@ function transferMoney(event) {
     ).value.trim();
 
 
+  const input =
+    document.getElementById(
+      "transferAmount"
+    );
+
+
   const amount =
-    Number(
-      document.getElementById(
-        "transferAmount"
-      ).value
+    parseFloat(input.value);
+
+
+  const message =
+    document.getElementById(
+      "transferMessage"
     );
 
 
-  if (account.length < 10) {
+  if(account.length < 10){
 
-    alert(
-      "Shigar da Account Number mai kyau."
-    );
+    message.className =
+      "message error";
+
+    message.innerText =
+      "Shigar da Account Number mai inganci.";
 
     return;
 
   }
 
 
-  if (!amount || amount <= 0) {
+  if(!amount || amount <= 0){
 
-    alert(
-      "Shigar da adadin kuɗi daidai."
-    );
+    message.className =
+      "message error";
+
+    message.innerText =
+      "Shigar da adadin kuɗi daidai.";
 
     return;
 
   }
 
 
-  if (amount > balance) {
+  if(amount > balance){
 
-    alert(
-      "Kuɗin da ke wallet ɗinka bai isa ba!"
-    );
+    message.className =
+      "message error";
+
+    message.innerText =
+      "Kuɗin da ke wallet ɗinka bai isa ba!";
 
     return;
 
@@ -1630,43 +1871,44 @@ function transferMoney(event) {
 
 
   addTransaction(
-    "Transfer → " + account,
+    "Transfer",
+    "An aika zuwa " + account,
     amount,
     "out"
   );
 
 
-  alert(
-    "An yi Transfer na DEMO!\n\n" +
-    "Account: " + account +
-    "\n" +
-    "Adadi: " + formatMoney(amount) +
-    "\n\n" +
-    "Sabon Balance: " +
-    formatMoney(balance)
+  message.className =
+    "message success";
+
+  message.innerText =
+    "An yi Transfer na " +
+    formatMoney(amount) +
+    ".";
+
+  input.value = "";
+
+
+  setTimeout(
+    function(){
+
+      closeModal("transferModal");
+
+      message.className =
+        "message";
+
+    },
+    1000
   );
-
-
-  document.getElementById(
-    "transferAccount"
-  ).value = "";
-
-
-  document.getElementById(
-    "transferAmount"
-  ).value = "";
-
-
-  closeModal("transferModal");
 
 }
 
 
-/* =================================================
-   AIRTIME
-================================================= */
+/* ==================================================
+   BUY AIRTIME
+================================================== */
 
-function buyAirtime(event) {
+function buyAirtime(event){
 
   event.preventDefault();
 
@@ -1683,61 +1925,76 @@ function buyAirtime(event) {
     ).value;
 
 
+  const input =
+    document.getElementById(
+      "airtimeAmount"
+    );
+
+
   const amount =
-    Number(
-      document.getElementById(
-        "airtimeAmount"
-      ).value
+    parseFloat(input.value);
+
+
+  const message =
+    document.getElementById(
+      "airtimeMessage"
     );
 
 
-  /* CHECK PHONE */
+  /* PHONE VALIDATION */
 
-  if (!/^0[0-9]{10}$/.test(phone)) {
+  if(!/^0[0-9]{10}$/.test(phone)){
 
-    alert(
-      "Shigar da lambar waya mai kyau.\n" +
-      "Misali: 08012345678"
-    );
+    message.className =
+      "message error";
+
+    message.innerText =
+      "Shigar da lambar waya mai lambobi 11.";
 
     return;
 
   }
 
 
-  /* CHECK NETWORK */
+  /* NETWORK VALIDATION */
 
-  if (!network) {
+  if(!network){
 
-    alert(
-      "Da fatan zaɓi Network."
-    );
+    message.className =
+      "message error";
 
-    return;
-
-  }
-
-
-  /* CHECK AMOUNT */
-
-  if (!amount || amount < 50) {
-
-    alert(
-      "Mafi ƙarancin Airtime shine ₦50."
-    );
+    message.innerText =
+      "Da fatan zaɓi Network.";
 
     return;
 
   }
 
 
-  /* CHECK BALANCE */
+  /* AMOUNT VALIDATION */
 
-  if (amount > balance) {
+  if(!amount || amount < 50){
 
-    alert(
-      "Kuɗin da ke wallet ɗinka bai isa ba!"
-    );
+    message.className =
+      "message error";
+
+    message.innerText =
+      "Mafi ƙarancin Airtime shine ₦50.";
+
+    return;
+
+  }
+
+
+  /* BALANCE CHECK */
+
+  if(amount > balance){
+
+    message.className =
+      "message error";
+
+    message.innerText =
+      "Kuɗin da ke wallet ɗinka bai isa ba!";
 
     return;
 
@@ -1756,82 +2013,69 @@ function buyAirtime(event) {
 
   addTransaction(
     "Airtime - " + network,
+    "Airtime zuwa " + phone,
     amount,
     "out"
   );
 
 
-  /* SUCCESS */
+  /* SUCCESS MESSAGE */
 
-  alert(
-    "An karɓi umarnin Airtime!\n\n" +
+  message.className =
+    "message success";
 
-    "Network: " +
-    network +
-
-    "\n" +
-
-    "Lamba: " +
-    phone +
-
-    "\n" +
-
-    "Adadi: " +
+  message.innerText =
+    "An yi nasarar sayen Airtime na " +
     formatMoney(amount) +
-
-    "\n\n" +
-
-    "Sabon Balance: " +
-    formatMoney(balance)
-  );
+    " zuwa " +
+    phone +
+    ".";
 
 
-  /* CLEAR */
-
-  document.getElementById(
-    "airtimePhone"
-  ).value = "";
-
-
-  document.getElementById(
-    "airtimeNetwork"
-  ).value = "";
-
-
-  document.getElementById(
-    "airtimeAmount"
-  ).value = "";
+  input.value = "";
 
 
   /* CLOSE */
 
-  closeModal("airtimeModal");
+  setTimeout(
+    function(){
+
+      closeModal("airtimeModal");
+
+      message.className =
+        "message";
+
+    },
+    1500
+  );
 
 }
 
 
-/* =================================================
-   DEMO SERVICES
-================================================= */
+/* ==================================================
+   OTHER SERVICES
+================================================== */
 
-function demoMessage(service) {
+function demoService(service){
 
   alert(
     service +
-    " service ɗin yana cikin DEMO.\n\n" +
+    " service yana cikin DEMO.\n\n" +
     "Za mu haɗa shi da backend/payment API daga baya."
   );
 
 }
 
 
-/* =================================================
+/* ==================================================
    INITIAL BALANCE
-================================================= */
+================================================== */
 
 updateBalance();
 
+
 </script>
+
 
 </body>
 </html>
