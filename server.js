@@ -1,63 +1,47 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
 
+
+// ===============================
+// MIDDLEWARE
+// ===============================
+
 app.use(cors());
+
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
 
-/*
-==================================================
-  SECRET KEYS
-==================================================
+// ===============================
+// ENV VARIABLES
+// ===============================
 
-KADA KA SAKA SU A HTML.
+const VTPASS_USERNAME =
+  process.env.VTPASS_USERNAME;
 
-Za mu saka su a .env
-*/
-
-const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
-
-// Wannan na Airtime Provider ne.
-// Za mu saka API key ɗinsa daga baya.
-const AIRTIME_API_KEY = process.env.AIRTIME_API_KEY;
+const VTPASS_PASSWORD =
+  process.env.VTPASS_PASSWORD;
 
 
-/*
-==================================================
-  HOME / TEST
-==================================================
-*/
+// ===============================
+// HOME TEST
+// ===============================
 
 app.get("/", (req, res) => {
+
   res.json({
     success: true,
-    message: "MMA Bank Server yana aiki."
+    message: "MMA Bank server yana aiki."
   });
+
 });
 
 
-/*
-==================================================
-  AIRTIME
-==================================================
-
-Frontend zai kira:
-
-POST /api/airtime
-
-Misali:
-
-{
-  phone: "08012345678",
-  network: "MTN",
-  amount: 100
-}
-*/
+// ===============================
+// AIRTIME
+// ===============================
 
 app.post("/api/airtime", async (req, res) => {
 
@@ -70,45 +54,41 @@ app.post("/api/airtime", async (req, res) => {
     } = req.body;
 
 
-    /*
-    -------------------------
-    VALIDATION
-    -------------------------
-    */
+    // ===============================
+    // VALIDATION
+    // ===============================
 
     if (!phone) {
+
       return res.status(400).json({
         success: false,
-        message: "Ba a shigar da lambar waya ba."
+        message: "Lambar waya ba ta zo ba."
       });
+
     }
 
 
     if (!network) {
+
       return res.status(400).json({
         success: false,
-        message: "Da fatan zaɓi Network."
+        message: "Network ba a zaɓa ba."
       });
+
     }
 
 
-    if (!amount || amount <= 0) {
+    if (!amount) {
+
       return res.status(400).json({
         success: false,
-        message: "Adadin kuɗi bai dace ba."
+        message: "Amount ba a shigar ba."
       });
+
     }
 
 
-    /*
-    -------------------------
-    PHONE VALIDATION
-    -------------------------
-    */
-
-    const phoneRegex = /^0[789][01]\d{8}$/;
-
-    if (!phoneRegex.test(phone)) {
+    if (!/^0\d{10}$/.test(phone)) {
 
       return res.status(400).json({
         success: false,
@@ -118,185 +98,186 @@ app.post("/api/airtime", async (req, res) => {
     }
 
 
-    /*
-    -------------------------
-    NETWORK VALIDATION
-    -------------------------
-    */
+    const airtimeAmount =
+      Number(amount);
 
-    const allowedNetworks = [
-      "MTN",
-      "AIRTEL",
-      "GLO",
-      "9MOBILE"
-    ];
 
-    if (!allowedNetworks.includes(network)) {
+    if (
+      !Number.isFinite(airtimeAmount) ||
+      airtimeAmount < 50
+    ) {
 
       return res.status(400).json({
         success: false,
-        message: "Network ba a yarda da shi ba."
+        message: "Amount bai dace ba."
       });
 
     }
 
 
-    /*
-    -------------------------
-    AMOUNT LIMIT
-    -------------------------
-    */
+    // ===============================
+    // NETWORK → VTPASS SERVICE ID
+    // ===============================
 
-    if (amount < 50 || amount > 50000) {
+    const services = {
+
+      mtn: "mtn",
+
+      airtel: "airtel",
+
+      glo: "glo",
+
+      etisalat: "etisalat"
+
+    };
+
+
+    const serviceID =
+      services[network];
+
+
+    if (!serviceID) {
 
       return res.status(400).json({
         success: false,
-        message: "Airtime dole ya kasance tsakanin ₦50 da ₦50,000."
+        message: "Network ɗin ba a tallafa masa ba."
       });
 
     }
 
 
-    /*
-    ==================================================
-      MU TSAYA ANAN NA DAN LOKACI
-    ==================================================
+    // ===============================
+    // REQUEST ID
+    // ===============================
 
-    Wannan yana tabbatar mana cewa request
-    daga frontend yana zuwa server lafiya.
-
-    Daga baya za mu saka ainihin VTU API a nan.
-    */
-
-
-    console.log("AIRTIME REQUEST");
-
-    console.log({
-      phone,
-      network,
-      amount
-    });
+    const requestId =
+      "MMA_" +
+      Date.now() +
+      "_" +
+      Math.floor(
+        Math.random() * 100000
+      );
 
 
-    /*
-    ==================================================
-      MISALIN ABIN DA ZA A YI DA PROVIDER
-    ==================================================
-
-    A nan ne za mu kira Airtime Provider.
-
-    Misali:
+    // ===============================
+    // VTPASS REQUEST
+    // ===============================
 
     const response = await axios.post(
-      "PROVIDER_AIRTIME_URL",
+
+      "https://vtpass.com/api/pay",
+
       {
-        phone: phone,
-        network: network,
-        amount: amount
+
+        request_id: requestId,
+
+        serviceID: serviceID,
+
+        amount: airtimeAmount,
+
+        phone: phone
+
       },
+
       {
+
+        auth: {
+
+          username:
+            VTPASS_USERNAME,
+
+          password:
+            VTPASS_PASSWORD
+
+        },
+
         headers: {
-          Authorization: `Bearer ${AIRTIME_API_KEY}`
-        }
+
+          "Content-Type":
+            "application/json"
+
+        },
+
+        timeout: 30000
+
       }
+
     );
 
-    */
+
+    const data =
+      response.data;
 
 
-    /*
-    ==================================================
-      TEMPORARY RESPONSE
-    ==================================================
-    */
-
-    return res.json({
-
-      success: true,
-
-      message: "An karɓi Airtime request.",
-
-      data: {
-        phone: phone,
-        network: network,
-        amount: amount,
-        status: "pending"
-      }
-
-    });
+    console.log(
+      "VTpass response:",
+      data
+    );
 
 
-  } catch (error) {
+    // ===============================
+    // CHECK SUCCESS
+    // ===============================
 
-    console.error("AIRTIME ERROR:", error.message);
+    if (
+      data &&
+      (
+        data.code === "000" ||
+        data.response_description ===
+          "TRANSACTION SUCCESSFUL"
+      )
+    ) {
 
-    return res.status(500).json({
+      return res.json({
+
+        success: true,
+
+        message:
+          "Airtime an aika cikin nasara.",
+
+        data: data
+
+      });
+
+    }
+
+
+    // ===============================
+    // FAILED
+    // ===============================
+
+    return res.status(400).json({
 
       success: false,
 
-      message: "An samu matsala wajen sarrafa Airtime."
+      message:
+        data?.response_description ||
+        "Airtime bai yi nasara ba.",
 
-    });
+      data: data
 
-  }
-
-});
-
-
-/*
-==================================================
-  PAYSTACK TEST
-==================================================
-
-Wannan route zai tabbatar mana cewa
-PAYSTACK_SECRET_KEY yana backend.
-
-Ba ya sayar da Airtime.
-*/
-
-app.get("/api/paystack-test", async (req, res) => {
-
-  try {
-
-    if (!PAYSTACK_SECRET_KEY) {
-
-      return res.status(500).json({
-        success: false,
-        message: "PAYSTACK_SECRET_KEY bai kasance a .env ba."
-      });
-
-    }
-
-
-    const response = await axios.get(
-      "https://api.paystack.co/balance",
-      {
-        headers: {
-          Authorization:
-            `Bearer ${PAYSTACK_SECRET_KEY}`
-        }
-      }
-    );
-
-
-    res.json({
-      success: true,
-      message: "Paystack connection yana aiki.",
-      data: response.data.data
     });
 
 
   } catch (error) {
 
     console.error(
-      "PAYSTACK ERROR:",
-      error.response?.data || error.message
+      "AIRTIME ERROR:",
+      error.response?.data ||
+      error.message
     );
 
 
-    res.status(500).json({
+    return res.status(500).json({
+
       success: false,
-      message: "Paystack connection ya kasa."
+
+      message:
+        error.response?.data
+          ?.response_description ||
+        error.message ||
+        "An samu matsala wajen sayen Airtime."
+
     });
 
   }
@@ -304,16 +285,21 @@ app.get("/api/paystack-test", async (req, res) => {
 });
 
 
-/*
-==================================================
-  SERVER
-==================================================
-*/
+// ===============================
+// SERVER
+// ===============================
 
-app.listen(PORT, () => {
+const PORT =
+  process.env.PORT || 3000;
 
-  console.log(
-    `MMA Bank Server yana aiki a port ${PORT}`
-  );
 
-});
+app.listen(
+  PORT,
+  () => {
+
+    console.log(
+      `MMA Bank server yana aiki a port ${PORT}`
+    );
+
+  }
+);
