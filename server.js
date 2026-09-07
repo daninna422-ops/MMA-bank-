@@ -1,305 +1,270 @@
 const express = require("express");
-const axios = require("axios");
-const cors = require("cors");
+const path = require("path");
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-
-// ===============================
-// MIDDLEWARE
-// ===============================
-
-app.use(cors());
-
+// Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-
-// ===============================
-// ENV VARIABLES
-// ===============================
-
-const VTPASS_USERNAME =
-  process.env.VTPASS_USERNAME;
-
-const VTPASS_PASSWORD =
-  process.env.VTPASS_PASSWORD;
-
+// Serve HTML/CSS/JS files
+app.use(express.static(path.join(__dirname, "public")));
 
 // ===============================
-// HOME TEST
+// DEMO USER DATA
+// ===============================
+
+let user = {
+  name: "Mubarak",
+  accountNumber: "8123456789",
+  balance: 1000
+};
+
+let transactions = [
+  {
+    type: "credit",
+    name: "Initial Balance",
+    description: "Demo wallet",
+    amount: 1000,
+    date: new Date().toLocaleString()
+  }
+];
+
+// ===============================
+// HOME
 // ===============================
 
 app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// ===============================
+// GET ACCOUNT
+// ===============================
+
+app.get("/api/account", (req, res) => {
+  res.json({
+    success: true,
+    user: {
+      name: user.name,
+      accountNumber: user.accountNumber,
+      balance: user.balance
+    },
+    transactions
+  });
+});
+
+// ===============================
+// ADD MONEY
+// ===============================
+
+app.post("/api/deposit", (req, res) => {
+
+  const amount = Number(req.body.amount);
+
+  if (!amount || amount <= 0) {
+    return res.status(400).json({
+      success: false,
+      message: "Shigar da adadin kuɗi daidai."
+    });
+  }
+
+  user.balance += amount;
+
+  transactions.unshift({
+    type: "credit",
+    name: "Add Money",
+    description: "An ƙara kuɗi",
+    amount: amount,
+    date: new Date().toLocaleString()
+  });
 
   res.json({
     success: true,
-    message: "MMA Bank server yana aiki."
+    message: "An ƙara kuɗi cikin wallet.",
+    balance: user.balance
   });
-
 });
-
 
 // ===============================
 // AIRTIME
 // ===============================
 
-app.post("/api/airtime", async (req, res) => {
+app.post("/api/airtime", (req, res) => {
 
-  try {
+  const {
+    phone,
+    network,
+    amount
+  } = req.body;
 
-    const {
-      phone,
-      network,
-      amount
-    } = req.body;
+  const airtimeAmount = Number(amount);
 
-
-    // ===============================
-    // VALIDATION
-    // ===============================
-
-    if (!phone) {
-
-      return res.status(400).json({
-        success: false,
-        message: "Lambar waya ba ta zo ba."
-      });
-
-    }
-
-
-    if (!network) {
-
-      return res.status(400).json({
-        success: false,
-        message: "Network ba a zaɓa ba."
-      });
-
-    }
-
-
-    if (!amount) {
-
-      return res.status(400).json({
-        success: false,
-        message: "Amount ba a shigar ba."
-      });
-
-    }
-
-
-    if (!/^0\d{10}$/.test(phone)) {
-
-      return res.status(400).json({
-        success: false,
-        message: "Lambar waya ba daidai ba ce."
-      });
-
-    }
-
-
-    const airtimeAmount =
-      Number(amount);
-
-
-    if (
-      !Number.isFinite(airtimeAmount) ||
-      airtimeAmount < 50
-    ) {
-
-      return res.status(400).json({
-        success: false,
-        message: "Amount bai dace ba."
-      });
-
-    }
-
-
-    // ===============================
-    // NETWORK → VTPASS SERVICE ID
-    // ===============================
-
-    const services = {
-
-      mtn: "mtn",
-
-      airtel: "airtel",
-
-      glo: "glo",
-
-      etisalat: "etisalat"
-
-    };
-
-
-    const serviceID =
-      services[network];
-
-
-    if (!serviceID) {
-
-      return res.status(400).json({
-        success: false,
-        message: "Network ɗin ba a tallafa masa ba."
-      });
-
-    }
-
-
-    // ===============================
-    // REQUEST ID
-    // ===============================
-
-    const requestId =
-      "MMA_" +
-      Date.now() +
-      "_" +
-      Math.floor(
-        Math.random() * 100000
-      );
-
-
-    // ===============================
-    // VTPASS REQUEST
-    // ===============================
-
-    const response = await axios.post(
-
-      "https://vtpass.com/api/pay",
-
-      {
-
-        request_id: requestId,
-
-        serviceID: serviceID,
-
-        amount: airtimeAmount,
-
-        phone: phone
-
-      },
-
-      {
-
-        auth: {
-
-          username:
-            VTPASS_USERNAME,
-
-          password:
-            VTPASS_PASSWORD
-
-        },
-
-        headers: {
-
-          "Content-Type":
-            "application/json"
-
-        },
-
-        timeout: 30000
-
-      }
-
-    );
-
-
-    const data =
-      response.data;
-
-
-    console.log(
-      "VTpass response:",
-      data
-    );
-
-
-    // ===============================
-    // CHECK SUCCESS
-    // ===============================
-
-    if (
-      data &&
-      (
-        data.code === "000" ||
-        data.response_description ===
-          "TRANSACTION SUCCESSFUL"
-      )
-    ) {
-
-      return res.json({
-
-        success: true,
-
-        message:
-          "Airtime an aika cikin nasara.",
-
-        data: data
-
-      });
-
-    }
-
-
-    // ===============================
-    // FAILED
-    // ===============================
-
+  // Check phone
+  if (!phone || phone.length < 10) {
     return res.status(400).json({
-
       success: false,
-
-      message:
-        data?.response_description ||
-        "Airtime bai yi nasara ba.",
-
-      data: data
-
+      message: "Lambar waya ba daidai ba ce."
     });
-
-
-  } catch (error) {
-
-    console.error(
-      "AIRTIME ERROR:",
-      error.response?.data ||
-      error.message
-    );
-
-
-    return res.status(500).json({
-
-      success: false,
-
-      message:
-        error.response?.data
-          ?.response_description ||
-        error.message ||
-        "An samu matsala wajen sayen Airtime."
-
-    });
-
   }
+
+  // Check network
+  if (!network) {
+    return res.status(400).json({
+      success: false,
+      message: "Da fatan zaɓi Network."
+    });
+  }
+
+  // Check amount
+  if (!airtimeAmount || airtimeAmount <= 0) {
+    return res.status(400).json({
+      success: false,
+      message: "Shigar da adadin kuɗi daidai."
+    });
+  }
+
+  // Check balance
+  if (airtimeAmount > user.balance) {
+    return res.status(400).json({
+      success: false,
+      message: "Kuɗin da ke wallet ɗinka bai isa ba!"
+    });
+  }
+
+  // Deduct money
+  user.balance -= airtimeAmount;
+
+  // Add transaction
+  transactions.unshift({
+    type: "debit",
+    name: "Airtime",
+    description: `${network} - ${phone}`,
+    amount: airtimeAmount,
+    date: new Date().toLocaleString()
+  });
+
+  res.json({
+    success: true,
+    message: "An karɓi umarnin Airtime.",
+    network,
+    phone,
+    amount: airtimeAmount,
+    balance: user.balance
+  });
+});
+
+// ===============================
+// TRANSFER
+// ===============================
+
+app.post("/api/transfer", (req, res) => {
+
+  const {
+    accountNumber,
+    amount
+  } = req.body;
+
+  const transferAmount = Number(amount);
+
+  if (!accountNumber) {
+    return res.status(400).json({
+      success: false,
+      message: "Shigar da Account Number."
+    });
+  }
+
+  if (!transferAmount || transferAmount <= 0) {
+    return res.status(400).json({
+      success: false,
+      message: "Shigar da adadin kuɗi daidai."
+    });
+  }
+
+  if (transferAmount > user.balance) {
+    return res.status(400).json({
+      success: false,
+      message: "Kuɗin da ke wallet bai isa ba."
+    });
+  }
+
+  // Deduct
+  user.balance -= transferAmount;
+
+  transactions.unshift({
+    type: "debit",
+    name: "Transfer",
+    description: ` zuwa ${accountNumber}`,
+    amount: transferAmount,
+    date: new Date().toLocaleString()
+  });
+
+  res.json({
+    success: true,
+    message: "An kammala transfer na DEMO.",
+    accountNumber,
+    amount: transferAmount,
+    balance: user.balance
+  });
+});
+
+// ===============================
+// WITHDRAW
+// ===============================
+
+app.post("/api/withdraw", (req, res) => {
+
+  const amount = Number(req.body.amount);
+
+  if (!amount || amount <= 0) {
+    return res.status(400).json({
+      success: false,
+      message: "Shigar da adadin kuɗi daidai."
+    });
+  }
+
+  if (amount > user.balance) {
+    return res.status(400).json({
+      success: false,
+      message: "Kuɗin da ke wallet bai isa ba."
+    });
+  }
+
+  user.balance -= amount;
+
+  transactions.unshift({
+    type: "debit",
+    name: "Withdraw",
+    description: "Cire kuɗi",
+    amount: amount,
+    date: new Date().toLocaleString()
+  });
+
+  res.json({
+    success: true,
+    message: "An yi Withdraw na DEMO.",
+    balance: user.balance
+  });
+});
+
+// ===============================
+// TRANSACTIONS
+// ===============================
+
+app.get("/api/transactions", (req, res) => {
+
+  res.json({
+    success: true,
+    transactions
+  });
 
 });
 
-
 // ===============================
-// SERVER
+// START SERVER
 // ===============================
 
-const PORT =
-  process.env.PORT || 3000;
-
-
-app.listen(
-  PORT,
-  () => {
-
-    console.log(
-      `MMA Bank server yana aiki a port ${PORT}`
-    );
-
-  }
-);
+app.listen(PORT, () => {
+  console.log(`MMA Bank server yana gudana a http://localhost:${PORT}`);
+});
