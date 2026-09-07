@@ -696,21 +696,26 @@ function buyAirtime(event) {
 </script>
   
 
-<!-- AIRTIME MODAL -->
-<!-- AIRTIME MODAL -->
+
+        <!-- AIRTIME MODAL -->
 <div id="airtimeModal" class="modal">
 
   <div class="modal-content">
 
     <span class="close-btn"
-          onclick="closeModal('airtimeModal')">×</span>
+          onclick="closeModal('airtimeModal')">
+      ×
+    </span>
 
     <h3>📱 Sayi Airtime</h3>
 
     <form id="airtimeForm">
 
       <div class="form-group">
-        <label>Lambar Waya</label>
+
+        <label for="airtimePhone">
+          Lambar Waya
+        </label>
 
         <input
           id="airtimePhone"
@@ -719,22 +724,51 @@ function buyAirtime(event) {
           maxlength="11"
           required
         >
+
       </div>
 
-      <div class="form-group">
-        <label>Network</label>
 
-        <select id="airtimeNetwork" required>
-          <option value="">-- Zaɓi Network --</option>
-          <option value="mtn">MTN</option>
-          <option value="airtel">Airtel</option>
-          <option value="glo">Glo</option>
-          <option value="etisalat">9mobile</option>
+      <div class="form-group">
+
+        <label for="airtimeNetwork">
+          Network
+        </label>
+
+        <select
+          id="airtimeNetwork"
+          required
+        >
+
+          <option value="">
+            -- Zaɓi Network --
+          </option>
+
+          <option value="mtn">
+            MTN
+          </option>
+
+          <option value="airtel">
+            Airtel
+          </option>
+
+          <option value="glo">
+            Glo
+          </option>
+
+          <option value="etisalat">
+            9mobile
+          </option>
+
         </select>
+
       </div>
 
+
       <div class="form-group">
-        <label>Adadin Kuɗi (₦)</label>
+
+        <label for="airtimeAmount">
+          Adadin Kuɗi (₦)
+        </label>
 
         <input
           id="airtimeAmount"
@@ -743,21 +777,27 @@ function buyAirtime(event) {
           placeholder="100"
           required
         >
+
       </div>
+
 
       <button
         type="submit"
         class="submit-btn"
         id="airtimeButton">
+
         📱 Sayi Airtime
+
       </button>
 
-      <div id="airtimeMessage"
-           style="
-           margin-top:15px;
-           font-weight:bold;
-           text-align:center;
-           ">
+
+      <div
+        id="airtimeMessage"
+        style="
+          margin-top:15px;
+          text-align:center;
+          font-weight:bold;
+        ">
       </div>
 
     </form>
