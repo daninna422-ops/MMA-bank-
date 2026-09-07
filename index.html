@@ -289,79 +289,101 @@ body{
 
   cursor: pointer;
   }
+ /* =====================================
+   FINAL MOBILE LAYOUT FIX
+===================================== */
 
-/* ================================
-   MOBILE RESPONSIVE FIX
-================================ */
+* {
+  box-sizing: border-box;
+}
 
 html,
 body {
   width: 100%;
-  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-}
-
-/* Babban dashboard ya cika screen */
-.header {
-  width: 100%;
-  max-width: 100%;
-}
-
-/* Services */
+/* SERVICES SECTION */
 .services {
-  width: 100%;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  padding: 0 20px !important;
+  margin: 0 !important;
 }
 
-/* Transactions */
+/* EACH SERVICE */
+.service {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 16px 5px !important;
+  background: #fff !important;
+  border-radius: 18px !important;
+}
+
+/* TRANSACTIONS */
 .transactions {
-  width: auto;
-  margin-left: 20px;
-  margin-right: 20px;
+  display: block !important;
+  width: calc(100% - 40px) !important;
+  max-width: none !important;
+  margin: 0 20px 25px !important;
 }
 
-/* Mobile */
+/* =====================================
+   MOBILE
+===================================== */
+
 @media (max-width: 600px) {
 
-  .header {
+  body {
     width: 100%;
-    padding: 20px;
+    overflow-x: hidden;
+  }
+
+  .header {
+    width: 100% !important;
   }
 
   .services {
-    grid-template-columns: repeat(4, 1fr);
-    padding: 0 20px;
-    gap: 10px;
+    width: 100% !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    padding: 0 20px !important;
   }
 
   .service {
-    width: 100%;
-    min-width: 0;
-    padding: 14px 4px;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 120px !important;
+    padding: 12px 3px !important;
   }
 
   .service-icon {
-    font-size: 23px;
+    font-size: 25px !important;
+    display: block !important;
+    margin-bottom: 8px !important;
   }
 
   .service-name {
-    font-size: 10px;
+    font-size: 11px !important;
+    white-space: normal !important;
   }
 
   .transactions {
-    width: auto;
-    margin-left: 20px;
-    margin-right: 20px;
+    width: calc(100% - 40px) !important;
+    margin: 0 20px 25px !important;
   }
-  }</style>
+                } </style>
 </head>
 
 <body>
