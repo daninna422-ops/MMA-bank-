@@ -7,205 +7,333 @@
 <title>MMA Bank</title>
 
 <style>
-:root{
-  --blue:#0066FF;
-  --darkblue:#0044B3;
-  --light:#F4F7FE;
-  --white:#FFFFFF;
-  --text:#202B55;
-  --gray:#8993AD;
-  --green:#05B989;
-  --red:#E94F45;
-}
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,Segoe UI,sans-serif;
-}
-
-body{
-  background:var(--light);
-  color:var(--text);
-}
-
-/* HEADER */
-.header{
-  background:linear-gradient(135deg,#0066FF,#0044B3);
-  color:white;
-  padding:20px;
-  border-bottom-left-radius:28px;
-  border-bottom-right-radius:28px;
-}
-
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo{
-  font-size:20px;
-  font-weight:bold;
-}
-
-.profile{
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  background:white;
-  color:#0066FF;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-}
-
-/* WELCOME */
-.welcome{
-  margin-top:20px;
-}
-
-.welcome small{
-  opacity:.8;
-}
-
-.welcome h2{
-  margin-top:5px;
-}
-
-/* BALANCE */
-.balance-card{
-  margin-top:18px;
-  background:rgba(255,255,255,.14);
-  border:1px solid rgba(255,255,255,.2);
-  padding:20px;
-  border-radius:20px;
-}
-
-.balance-title{
-  font-size:13px;
-  opacity:.8;
-}
-
-.balance{
-  font-size:30px;
-  font-weight:bold;
-  margin:8px 0 18px;
-}
-
-.account{
-  font-size:12px;
-  opacity:.85;
-}
-
-/* QUICK ACTIONS */
-.quick{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:15px;
-}
-
-.quick button{
-  border:none;
-  border-radius:12px;
-  padding:12px 5px;
-  background:rgba(255,255,255,.18);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-/* SERVICES */
-.title{
-  margin:22px 20px 12px;
-  font-size:17px;
-  font-weight:bold;
-}
-
-.services{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  padding:0 20px;
-}
-
-.service{
-  background:white;
-  border-radius:15px;
-  padding:14px 5px;
-  text-align:center;
-  box-shadow:0 4px 12px rgba(0,0,0,.04);
-  cursor:pointer;
-}
-
-.service-icon{
-  font-size:23px;
-  display:block;
-  margin-bottom:6px;
-}
-
-.service-name{
-  font-size:10px;
-  font-weight:bold;
-  color:var(--gray);
-}
-
-/* TRANSACTIONS */
-.transactions{
-  background:white;
-  margin:0 20px 25px;
-  border-radius:18px;
-  padding:15px;
-}
-
-.transaction{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:13px 0;
-  border-bottom:1px solid #eee;
-}
-
-.transaction:last-child{
-  border-bottom:none;
-}
-
-.tx-name{
-  font-weight:bold;
-  font-size:14px;
-}
-
-.tx-date{
-  font-size:11px;
-  color:var(--gray);
-  margin-top:3px;
-}
-
-.in{
-  color:var(--green);
-  font-weight:bold;
-}
-
-.out{
-  color:var(--red);
-  font-weight:bold;
-}
 
 /* =========================
-   ALL MODALS
+   RESET
+========================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, "Segoe UI", sans-serif;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: #F4F7FE;
+  color: #202B55;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  width: 100%;
+  background: linear-gradient(135deg, #0066FF, #0044B3);
+  color: white;
+
+  padding: 25px 20px 35px;
+
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.profile {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+
+  background: white;
+  color: #0066FF;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome {
+  margin-top: 35px;
+}
+
+.welcome small {
+  font-size: 16px;
+  opacity: 0.85;
+}
+
+.welcome h2 {
+  margin-top: 8px;
+  font-size: 34px;
+}
+
+
+/* =========================
+   BALANCE CARD
+========================= */
+
+.balance-card {
+  margin-top: 25px;
+
+  background: rgba(255,255,255,0.14);
+
+  border: 1px solid rgba(255,255,255,0.25);
+
+  padding: 25px;
+
+  border-radius: 25px;
+
+  backdrop-filter: blur(5px);
+}
+
+.balance-title {
+  font-size: 17px;
+  opacity: 0.85;
+}
+
+.balance {
+  font-size: 42px;
+  font-weight: bold;
+
+  margin: 10px 0 20px;
+}
+
+.account {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+
+/* =========================
+   QUICK BUTTONS
+========================= */
+
+.quick {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+
+  margin-top: 20px;
+}
+
+.quick button {
+  border: none;
+
+  border-radius: 16px;
+
+  padding: 15px 5px;
+
+  background: rgba(255,255,255,0.18);
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.quick button:hover {
+  background: rgba(255,255,255,0.28);
+}
+
+.quick button:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.title {
+  margin: 30px 20px 15px;
+
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+/* =========================
+   SERVICES
+========================= */
+
+.services {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+
+  padding: 0 20px;
+}
+
+.service {
+  width: 100%;
+  min-width: 0;
+
+  height: 145px;
+
+  background: white;
+
+  border-radius: 22px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 18px rgba(0,0,0,0.04);
+
+  transition: 0.2s;
+}
+
+.service:hover {
+  transform: translateY(-3px);
+}
+
+.service:active {
+  transform: scale(0.96);
+}
+
+.service-icon {
+  display: block;
+
+  font-size: 38px;
+
+  margin-bottom: 10px;
+}
+
+.service-name {
+  font-size: 14px;
+
+  font-weight: bold;
+
+  color: #8993AD;
+}
+
+
+/* =========================
+   TRANSACTIONS
+========================= */
+
+.transactions {
+  width: calc(100% - 40px);
+
+  margin: 0 20px 35px;
+
+  background: white;
+
+  border-radius: 22px;
+
+  padding: 15px 20px;
+
+  box-shadow: 0 5px 18px rgba(0,0,0,0.04);
+}
+
+.transaction {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 18px 0;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.transaction:last-child {
+  border-bottom: none;
+}
+
+.tx-name {
+  font-size: 16px;
+
+  font-weight: bold;
+}
+
+.tx-date {
+  font-size: 12px;
+
+  color: #8993AD;
+
+  margin-top: 5px;
+}
+
+.in {
+  color: #05B989;
+
+  font-weight: bold;
+
+  font-size: 16px;
+}
+
+.out {
+  color: #E94F45;
+
+  font-weight: bold;
+
+  font-size: 16px;
+}
+
+
+/* =========================
+   MODAL
 ========================= */
 
 .modal {
   display: none;
+
   position: fixed;
+
   inset: 0;
+
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 99999;
+
+  background: rgba(0,0,0,0.60);
+
+  z-index: 9999;
 
   align-items: center;
   justify-content: center;
@@ -215,47 +343,80 @@ body{
 
 .modal-content {
   width: 100%;
-  max-width: 500px;
 
-  background: #fff;
-  border-radius: 25px;
+  max-width: 520px;
 
-  padding: 25px;
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: white;
+
+  border-radius: 28px;
+
+  padding: 30px 25px;
 
   position: relative;
-  box-sizing: border-box;
 
-  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
 }
+
+
+/* =========================
+   CLOSE BUTTON
+========================= */
 
 .close-btn {
   position: absolute;
-  top: 12px;
-  right: 20px;
 
-  font-size: 32px;
+  top: 15px;
+  right: 22px;
+
+  font-size: 36px;
+
   color: #999;
 
   cursor: pointer;
+
+  line-height: 1;
 }
+
+.close-btn:hover {
+  color: #333;
+}
+
+
+/* =========================
+   MODAL TITLE
+========================= */
 
 .modal-content h3 {
   color: #0066FF;
-  font-size: 28px;
-  margin: 5px 0 20px;
+
+  font-size: 30px;
+
+  margin: 5px 40px 25px 0;
 }
 
+
+/* =========================
+   FORM
+========================= */
+
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
 
+  font-size: 16px;
+
   font-weight: bold;
+
   color: #203B72;
 
-  margin-bottom: 8px;
+  margin-bottom: 9px;
 }
 
 .form-group input,
@@ -264,14 +425,26 @@ body{
 
   padding: 16px;
 
-  border: 2px solid #dce3f0;
+  border: 2px solid #DCE3F0;
+
   border-radius: 18px;
 
-  font-size: 18px;
+  font-size: 17px;
 
-  box-sizing: border-box;
   outline: none;
+
+  background: white;
 }
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #0066FF;
+}
+
+
+/* =========================
+   SUBMIT BUTTON
+========================= */
 
 .submit-btn {
   width: 100%;
@@ -279,323 +452,514 @@ body{
   padding: 17px;
 
   border: none;
+
   border-radius: 18px;
 
   background: #0066FF;
+
   color: white;
 
   font-size: 18px;
+
   font-weight: bold;
 
   cursor: pointer;
-  }
- /* =====================================
-   FINAL MOBILE LAYOUT FIX
-===================================== */
 
-* {
-  box-sizing: border-box;
+  transition: 0.2s;
 }
 
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+.submit-btn:hover {
+  background: #0055D6;
 }
 
-/* SERVICES SECTION */
-.services {
-  width: 100% !important;
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 12px !important;
-  padding: 0 20px !important;
-  margin: 0 !important;
+.submit-btn:active {
+  transform: scale(0.98);
 }
 
-/* EACH SERVICE */
-.service {
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  padding: 16px 5px !important;
-  background: #fff !important;
-  border-radius: 18px !important;
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message {
+  display: none;
+
+  margin-top: 15px;
+
+  padding: 12px;
+
+  border-radius: 12px;
+
+  font-weight: bold;
+
+  text-align: center;
 }
 
-/* TRANSACTIONS */
-.transactions {
-  display: block !important;
-  width: calc(100% - 40px) !important;
-  max-width: none !important;
-  margin: 0 20px 25px !important;
+.message.success {
+  display: block;
+
+  background: #E5FAF3;
+
+  color: #05B989;
 }
 
-/* =====================================
+.message.error {
+  display: block;
+
+  background: #FFF0EF;
+
+  color: #E94F45;
+}
+
+
+/* =========================
    MOBILE
-===================================== */
+========================= */
 
 @media (max-width: 600px) {
 
-  body {
-    width: 100%;
-    overflow-x: hidden;
+  .header {
+    padding: 22px 20px 30px;
   }
 
-  .header {
-    width: 100% !important;
+  .logo {
+    font-size: 20px;
+  }
+
+  .welcome {
+    margin-top: 30px;
+  }
+
+  .welcome h2 {
+    font-size: 32px;
+  }
+
+  .balance-card {
+    padding: 22px;
+  }
+
+  .balance {
+    font-size: 38px;
+  }
+
+  .quick {
+    gap: 10px;
+  }
+
+  .quick button {
+    font-size: 14px;
+  }
+
+  .title {
+    font-size: 22px;
   }
 
   .services {
-    width: 100% !important;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    gap: 10px !important;
-    padding: 0 20px !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 10px;
+
+    padding: 0 20px;
   }
 
   .service {
-    width: 100% !important;
-    min-width: 0 !important;
-    height: 120px !important;
-    padding: 12px 3px !important;
+    height: 135px;
+
+    border-radius: 20px;
   }
 
   .service-icon {
-    font-size: 25px !important;
-    display: block !important;
-    margin-bottom: 8px !important;
+    font-size: 32px;
   }
 
   .service-name {
-    font-size: 11px !important;
-    white-space: normal !important;
+    font-size: 12px;
   }
 
   .transactions {
-    width: calc(100% - 40px) !important;
-    margin: 0 20px 25px !important;
+    width: calc(100% - 40px);
+
+    margin-left: 20px;
+    margin-right: 20px;
   }
-                } </style>
+
+  .modal {
+    padding: 15px;
+  }
+
+  .modal-content {
+    padding: 28px 20px;
+    border-radius: 25px;
+  }
+
+  .modal-content h3 {
+    font-size: 27px;
+  }
+}
+
+</style>
 </head>
+
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
+
+<!-- =================================================
+     HEADER
+================================================= -->
+
+<header class="header">
 
   <div class="top">
-    <div class="logo">🏦 MMA BANK</div>
-    <div class="profile">M</div>
+
+    <div class="logo">
+      🏦 MMA BANK
+    </div>
+
+    <div class="profile">
+      M
+    </div>
+
   </div>
 
+
   <div class="welcome">
-    <small>Barka da zuwa</small>
-    <h2>Mubarak 👋</h2>
+
+    <small>
+      Barka da zuwa
+    </small>
+
+    <h2>
+      Mubarak 👋
+    </h2>
+
   </div>
+
+
+  <!-- BALANCE -->
 
   <div class="balance-card">
 
     <div class="balance-title">
       Wallet Balance
     </div>
-<div class="balance" id="userBalance">
-  ₦1,000.00
-</div>
+
+    <div
+      class="balance"
+      id="userBalance"
+    >
+      ₦1,000.00
+    </div>
 
     <div class="account">
       Account Number: 8123456789
     </div>
 
+
+    <!-- QUICK ACTIONS -->
+
     <div class="quick">
 
-      <button onclick="openModal('deposit')">
-        📥<br>Add Money
+      <button
+        onclick="openModal('depositModal')"
+      >
+        📥
+        <br>
+        Add Money
       </button>
 
-      <button onclick="openModal('transfer')">
-        💸<br>Transfer
+
+      <button
+        onclick="openModal('transferModal')"
+      >
+        💸
+        <br>
+        Transfer
       </button>
 
-      <button onclick="openModal('withdraw')">
-        📤<br>Withdraw
+
+      <button
+        onclick="openModal('withdrawModal')"
+      >
+        📤
+        <br>
+        Withdraw
       </button>
 
     </div>
 
   </div>
-</div>
+
+</header>
 
 
-<!-- SERVICES -->
+
+<!-- =================================================
+     SERVICES
+================================================= -->
+
 <div class="title">
   Ayyukan Banki
 </div>
 
+
 <div class="services">
 
-  <div class="service" onclick="openModal('transfer')">
-    <span class="service-icon">💸</span>
-    <span class="service-name">Transfer</span>
+
+  <!-- TRANSFER -->
+
+  <div
+    class="service"
+    onclick="openModal('transferModal')"
+  >
+
+    <span class="service-icon">
+      💸
+    </span>
+
+    <span class="service-name">
+      Transfer
+    </span>
+
   </div>
 
-  <div class="service" onclick="openModal('deposit')">
-    <span class="service-icon">📥</span>
-    <span class="service-name">Deposit</span>
+
+  <!-- DEPOSIT -->
+
+  <div
+    class="service"
+    onclick="openModal('depositModal')"
+  >
+
+    <span class="service-icon">
+      📥
+    </span>
+
+    <span class="service-name">
+      Deposit
+    </span>
+
   </div>
 
-  <div class="service" onclick="openModal('withdraw')">
-    <span class="service-icon">📤</span>
-    <span class="service-name">Withdraw</span>
+
+  <!-- WITHDRAW -->
+
+  <div
+    class="service"
+    onclick="openModal('withdrawModal')"
+  >
+
+    <span class="service-icon">
+      📤
+    </span>
+
+    <span class="service-name">
+      Withdraw
+    </span>
+
   </div>
 
-  <div class="service" onclick="openModal('airtimeModal')">
-    <span class="service-icon">📱</span>
-    <span class="service-name">Airtime</span>
+
+  <!-- AIRTIME -->
+
+  <div
+    class="service"
+    onclick="openModal('airtimeModal')"
+  >
+
+    <span class="service-icon">
+      📱
+    </span>
+
+    <span class="service-name">
+      Airtime
+    </span>
+
   </div>
 
-  <div class="service">
-    <span class="service-icon">📶</span>
-    <span class="service-name">Data</span>
+
+  <!-- DATA -->
+
+  <div
+    class="service"
+    onclick="demoMessage('Data')"
+  >
+
+    <span class="service-icon">
+      📶
+    </span>
+
+    <span class="service-name">
+      Data
+    </span>
+
   </div>
 
-  <div class="service">
-    <span class="service-icon">💡</span>
-    <span class="service-name">Electricity</span>
+
+  <!-- ELECTRICITY -->
+
+  <div
+    class="service"
+    onclick="demoMessage('Electricity')"
+  >
+
+    <span class="service-icon">
+      💡
+    </span>
+
+    <span class="service-name">
+      Electricity
+    </span>
+
   </div>
 
-  <div class="service">
-    <span class="service-icon">📺</span>
-    <span class="service-name">TV</span>
+
+  <!-- TV -->
+
+  <div
+    class="service"
+    onclick="demoMessage('TV')"
+  >
+
+    <span class="service-icon">
+      📺
+    </span>
+
+    <span class="service-name">
+      TV
+    </span>
+
   </div>
 
-  <div class="service">
-    <span class="service-icon">💳</span>
-    <span class="service-name">Cards</span>
+
+  <!-- CARDS -->
+
+  <div
+    class="service"
+    onclick="demoMessage('Cards')"
+  >
+
+    <span class="service-icon">
+      💳
+    </span>
+
+    <span class="service-name">
+      Cards
+    </span>
+
   </div>
 
-  <div class="service">
-    <span class="service-icon">💰</span>
-    <span class="service-name">Savings</span>
+
+  <!-- SAVINGS -->
+
+  <div
+    class="service"
+    onclick="demoMessage('Savings')"
+  >
+
+    <span class="service-icon">
+      💰
+    </span>
+
+    <span class="service-name">
+      Savings
+    </span>
+
   </div>
 
-  <div class="service">
-    <span class="service-icon">🏦</span>
-    <span class="service-name">Loan</span>
+
+  <!-- LOAN -->
+
+  <div
+    class="service"
+    onclick="demoMessage('Loan')"
+  >
+
+    <span class="service-icon">
+      🏦
+    </span>
+
+    <span class="service-name">
+      Loan
+    </span>
+
   </div>
 
-  <div class="service">
-    <span class="service-icon">🎧</span>
-    <span class="service-name">Support</span>
+
+  <!-- SUPPORT -->
+
+  <div
+    class="service"
+    onclick="demoMessage('Support')"
+  >
+
+    <span class="service-icon">
+      🎧
+    </span>
+
+    <span class="service-name">
+      Support
+    </span>
+
   </div>
+
 
 </div>
 
-  
-  
 
 
+<!-- =================================================
+     RECENT TRANSACTIONS
+================================================= -->
 
-<!-- RECENT TRANSACTIONS -->
 <div class="title">
   Recent Transactions
 </div>
 
-<div class="transactions">
+
+<div
+  class="transactions"
+  id="transactions"
+>
 
   <div class="transaction">
+
     <div>
-      <div class="tx-name">Babu Transaction</div>
-      <div class="tx-date">Babu mu'amala</div>
+
+      <div class="tx-name">
+        Babu Transaction
+      </div>
+
+      <div class="tx-date">
+        Babu mu'amala
+      </div>
+
     </div>
-    <div class="in">+₦0.00</div>
+
+    <div class="in">
+      +₦0.00
+    </div>
+
   </div>
+
 
   <div class="transaction">
+
     <div>
-      <div class="tx-name">Babu Transaction</div>
-      <div class="tx-date">Babu mu'amala</div>
+
+      <div class="tx-name">
+        Babu Transaction
+      </div>
+
+      <div class="tx-date">
+        Babu mu'amala
+      </div>
+
     </div>
-    <div class="out">-₦0.00</div>
-  </div>
 
-</div>
-
-
-<!-- TRANSFER MODAL -->
-<div class="modal" id="transfer">
-
-  <div class="modal-box">
-
-    <span class="close" onclick="closeModal('transfer')">×</span>
-
-    <h3>💸 Transfer Money</h3>
-
-    <input class="input"
-           type="number"
-           placeholder="Account Number">
-
-    <input class="input"
-           type="number"
-           placeholder="Amount ₦">
-
-    <button class="submit"
-            onclick="demoMessage()">
-      Continue
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- DEPOSIT MODAL -->
-<div class="modal" id="deposit">
-
-  <div class="modal-box">
-
-    <span class="close" onclick="closeModal('deposit')">×</span>
-
-    <h3>📥 Add Money</h3>
-
-    <input class="input"
-           type="number"
-           placeholder="Amount ₦">
-
-    <button class="submit"
-            onclick="demoMessage()">
-      Continue
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- WITHDRAW MODAL -->
-<div class="modal" id="withdraw">
-
-  <div class="modal-box">
-
-    <span class="close" onclick="closeModal('withdraw')">×</span>
-
-    <h3>📤 Withdraw Money</h3>
-
-    <input class="input"
-           type="number"
-           placeholder="Amount ₦">
-
-    <button class="submit"
-            onclick="demoMessage()">
-      Continue
-    </button>
+    <div class="out">
+      -₦0.00
+    </div>
 
   </div>
 
@@ -603,125 +967,45 @@ body {
 
 
 
+<!-- =================================================
+     TRANSFER MODAL
+================================================= -->
 
-<script>
-
-function openModal(id) {
-  const modal = document.getElementById(id);
-
-  if (modal) {
-    modal.style.display = "flex";
-  }
-}
-
-function closeModal(id) {
-  const modal = document.getElementById(id);
-
-  if (modal) {
-    modal.style.display = "none";
-  }
-}
-
-function demoMessage() {
-  alert(
-    "Wannan sabis ɗin yana cikin DEMO.\n\n" +
-    "Za mu haɗa shi da backend daga baya."
-  );
-}
-
-function buyAirtime(event) {
-
-  event.preventDefault();
-
-  const phone =
-    document.getElementById("airtimePhone").value;
-
-  const network =
-    document.getElementById("airtimeNetwork").value;
-
-  const amount =
-    parseFloat(
-      document.getElementById("airtimeAmount").value
-    );
-
-  const balanceEl =
-    document.getElementById("userBalance");
-
-  if (!network) {
-    alert("Da fatan zaɓi Network.");
-    return;
-  }
-
-  if (!phone) {
-    alert("Da fatan shigar da lambar waya.");
-    return;
-  }
-
-  if (!amount || amount <= 0) {
-    alert("Da fatan shigar da adadin kuɗi.");
-    return;
-  }
-
-  const currentBalance =
-    parseFloat(
-      balanceEl.innerText
-        .replace("₦", "")
-        .replace(/,/g, "")
-    );
-
-  if (amount > currentBalance) {
-    alert("Kuɗin da ke wallet ɗinka bai isa ba!");
-    return;
-  }
-
-  const newBalance =
-    currentBalance - amount;
-
-  balanceEl.innerText =
-    "₦" +
-    newBalance.toLocaleString("en-US", {
-      minimumFractionDigits: 2
-    });
-
-  alert(
-    "An karɓi umarnin Airtime!\n\n" +
-    "Network: " + network + "\n" +
-    "Lamba: " + phone + "\n" +
-    "Adadi: ₦" + amount.toLocaleString()
-  );
-
-  closeModal("airtimeModal");
-}
-
-</script>
-  
-
-
-        <!-- AIRTIME MODAL -->
-<div id="airtimeModal" class="modal">
+<div
+  class="modal"
+  id="transferModal"
+>
 
   <div class="modal-content">
 
-    <span class="close-btn"
-          onclick="closeModal('airtimeModal')">
+    <span
+      class="close-btn"
+      onclick="closeModal('transferModal')"
+    >
       ×
     </span>
 
-    <h3>📱 Sayi Airtime</h3>
 
-    <form id="airtimeForm">
+    <h3>
+      💸 Transfer Money
+    </h3>
+
+
+    <form
+      onsubmit="transferMoney(event)"
+    >
 
       <div class="form-group">
 
-        <label for="airtimePhone">
-          Lambar Waya
+        <label>
+          Account Number
         </label>
 
         <input
-          id="airtimePhone"
-          type="tel"
-          placeholder="08012345678"
-          maxlength="11"
+          id="transferAccount"
+          type="text"
+          inputmode="numeric"
+          placeholder="8123456789"
           required
         >
 
@@ -730,7 +1014,228 @@ function buyAirtime(event) {
 
       <div class="form-group">
 
-        <label for="airtimeNetwork">
+        <label>
+          Adadin Kuɗi (₦)
+        </label>
+
+        <input
+          id="transferAmount"
+          type="number"
+          min="1"
+          placeholder="100"
+          required
+        >
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="submit-btn"
+      >
+        💸 Transfer
+      </button>
+
+
+      <div
+        id="transferMessage"
+        class="message"
+      ></div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+<!-- =================================================
+     DEPOSIT MODAL
+================================================= -->
+
+<div
+  class="modal"
+  id="depositModal"
+>
+
+  <div class="modal-content">
+
+    <span
+      class="close-btn"
+      onclick="closeModal('depositModal')"
+    >
+      ×
+    </span>
+
+
+    <h3>
+      📥 Add Money
+    </h3>
+
+
+    <form
+      onsubmit="depositMoney(event)"
+    >
+
+      <div class="form-group">
+
+        <label>
+          Adadin Kuɗi (₦)
+        </label>
+
+        <input
+          id="depositAmount"
+          type="number"
+          min="1"
+          placeholder="1000"
+          required
+        >
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="submit-btn"
+      >
+        📥 Add Money
+      </button>
+
+
+      <div
+        id="depositMessage"
+        class="message"
+      ></div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+<!-- =================================================
+     WITHDRAW MODAL
+================================================= -->
+
+<div
+  class="modal"
+  id="withdrawModal"
+>
+
+  <div class="modal-content">
+
+    <span
+      class="close-btn"
+      onclick="closeModal('withdrawModal')"
+    >
+      ×
+    </span>
+
+
+    <h3>
+      📤 Withdraw Money
+    </h3>
+
+
+    <form
+      onsubmit="withdrawMoney(event)"
+    >
+
+      <div class="form-group">
+
+        <label>
+          Adadin Kuɗi (₦)
+        </label>
+
+        <input
+          id="withdrawAmount"
+          type="number"
+          min="1"
+          placeholder="100"
+          required
+        >
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="submit-btn"
+      >
+        📤 Withdraw
+      </button>
+
+
+      <div
+        id="withdrawMessage"
+        class="message"
+      ></div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+<!-- =================================================
+     AIRTIME MODAL
+================================================= -->
+
+<div
+  class="modal"
+  id="airtimeModal"
+>
+
+  <div class="modal-content">
+
+    <span
+      class="close-btn"
+      onclick="closeModal('airtimeModal')"
+    >
+      ×
+    </span>
+
+
+    <h3>
+      📱 Sayi Airtime
+    </h3>
+
+
+    <form
+      onsubmit="buyAirtime(event)"
+    >
+
+
+      <!-- PHONE -->
+
+      <div class="form-group">
+
+        <label>
+          Lambar Waya
+        </label>
+
+        <input
+          id="airtimePhone"
+          type="tel"
+          inputmode="numeric"
+          maxlength="11"
+          placeholder="08012345678"
+          required
+        >
+
+      </div>
+
+
+      <!-- NETWORK -->
+
+      <div class="form-group">
+
+        <label>
           Network
         </label>
 
@@ -743,19 +1248,19 @@ function buyAirtime(event) {
             -- Zaɓi Network --
           </option>
 
-          <option value="mtn">
+          <option value="MTN">
             MTN
           </option>
 
-          <option value="airtel">
+          <option value="Airtel">
             Airtel
           </option>
 
-          <option value="glo">
+          <option value="Glo">
             Glo
           </option>
 
-          <option value="etisalat">
+          <option value="9mobile">
             9mobile
           </option>
 
@@ -764,9 +1269,11 @@ function buyAirtime(event) {
       </div>
 
 
+      <!-- AMOUNT -->
+
       <div class="form-group">
 
-        <label for="airtimeAmount">
+        <label>
           Adadin Kuɗi (₦)
         </label>
 
@@ -781,49 +1288,68 @@ function buyAirtime(event) {
       </div>
 
 
+      <!-- BUTTON -->
+
       <button
         type="submit"
         class="submit-btn"
-        id="airtimeButton">
-
+      >
         📱 Sayi Airtime
-
       </button>
 
 
       <div
         id="airtimeMessage"
-        style="
-          margin-top:15px;
-          text-align:center;
-          font-weight:bold;
-        ">
-      </div>
+        class="message"
+      ></div>
+
 
     </form>
 
   </div>
 
 </div>
-        </option>
+
+
 
 <script>
 
-function openModal(id) {
-  document.getElementById(id).style.display = "flex";
+/* =================================================
+   GLOBAL BALANCE
+================================================= */
+
+let balance = 1000;
+
+
+/* =================================================
+   FORMAT MONEY
+================================================= */
+
+function formatMoney(amount) {
+
+  return "₦" + amount.toLocaleString("en-NG", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+
 }
 
-function closeModal(id) {
-  document.getElementById(id).style.display = "none";
+
+/* =================================================
+   UPDATE BALANCE
+================================================= */
+
+function updateBalance() {
+
+  document.getElementById("userBalance").innerText =
+    formatMoney(balance);
+
 }
 
-</script><script>
 
-/*
-==================================================
-  OPEN MODAL
-==================================================
-*/
+/* =================================================
+   OPEN MODAL
+================================================= */
 
 function openModal(id) {
 
@@ -838,11 +1364,9 @@ function openModal(id) {
 }
 
 
-/*
-==================================================
-  CLOSE MODAL
-==================================================
-*/
+/* =================================================
+   CLOSE MODAL
+================================================= */
 
 function closeModal(id) {
 
@@ -857,250 +1381,457 @@ function closeModal(id) {
 }
 
 
-/*
-==================================================
-  BUY AIRTIME
-==================================================
-*/
+/* =================================================
+   CLOSE MODAL WHEN CLICK OUTSIDE
+================================================= */
 
-async function buyAirtime() {
+document.querySelectorAll(".modal").forEach(function(modal) {
 
+  modal.addEventListener("click", function(event) {
 
-  /*
-  -------------------------
-  GET VALUES
-  -------------------------
-  */
+    if (event.target === modal) {
 
-  const phone =
-    document.getElementById("airtimePhone").value.trim();
-
-  const network =
-    document.getElementById("airtimeNetwork").value;
-
-  const amount =
-    Number(
-      document.getElementById("airtimeAmount").value
-    );
-
-
-  const button =
-    document.getElementById("airtimeButton");
-
-  const message =
-    document.getElementById("airtimeMessage");
-
-
-  /*
-  -------------------------
-  CLEAR MESSAGE
-  -------------------------
-  */
-
-  message.innerText = "";
-
-
-  /*
-  -------------------------
-  PHONE CHECK
-  -------------------------
-  */
-
-  const phoneRegex = /^0[789][01]\d{8}$/;
-
-  if (!phoneRegex.test(phone)) {
-
-    message.innerText =
-      "❌ Shigar da lambar waya mai kyau.";
-
-    return;
-
-  }
-
-
-  /*
-  -------------------------
-  NETWORK CHECK
-  -------------------------
-  */
-
-  if (!network) {
-
-    message.innerText =
-      "❌ Da fatan zaɓi Network.";
-
-    return;
-
-  }
-
-
-  /*
-  -------------------------
-  AMOUNT CHECK
-  -------------------------
-  */
-
-  if (!amount || amount < 50) {
-
-    message.innerText =
-      "❌ Mafi ƙarancin Airtime shine ₦50.";
-
-    return;
-
-  }
-
-
-  if (amount > 50000) {
-
-    message.innerText =
-      "❌ Adadin ya yi yawa.";
-
-    return;
-
-  }
-
-
-  /*
-  -------------------------
-  DISABLE BUTTON
-  -------------------------
-  */
-
-  button.disabled = true;
-
-  button.innerText =
-    "⏳ Ana aikawa...";
-
-
-  try {
-
-
-    /*
-    ==================================================
-      SEND TO SERVER
-    ==================================================
-    */
-
-    const response = await fetch(
-      "/api/airtime",
-      {
-
-        method: "POST",
-
-        headers: {
-
-          "Content-Type":
-            "application/json"
-
-        },
-
-        body: JSON.stringify({
-
-          phone: phone,
-
-          network: network,
-
-          amount: amount
-
-        })
-
-      }
-    );
-
-
-    const data =
-      await response.json();
-
-
-    /*
-    ==================================================
-      SERVER ERROR
-    ==================================================
-    */
-
-    if (!response.ok || !data.success) {
-
-      throw new Error(
-        data.message ||
-        "Airtime request ya kasa."
-      );
+      modal.style.display = "none";
 
     }
 
+  });
 
-    /*
-    ==================================================
-      SUCCESS
-    ==================================================
-    */
-
-    message.innerText =
-      "✅ " + data.message;
+});
 
 
-    alert(
+/* =================================================
+   ADD TRANSACTION
+================================================= */
 
-      "An karɓi Airtime request!\n\n" +
+function addTransaction(name, amount, type) {
 
-      "Network: " + network + "\n" +
-
-      "Lamba: " + phone + "\n" +
-
-      "Adadi: ₦" +
-      amount.toLocaleString()
-
-    );
+  const transactions =
+    document.getElementById("transactions");
 
 
-    /*
-    -------------------------
-    CLEAR FORM
-    -------------------------
-    */
+  const transaction =
+    document.createElement("div");
 
-    document.getElementById(
-      "airtimePhone"
-    ).value = "";
-
-    document.getElementById(
-      "airtimeNetwork"
-    ).value = "";
-
-    document.getElementById(
-      "airtimeAmount"
-    ).value = "";
+  transaction.className = "transaction";
 
 
-  } catch (error) {
+  const sign =
+    type === "in" ? "+" : "-";
 
 
-    console.error(
-      "Airtime error:",
-      error
-    );
+  transaction.innerHTML = `
+
+    <div>
+
+      <div class="tx-name">
+        ${name}
+      </div>
+
+      <div class="tx-date">
+        Yanzu
+      </div>
+
+    </div>
+
+    <div class="${type}">
+      ${sign}${formatMoney(amount)}
+    </div>
+
+  `;
 
 
-    message.innerText =
-      "❌ " + error.message;
-
-
-  } finally {
-
-
-    /*
-    -------------------------
-    ENABLE BUTTON
-    -------------------------
-    */
-
-    button.disabled = false;
-
-    button.innerText =
-      "📱 Sayi Airtime";
-
-  }
+  transactions.prepend(transaction);
 
 }
 
-</script></body>
+
+/* =================================================
+   DEPOSIT
+================================================= */
+
+function depositMoney(event) {
+
+  event.preventDefault();
+
+
+  const amount =
+    Number(
+      document.getElementById("depositAmount").value
+    );
+
+
+  if (!amount || amount <= 0) {
+
+    alert("Shigar da adadin kuɗi daidai.");
+
+    return;
+
+  }
+
+
+  balance += amount;
+
+
+  updateBalance();
+
+
+  addTransaction(
+    "Deposit",
+    amount,
+    "in"
+  );
+
+
+  alert(
+    "An ƙara kuɗi cikin wallet!\n\n" +
+    "Adadi: " +
+    formatMoney(amount) +
+    "\n\n" +
+    "Sabon Balance: " +
+    formatMoney(balance)
+  );
+
+
+  document.getElementById("depositAmount").value = "";
+
+
+  closeModal("depositModal");
+
+}
+
+
+/* =================================================
+   WITHDRAW
+================================================= */
+
+function withdrawMoney(event) {
+
+  event.preventDefault();
+
+
+  const amount =
+    Number(
+      document.getElementById("withdrawAmount").value
+    );
+
+
+  if (!amount || amount <= 0) {
+
+    alert("Shigar da adadin kuɗi daidai.");
+
+    return;
+
+  }
+
+
+  if (amount > balance) {
+
+    alert(
+      "Kuɗin da ke wallet ɗinka bai isa ba!"
+    );
+
+    return;
+
+  }
+
+
+  balance -= amount;
+
+
+  updateBalance();
+
+
+  addTransaction(
+    "Withdraw",
+    amount,
+    "out"
+  );
+
+
+  alert(
+    "An cire kuɗi daga wallet!\n\n" +
+    "Adadi: " +
+    formatMoney(amount) +
+    "\n\n" +
+    "Sabon Balance: " +
+    formatMoney(balance)
+  );
+
+
+  document.getElementById("withdrawAmount").value = "";
+
+
+  closeModal("withdrawModal");
+
+}
+
+
+/* =================================================
+   TRANSFER
+================================================= */
+
+function transferMoney(event) {
+
+  event.preventDefault();
+
+
+  const account =
+    document.getElementById(
+      "transferAccount"
+    ).value.trim();
+
+
+  const amount =
+    Number(
+      document.getElementById(
+        "transferAmount"
+      ).value
+    );
+
+
+  if (account.length < 10) {
+
+    alert(
+      "Shigar da Account Number mai kyau."
+    );
+
+    return;
+
+  }
+
+
+  if (!amount || amount <= 0) {
+
+    alert(
+      "Shigar da adadin kuɗi daidai."
+    );
+
+    return;
+
+  }
+
+
+  if (amount > balance) {
+
+    alert(
+      "Kuɗin da ke wallet ɗinka bai isa ba!"
+    );
+
+    return;
+
+  }
+
+
+  balance -= amount;
+
+
+  updateBalance();
+
+
+  addTransaction(
+    "Transfer → " + account,
+    amount,
+    "out"
+  );
+
+
+  alert(
+    "An yi Transfer na DEMO!\n\n" +
+    "Account: " + account +
+    "\n" +
+    "Adadi: " + formatMoney(amount) +
+    "\n\n" +
+    "Sabon Balance: " +
+    formatMoney(balance)
+  );
+
+
+  document.getElementById(
+    "transferAccount"
+  ).value = "";
+
+
+  document.getElementById(
+    "transferAmount"
+  ).value = "";
+
+
+  closeModal("transferModal");
+
+}
+
+
+/* =================================================
+   AIRTIME
+================================================= */
+
+function buyAirtime(event) {
+
+  event.preventDefault();
+
+
+  const phone =
+    document.getElementById(
+      "airtimePhone"
+    ).value.trim();
+
+
+  const network =
+    document.getElementById(
+      "airtimeNetwork"
+    ).value;
+
+
+  const amount =
+    Number(
+      document.getElementById(
+        "airtimeAmount"
+      ).value
+    );
+
+
+  /* CHECK PHONE */
+
+  if (!/^0[0-9]{10}$/.test(phone)) {
+
+    alert(
+      "Shigar da lambar waya mai kyau.\n" +
+      "Misali: 08012345678"
+    );
+
+    return;
+
+  }
+
+
+  /* CHECK NETWORK */
+
+  if (!network) {
+
+    alert(
+      "Da fatan zaɓi Network."
+    );
+
+    return;
+
+  }
+
+
+  /* CHECK AMOUNT */
+
+  if (!amount || amount < 50) {
+
+    alert(
+      "Mafi ƙarancin Airtime shine ₦50."
+    );
+
+    return;
+
+  }
+
+
+  /* CHECK BALANCE */
+
+  if (amount > balance) {
+
+    alert(
+      "Kuɗin da ke wallet ɗinka bai isa ba!"
+    );
+
+    return;
+
+  }
+
+
+  /* DEDUCT MONEY */
+
+  balance -= amount;
+
+
+  updateBalance();
+
+
+  /* ADD TRANSACTION */
+
+  addTransaction(
+    "Airtime - " + network,
+    amount,
+    "out"
+  );
+
+
+  /* SUCCESS */
+
+  alert(
+    "An karɓi umarnin Airtime!\n\n" +
+
+    "Network: " +
+    network +
+
+    "\n" +
+
+    "Lamba: " +
+    phone +
+
+    "\n" +
+
+    "Adadi: " +
+    formatMoney(amount) +
+
+    "\n\n" +
+
+    "Sabon Balance: " +
+    formatMoney(balance)
+  );
+
+
+  /* CLEAR */
+
+  document.getElementById(
+    "airtimePhone"
+  ).value = "";
+
+
+  document.getElementById(
+    "airtimeNetwork"
+  ).value = "";
+
+
+  document.getElementById(
+    "airtimeAmount"
+  ).value = "";
+
+
+  /* CLOSE */
+
+  closeModal("airtimeModal");
+
+}
+
+
+/* =================================================
+   DEMO SERVICES
+================================================= */
+
+function demoMessage(service) {
+
+  alert(
+    service +
+    " service ɗin yana cikin DEMO.\n\n" +
+    "Za mu haɗa shi da backend/payment API daga baya."
+  );
+
+}
+
+
+/* =================================================
+   INITIAL BALANCE
+================================================= */
+
+updateBalance();
+
+</script>
+
+</body>
 </html>
