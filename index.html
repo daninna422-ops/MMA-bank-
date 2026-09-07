@@ -290,7 +290,78 @@ body{
   cursor: pointer;
   }
 
-</style>
+/* ================================
+   MOBILE RESPONSIVE FIX
+================================ */
+
+html,
+body {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Babban dashboard ya cika screen */
+.header {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Services */
+.services {
+  width: 100%;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* Transactions */
+.transactions {
+  width: auto;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+  .header {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .services {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0 20px;
+    gap: 10px;
+  }
+
+  .service {
+    width: 100%;
+    min-width: 0;
+    padding: 14px 4px;
+  }
+
+  .service-icon {
+    font-size: 23px;
+  }
+
+  .service-name {
+    font-size: 10px;
+  }
+
+  .transactions {
+    width: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  }</style>
 </head>
 
 <body>
