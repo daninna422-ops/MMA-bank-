@@ -842,5 +842,290 @@ function closeModal(id) {
   document.getElementById(id).style.display = "none";
 }
 
+</script><script>
+
+/*
+==================================================
+  OPEN MODAL
+==================================================
+*/
+
+function openModal(id) {
+
+  const modal = document.getElementById(id);
+
+  if (modal) {
+
+    modal.style.display = "flex";
+
+  }
+
+}
+
+
+/*
+==================================================
+  CLOSE MODAL
+==================================================
+*/
+
+function closeModal(id) {
+
+  const modal = document.getElementById(id);
+
+  if (modal) {
+
+    modal.style.display = "none";
+
+  }
+
+}
+
+
+/*
+==================================================
+  BUY AIRTIME
+==================================================
+*/
+
+async function buyAirtime() {
+
+
+  /*
+  -------------------------
+  GET VALUES
+  -------------------------
+  */
+
+  const phone =
+    document.getElementById("airtimePhone").value.trim();
+
+  const network =
+    document.getElementById("airtimeNetwork").value;
+
+  const amount =
+    Number(
+      document.getElementById("airtimeAmount").value
+    );
+
+
+  const button =
+    document.getElementById("airtimeButton");
+
+  const message =
+    document.getElementById("airtimeMessage");
+
+
+  /*
+  -------------------------
+  CLEAR MESSAGE
+  -------------------------
+  */
+
+  message.innerText = "";
+
+
+  /*
+  -------------------------
+  PHONE CHECK
+  -------------------------
+  */
+
+  const phoneRegex = /^0[789][01]\d{8}$/;
+
+  if (!phoneRegex.test(phone)) {
+
+    message.innerText =
+      "❌ Shigar da lambar waya mai kyau.";
+
+    return;
+
+  }
+
+
+  /*
+  -------------------------
+  NETWORK CHECK
+  -------------------------
+  */
+
+  if (!network) {
+
+    message.innerText =
+      "❌ Da fatan zaɓi Network.";
+
+    return;
+
+  }
+
+
+  /*
+  -------------------------
+  AMOUNT CHECK
+  -------------------------
+  */
+
+  if (!amount || amount < 50) {
+
+    message.innerText =
+      "❌ Mafi ƙarancin Airtime shine ₦50.";
+
+    return;
+
+  }
+
+
+  if (amount > 50000) {
+
+    message.innerText =
+      "❌ Adadin ya yi yawa.";
+
+    return;
+
+  }
+
+
+  /*
+  -------------------------
+  DISABLE BUTTON
+  -------------------------
+  */
+
+  button.disabled = true;
+
+  button.innerText =
+    "⏳ Ana aikawa...";
+
+
+  try {
+
+
+    /*
+    ==================================================
+      SEND TO SERVER
+    ==================================================
+    */
+
+    const response = await fetch(
+      "/api/airtime",
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type":
+            "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+          phone: phone,
+
+          network: network,
+
+          amount: amount
+
+        })
+
+      }
+    );
+
+
+    const data =
+      await response.json();
+
+
+    /*
+    ==================================================
+      SERVER ERROR
+    ==================================================
+    */
+
+    if (!response.ok || !data.success) {
+
+      throw new Error(
+        data.message ||
+        "Airtime request ya kasa."
+      );
+
+    }
+
+
+    /*
+    ==================================================
+      SUCCESS
+    ==================================================
+    */
+
+    message.innerText =
+      "✅ " + data.message;
+
+
+    alert(
+
+      "An karɓi Airtime request!\n\n" +
+
+      "Network: " + network + "\n" +
+
+      "Lamba: " + phone + "\n" +
+
+      "Adadi: ₦" +
+      amount.toLocaleString()
+
+    );
+
+
+    /*
+    -------------------------
+    CLEAR FORM
+    -------------------------
+    */
+
+    document.getElementById(
+      "airtimePhone"
+    ).value = "";
+
+    document.getElementById(
+      "airtimeNetwork"
+    ).value = "";
+
+    document.getElementById(
+      "airtimeAmount"
+    ).value = "";
+
+
+  } catch (error) {
+
+
+    console.error(
+      "Airtime error:",
+      error
+    );
+
+
+    message.innerText =
+      "❌ " + error.message;
+
+
+  } finally {
+
+
+    /*
+    -------------------------
+    ENABLE BUTTON
+    -------------------------
+    */
+
+    button.disabled = false;
+
+    button.innerText =
+      "📱 Sayi Airtime";
+
+  }
+
+}
+
 </script></body>
 </html>
