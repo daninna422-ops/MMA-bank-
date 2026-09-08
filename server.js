@@ -1,270 +1,862 @@
 const express = require("express");
-const path = require("path");
+const cors = require("cors");
+const Database = require("better-sqlite3");
+const crypto = require("crypto");
+require("dotenv").config();
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Serve HTML/CSS/JS files
-app.use(express.static(path.join(__dirname, "public")));
+/*
+==================================================
+DATABASE
+==================================================
+*/
 
-// ===============================
-// DEMO USER DATA
-// ===============================
+const db = new Database("./data/mma-bank.db");
 
-let user = {
-  name: "Mubarak",
-  accountNumber: "8123456789",
-  balance: 1000
-};
+db.pragma("journal_mode = WAL");
+db.pragma("foreign_keys = ON");
 
-let transactions = [
-  {
-    type: "credit",
-    name: "Initial Balance",
-    description: "Demo wallet",
-    amount: 1000,
-    date: new Date().toLocaleString()
+/*
+==================================================
+CREATE TABLES
+==================================================
+*/
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    phone TEXT UNIQUE,
+    email TEXT UNIQUE,
+    account_number TEXT UNIQUE NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS wallets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER UNIQUE NOT NULL,
+    balance INTEGER NOT NULL DEFAULT 0,
+    currency TEXT NOT NULL DEFAULT 'NGN',
+    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY(user_id)
+      REFERENCES users(id)
+      ON DELETE CASCADE
+  );
+
+  CREATE TABLE IF NOT EXISTS transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    reference TEXT UNIQUE NOT NULL,
+
+    user_id INTEGER NOT NULL,
+
+    type TEXT NOT NULL,
+
+    amount INTEGER NOT NULL,
+
+    balance_before INTEGER NOT NULL,
+
+    balance_after INTEGER NOT NULL,
+
+    status TEXT NOT NULL DEFAULT 'SUCCESS',
+
+    description TEXT,
+
+    metadata TEXT,
+
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY(user_id)
+      REFERENCES users(id)
+      ON DELETE CASCADE
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_transactions_user
+  ON transactions(user_id);
+
+  CREATE INDEX IF NOT EXISTS idx_transactions_reference
+  ON transactions(reference);
+`);
+
+/*
+==================================================
+HELPER FUNCTIONS
+==================================================
+*/
+
+function generateReference(prefix = "MMA") {
+  return (
+    prefix +
+    "_" +
+    Date.now() +
+    "_" +
+    crypto.randomBytes(5).toString("hex")
+  );
+}
+
+
+function generateAccountNumber() {
+
+  let accountNumber;
+
+  while (true) {
+
+    accountNumber =
+      "81" +
+      Math.floor(
+        10000000 + Math.random() * 90000000
+      );
+
+    const exists = db
+      .prepare(
+        "SELECT id FROM users WHERE account_number = ?"
+      )
+      .get(accountNumber);
+
+    if (!exists) {
+      break;
+    }
   }
-];
 
-// ===============================
-// HOME
-// ===============================
+  return accountNumber;
+}
+
+
+function getUser(userId) {
+
+  return db
+    .prepare(
+      `
+      SELECT
+        id,
+        name,
+        phone,
+        email,
+        account_number,
+        created_at
+      FROM users
+      WHERE id = ?
+      `
+    )
+    .get(userId);
+}
+
+
+function getWallet(userId) {
+
+  return db
+    .prepare(
+      `
+      SELECT
+        id,
+        user_id,
+        balance,
+        currency,
+        updated_at
+      FROM wallets
+      WHERE user_id = ?
+      `
+    )
+    .get(userId);
+}
+
+
+function money(amount) {
+
+  return Number(amount).toLocaleString(
+    "en-NG",
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
+  );
+}
+
+
+/*
+==================================================
+HOME
+==================================================
+*/
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-// ===============================
-// GET ACCOUNT
-// ===============================
-
-app.get("/api/account", (req, res) => {
-  res.json({
-    success: true,
-    user: {
-      name: user.name,
-      accountNumber: user.accountNumber,
-      balance: user.balance
-    },
-    transactions
-  });
-});
-
-// ===============================
-// ADD MONEY
-// ===============================
-
-app.post("/api/deposit", (req, res) => {
-
-  const amount = Number(req.body.amount);
-
-  if (!amount || amount <= 0) {
-    return res.status(400).json({
-      success: false,
-      message: "Shigar da adadin kuɗi daidai."
-    });
-  }
-
-  user.balance += amount;
-
-  transactions.unshift({
-    type: "credit",
-    name: "Add Money",
-    description: "An ƙara kuɗi",
-    amount: amount,
-    date: new Date().toLocaleString()
-  });
 
   res.json({
     success: true,
-    message: "An ƙara kuɗi cikin wallet.",
-    balance: user.balance
+    message: "MMA Bank server yana aiki.",
+    version: "1.0.0"
   });
+
 });
 
-// ===============================
-// AIRTIME
-// ===============================
 
-app.post("/api/airtime", (req, res) => {
+/*
+==================================================
+HEALTH CHECK
+==================================================
+*/
 
-  const {
-    phone,
-    network,
-    amount
-  } = req.body;
-
-  const airtimeAmount = Number(amount);
-
-  // Check phone
-  if (!phone || phone.length < 10) {
-    return res.status(400).json({
-      success: false,
-      message: "Lambar waya ba daidai ba ce."
-    });
-  }
-
-  // Check network
-  if (!network) {
-    return res.status(400).json({
-      success: false,
-      message: "Da fatan zaɓi Network."
-    });
-  }
-
-  // Check amount
-  if (!airtimeAmount || airtimeAmount <= 0) {
-    return res.status(400).json({
-      success: false,
-      message: "Shigar da adadin kuɗi daidai."
-    });
-  }
-
-  // Check balance
-  if (airtimeAmount > user.balance) {
-    return res.status(400).json({
-      success: false,
-      message: "Kuɗin da ke wallet ɗinka bai isa ba!"
-    });
-  }
-
-  // Deduct money
-  user.balance -= airtimeAmount;
-
-  // Add transaction
-  transactions.unshift({
-    type: "debit",
-    name: "Airtime",
-    description: `${network} - ${phone}`,
-    amount: airtimeAmount,
-    date: new Date().toLocaleString()
-  });
+app.get("/api/health", (req, res) => {
 
   res.json({
     success: true,
-    message: "An karɓi umarnin Airtime.",
-    network,
-    phone,
-    amount: airtimeAmount,
-    balance: user.balance
+    server: "online",
+    database: "connected",
+    time: new Date().toISOString()
   });
+
 });
 
-// ===============================
-// TRANSFER
-// ===============================
 
-app.post("/api/transfer", (req, res) => {
+/*
+==================================================
+CREATE USER
+==================================================
+*/
 
-  const {
-    accountNumber,
-    amount
-  } = req.body;
+app.post("/api/users", (req, res) => {
 
-  const transferAmount = Number(amount);
+  try {
 
-  if (!accountNumber) {
-    return res.status(400).json({
-      success: false,
-      message: "Shigar da Account Number."
+    const {
+      name,
+      phone,
+      email
+    } = req.body;
+
+    if (!name) {
+
+      return res.status(400).json({
+        success: false,
+        message: "Suna ya zama dole."
+      });
+
+    }
+
+    const accountNumber =
+      generateAccountNumber();
+
+    const result = db
+      .prepare(
+        `
+        INSERT INTO users
+        (
+          name,
+          phone,
+          email,
+          account_number
+        )
+        VALUES (?, ?, ?, ?)
+        `
+      )
+      .run(
+        name,
+        phone || null,
+        email || null,
+        accountNumber
+      );
+
+    const userId = result.lastInsertRowid;
+
+    db.prepare(
+      `
+      INSERT INTO wallets
+      (
+        user_id,
+        balance,
+        currency
+      )
+      VALUES (?, 0, 'NGN')
+      `
+    ).run(userId);
+
+    const user = getUser(userId);
+
+    res.status(201).json({
+      success: true,
+      message: "An ƙirƙiri account.",
+      user,
+      wallet: getWallet(userId)
     });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "An samu matsala wajen ƙirƙirar account."
+    });
+
   }
 
-  if (!transferAmount || transferAmount <= 0) {
-    return res.status(400).json({
+});
+
+
+/*
+==================================================
+GET USER
+==================================================
+*/
+
+app.get("/api/users/:id", (req, res) => {
+
+  const userId = Number(req.params.id);
+
+  const user = getUser(userId);
+
+  if (!user) {
+
+    return res.status(404).json({
       success: false,
-      message: "Shigar da adadin kuɗi daidai."
+      message: "Ba a sami user ba."
     });
+
   }
-
-  if (transferAmount > user.balance) {
-    return res.status(400).json({
-      success: false,
-      message: "Kuɗin da ke wallet bai isa ba."
-    });
-  }
-
-  // Deduct
-  user.balance -= transferAmount;
-
-  transactions.unshift({
-    type: "debit",
-    name: "Transfer",
-    description: ` zuwa ${accountNumber}`,
-    amount: transferAmount,
-    date: new Date().toLocaleString()
-  });
 
   res.json({
     success: true,
-    message: "An kammala transfer na DEMO.",
-    accountNumber,
-    amount: transferAmount,
-    balance: user.balance
+    user,
+    wallet: getWallet(userId)
   });
+
 });
 
-// ===============================
-// WITHDRAW
-// ===============================
 
-app.post("/api/withdraw", (req, res) => {
+/*
+==================================================
+GET WALLET BALANCE
+==================================================
+*/
 
-  const amount = Number(req.body.amount);
+app.get("/api/wallet/:userId", (req, res) => {
 
-  if (!amount || amount <= 0) {
-    return res.status(400).json({
+  const userId = Number(req.params.userId);
+
+  const user = getUser(userId);
+
+  if (!user) {
+
+    return res.status(404).json({
       success: false,
-      message: "Shigar da adadin kuɗi daidai."
+      message: "User bai wanzu ba."
     });
+
   }
 
-  if (amount > user.balance) {
-    return res.status(400).json({
-      success: false,
-      message: "Kuɗin da ke wallet bai isa ba."
-    });
-  }
-
-  user.balance -= amount;
-
-  transactions.unshift({
-    type: "debit",
-    name: "Withdraw",
-    description: "Cire kuɗi",
-    amount: amount,
-    date: new Date().toLocaleString()
-  });
+  const wallet = getWallet(userId);
 
   res.json({
     success: true,
-    message: "An yi Withdraw na DEMO.",
-    balance: user.balance
-  });
-});
 
-// ===============================
-// TRANSACTIONS
-// ===============================
-
-app.get("/api/transactions", (req, res) => {
-
-  res.json({
-    success: true,
-    transactions
+    wallet: {
+      userId: wallet.user_id,
+      balance: wallet.balance,
+      balanceFormatted:
+        "₦" + money(wallet.balance),
+      currency: wallet.currency,
+      accountNumber:
+        user.account_number
+    }
   });
 
 });
 
-// ===============================
-// START SERVER
-// ===============================
 
-app.listen(PORT, () => {
-  console.log(`MMA Bank server yana gudana a http://localhost:${PORT}`);
-});
+/*
+==================================================
+TRANSACTION HISTORY
+==================================================
+*/
+
+app.get(
+  "/api/wallet/:userId/transactions",
+  (req, res) => {
+
+    const userId = Number(req.params.userId);
+
+    const user = getUser(userId);
+
+    if (!user) {
+
+      return res.status(404).json({
+        success: false,
+        message: "User bai wanzu ba."
+      });
+
+    }
+
+    const transactions = db
+      .prepare(
+        `
+        SELECT
+          id,
+          reference,
+          type,
+          amount,
+          balance_before,
+          balance_after,
+          status,
+          description,
+          metadata,
+          created_at
+        FROM transactions
+        WHERE user_id = ?
+        ORDER BY id DESC
+        LIMIT 100
+        `
+      )
+      .all(userId);
+
+    res.json({
+      success: true,
+      transactions
+    });
+
+  }
+);
+
+
+/*
+==================================================
+TEST DEPOSIT
+==================================================
+
+IMPORTANT:
+Wannan NA GWAJI ne kawai.
+
+Kada a bar wannan endpoint
+a production/live money.
+==================================================
+*/
+
+app.post(
+  "/api/test/deposit",
+  (req, res) => {
+
+    try {
+
+      const {
+        userId,
+        amount
+      } = req.body;
+
+      const numericUserId =
+        Number(userId);
+
+      const numericAmount =
+        Number(amount);
+
+      if (!numericUserId) {
+
+        return res.status(400).json({
+          success: false,
+          message: "userId ya zama dole."
+        });
+
+      }
+
+      if (
+        !Number.isFinite(numericAmount) ||
+        numericAmount <= 0
+      ) {
+
+        return res.status(400).json({
+          success: false,
+          message: "Amount bai yi daidai ba."
+        });
+
+      }
+
+      /*
+      Muna amfani da Kobo a database.
+
+      ₦100 = 10000 kobo
+
+      Amma frontend zai nuna ₦100.00
+      */
+
+      const amountKobo =
+        Math.round(numericAmount * 100);
+
+      const user = getUser(
+        numericUserId
+      );
+
+      if (!user) {
+
+        return res.status(404).json({
+          success: false,
+          message: "User bai wanzu ba."
+        });
+
+      }
+
+      const reference =
+        generateReference("TESTDEP");
+
+      const transaction =
+        db.transaction(() => {
+
+          const wallet =
+            getWallet(numericUserId);
+
+          const before =
+            wallet.balance;
+
+          const after =
+            before + amountKobo;
+
+          db.prepare(
+            `
+            UPDATE wallets
+            SET
+              balance = ?,
+              updated_at = CURRENT_TIMESTAMP
+            WHERE user_id = ?
+            `
+          ).run(
+            after,
+            numericUserId
+          );
+
+          db.prepare(
+            `
+            INSERT INTO transactions
+            (
+              reference,
+              user_id,
+              type,
+              amount,
+              balance_before,
+              balance_after,
+              status,
+              description
+            )
+            VALUES
+            (?, ?, ?, ?, ?, ?, ?, ?)
+            `
+          ).run(
+            reference,
+            numericUserId,
+            "DEPOSIT",
+            amountKobo,
+            before,
+            after,
+            "SUCCESS",
+            "Test deposit"
+          );
+
+          return {
+            before,
+            after
+          };
+
+        });
+
+      res.json({
+
+        success: true,
+
+        message:
+          "An ƙara kuɗin TEST wallet.",
+
+        reference,
+
+        amount:
+          numericAmount,
+
+        balance:
+          transaction.after / 100,
+
+        balanceFormatted:
+          "₦" +
+          money(
+            transaction.after / 100
+          )
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      res.status(500).json({
+        success: false,
+        message:
+          "An kasa ƙara kuɗi."
+      });
+
+    }
+
+  }
+);
+
+
+/*
+==================================================
+SPEND FROM WALLET
+==================================================
+
+Za mu yi amfani da wannan daga baya
+ga Airtime / Data / Electricity.
+==================================================
+*/
+
+function debitWallet({
+  userId,
+  amountKobo,
+  type,
+  description,
+  metadata = {}
+}) {
+
+  const transaction =
+    db.transaction(() => {
+
+      const wallet =
+        getWallet(userId);
+
+      if (!wallet) {
+
+        throw new Error(
+          "WALLET_NOT_FOUND"
+        );
+
+      }
+
+      if (
+        amountKobo <= 0
+      ) {
+
+        throw new Error(
+          "INVALID_AMOUNT"
+        );
+
+      }
+
+      if (
+        wallet.balance < amountKobo
+      ) {
+
+        throw new Error(
+          "INSUFFICIENT_BALANCE"
+        );
+
+      }
+
+      const before =
+        wallet.balance;
+
+      const after =
+        before - amountKobo;
+
+      const reference =
+        generateReference(type);
+
+      db.prepare(
+        `
+        UPDATE wallets
+        SET
+          balance = ?,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE user_id = ?
+        `
+      ).run(
+        after,
+        userId
+      );
+
+      db.prepare(
+        `
+        INSERT INTO transactions
+        (
+          reference,
+          user_id,
+          type,
+          amount,
+          balance_before,
+          balance_after,
+          status,
+          description,
+          metadata
+        )
+        VALUES
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `
+      ).run(
+        reference,
+        userId,
+        type,
+        amountKobo,
+        before,
+        after,
+        "SUCCESS",
+        description || null,
+        JSON.stringify(metadata)
+      );
+
+      return {
+        reference,
+        before,
+        after
+      };
+
+    });
+
+  return transaction;
+}
+
+
+/*
+==================================================
+TEST WITHDRAW / DEBIT
+
+NA GWAJI NE.
+
+Daga baya Airtime/Transfer/Withdrawal
+zai yi amfani da secure provider.
+==================================================
+*/
+
+app.post(
+  "/api/test/debit",
+  (req, res) => {
+
+    try {
+
+      const {
+        userId,
+        amount
+      } = req.body;
+
+      const numericUserId =
+        Number(userId);
+
+      const numericAmount =
+        Number(amount);
+
+      if (!numericUserId) {
+
+        return res.status(400).json({
+          success: false,
+          message:
+            "userId ya zama dole."
+        });
+
+      }
+
+      if (
+        !Number.isFinite(numericAmount) ||
+        numericAmount <= 0
+      ) {
+
+        return res.status(400).json({
+          success: false,
+          message:
+            "Amount bai yi daidai ba."
+        });
+
+      }
+
+      const amountKobo =
+        Math.round(
+          numericAmount * 100
+        );
+
+      const result =
+        debitWallet({
+
+          userId:
+            numericUserId,
+
+          amountKobo,
+
+          type:
+            "TEST_DEBIT",
+
+          description:
+            "Test wallet debit"
+
+        });
+
+      res.json({
+
+        success: true,
+
+        message:
+          "An cire kuɗi daga TEST wallet.",
+
+        reference:
+          result.reference,
+
+        amount:
+          numericAmount,
+
+        balance:
+          result.after / 100,
+
+        balanceFormatted:
+          "₦" +
+          money(
+            result.after / 100
+          )
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      if (
+        error.message ===
+        "INSUFFICIENT_BALANCE"
+      ) {
+
+        return res.status(400).json({
+          success: false,
+          message:
+            "Kuɗin wallet bai isa ba."
+        });
+
+      }
+
+      res.status(500).json({
+        success: false,
+        message:
+          "An kasa cire kuɗi."
+      });
+
+    }
+
+  }
+);
+
+
+/*
+==================================================
+START SERVER
+==================================================
+*/
+
+app.listen(
+  PORT,
+  () => {
+
+    console.log(
+      `MMA Bank server yana aiki a port ${PORT}`
+    );
+
+    console.log(
+      `http://localhost:${PORT}`
+    );
+
+  }
+);
