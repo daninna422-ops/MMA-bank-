@@ -2,9 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const Database = require("better-sqlite3");
 const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
+
+/*
+==================================================
+SERVER
+==================================================
+*/
 
 const PORT = process.env.PORT || 3000;
 
@@ -17,7 +25,39 @@ DATABASE
 ==================================================
 */
 
-const db = new Database("./mma-bank.db");
+/*
+Render zai iya amfani da DATA_DIR idan
+an saita shi.
+
+Idan babu DATA_DIR:
+./data
+
+Idan kana da Render Persistent Disk:
+DATA_DIR = /var/data
+*/
+
+const DATA_DIR =
+  process.env.DATA_DIR ||
+  path.join(process.cwd(), "data");
+
+/*
+Tabbatar folder ɗin database yana wanzu.
+Wannan shi ne gyaran babban error ɗinmu.
+*/
+
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, {
+    recursive: true
+  });
+}
+
+const DB_PATH =
+  path.join(DATA_DIR, "mma-bank.db");
+
+console.log("Database path:", DB_PATH);
+
+const db =
+  new Database(DB_PATH);
 
 db.pragma("journal_mode = WAL");
 db.pragma("foreign_keys = ON");
@@ -31,19 +71,30 @@ CREATE TABLES
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+
     name TEXT NOT NULL,
+
     phone TEXT UNIQUE,
+
     email TEXT UNIQUE,
+
     account_number TEXT UNIQUE NOT NULL,
-    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+    created_at TEXT NOT NULL
+      DEFAULT CURRENT_TIMESTAMP
   );
 
   CREATE TABLE IF NOT EXISTS wallets (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+
     user_id INTEGER UNIQUE NOT NULL,
+
     balance INTEGER NOT NULL DEFAULT 0,
+
     currency TEXT NOT NULL DEFAULT 'NGN',
-    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TEXT NOT NULL
+      DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY(user_id)
       REFERENCES users(id)
@@ -65,29 +116,33 @@ db.exec(`
 
     balance_after INTEGER NOT NULL,
 
-    status TEXT NOT NULL DEFAULT 'SUCCESS',
+    status TEXT NOT NULL
+      DEFAULT 'SUCCESS',
 
     description TEXT,
 
     metadata TEXT,
 
-    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TEXT NOT NULL
+      DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY(user_id)
       REFERENCES users(id)
       ON DELETE CASCADE
   );
 
-  CREATE INDEX IF NOT EXISTS idx_transactions_user
-  ON transactions(user_id);
+  CREATE INDEX IF NOT EXISTS
+    idx_transactions_user
+    ON transactions(user_id);
 
-  CREATE INDEX IF NOT EXISTS idx_transactions_reference
-  ON transactions(reference);
+  CREATE INDEX IF NOT EXISTS
+    idx_transactions_reference
+    ON transactions(reference);
 `);
 
 /*
 ==================================================
-HELPER FUNCTIONS
+HELPERS
 ==================================================
 */
 
@@ -97,13 +152,20 @@ function generateReference(prefix = "MMA") {
     "_" +
     Date.now() +
     "_" +
-    crypto.randomBytes(5).toString("hex")
+    crypto
+      .randomBytes(5)
+      .toString("hex")
   );
 }
 
 
-function generateAccountNumber() {
+/*
+==================================================
+GENERATE ACCOUNT NUMBER
+==================================================
+*/
 
+function generateAccountNumber() {
   let accountNumber;
 
   while (true) {
@@ -111,62 +173,150 @@ function generateAccountNumber() {
     accountNumber =
       "81" +
       Math.floor(
-        10000000 + Math.random() * 90000000
+        10000000 +
+        Math.random() * 90000000
       );
 
-    const exists = db
-      .prepare(
-        "SELECT id FROM users WHERE account_number = ?"
-      )
-      .get(accountNumber);
+    const exists =
+      db.prepare(
+        `
+        SELECT id
+        FROM users
+        WHERE account_number = ?
+        `
+      ).get(accountNumber);
 
     if (!exists) {
-      break;
+      return accountNumber;
     }
   }
-
-  return accountNumber;
 }
 
+
+/*
+==================================================
+GET USER
+==================================================
+*/
 
 function getUser(userId) {
 
-  return db
-    .prepare(
-      `
-      SELECT
-        id,
-        name,
-        phone,
-        email,
-        account_number,
-        created_at
-      FROM users
-      WHERE id = ?
-      `
-    )
-    .get(userId);
+  return db.prepare(
+    `
+    SELECT
+      id,
+      name,
+      phone,
+      email,
+      account_number,
+      created_at
+    FROM users
+    WHERE id = ?
+    `
+  ).get(userId);
 }
 
+
+/*
+==================================================
+GET USER BY PHONE
+==================================================
+*/
+
+function getUserByPhone(phone) {
+
+  return db.prepare(
+    `
+    SELECT
+      id,
+      name,
+      phone,
+      email,
+      account_number,
+      created_at
+    FROM users
+    WHERE phone = ?
+    `
+  ).get(phone);
+}
+
+
+/*
+==================================================
+GET USER BY EMAIL
+==================================================
+*/
+
+function getUserByEmail(email) {
+
+  return db.prepare(
+    `
+    SELECT
+      id,
+      name,
+      phone,
+      email,
+      account_number,
+      created_at
+    FROM users
+    WHERE email = ?
+    `
+  ).get(email);
+}
+
+
+/*
+==================================================
+GET USER BY ACCOUNT NUMBER
+==================================================
+*/
+
+function getUserByAccountNumber(accountNumber) {
+
+  return db.prepare(
+    `
+    SELECT
+      id,
+      name,
+      phone,
+      email,
+      account_number,
+      created_at
+    FROM users
+    WHERE account_number = ?
+    `
+  ).get(accountNumber);
+}
+
+
+/*
+==================================================
+GET WALLET
+==================================================
+*/
 
 function getWallet(userId) {
 
-  return db
-    .prepare(
-      `
-      SELECT
-        id,
-        user_id,
-        balance,
-        currency,
-        updated_at
-      FROM wallets
-      WHERE user_id = ?
-      `
-    )
-    .get(userId);
+  return db.prepare(
+    `
+    SELECT
+      id,
+      user_id,
+      balance,
+      currency,
+      updated_at
+    FROM wallets
+    WHERE user_id = ?
+    `
+  ).get(userId);
 }
 
+
+/*
+==================================================
+MONEY FORMAT
+==================================================
+*/
 
 function money(amount) {
 
@@ -182,6 +332,30 @@ function money(amount) {
 
 /*
 ==================================================
+VALIDATE AMOUNT
+==================================================
+*/
+
+function convertToKobo(amount) {
+
+  const numericAmount =
+    Number(amount);
+
+  if (
+    !Number.isFinite(numericAmount) ||
+    numericAmount <= 0
+  ) {
+    return null;
+  }
+
+  return Math.round(
+    numericAmount * 100
+  );
+}
+
+
+/*
+==================================================
 HOME
 ==================================================
 */
@@ -190,8 +364,15 @@ app.get("/", (req, res) => {
 
   res.json({
     success: true,
-    message: "MMA Bank server yana aiki.",
-    version: "1.0.0"
+
+    message:
+      "MMA Bank server yana aiki.",
+
+    version:
+      "1.0.0",
+
+    database:
+      "connected"
   });
 
 });
@@ -203,16 +384,51 @@ HEALTH CHECK
 ==================================================
 */
 
-app.get("/api/health", (req, res) => {
+app.get(
+  "/api/health",
+  (req, res) => {
 
-  res.json({
-    success: true,
-    server: "online",
-    database: "connected",
-    time: new Date().toISOString()
-  });
+    try {
 
-});
+      db.prepare(
+        "SELECT 1"
+      ).get();
+
+      res.json({
+
+        success: true,
+
+        server:
+          "online",
+
+        database:
+          "connected",
+
+        time:
+          new Date().toISOString()
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      res.status(500).json({
+
+        success: false,
+
+        server:
+          "online",
+
+        database:
+          "error"
+
+      });
+
+    }
+
+  }
+);
 
 
 /*
@@ -221,83 +437,177 @@ CREATE USER
 ==================================================
 */
 
-app.post("/api/users", (req, res) => {
+app.post(
+  "/api/users",
+  (req, res) => {
 
-  try {
+    try {
 
-    const {
-      name,
-      phone,
-      email
-    } = req.body;
+      const {
+        name,
+        phone,
+        email
+      } = req.body;
 
-    if (!name) {
+      if (!name || !String(name).trim()) {
 
-      return res.status(400).json({
+        return res.status(400).json({
+
+          success: false,
+
+          message:
+            "Suna ya zama dole."
+
+        });
+
+      }
+
+      const cleanName =
+        String(name).trim();
+
+      const cleanPhone =
+        phone
+          ? String(phone).trim()
+          : null;
+
+      const cleanEmail =
+        email
+          ? String(email)
+              .trim()
+              .toLowerCase()
+          : null;
+
+      /*
+      Check phone
+      */
+
+      if (cleanPhone) {
+
+        const phoneExists =
+          getUserByPhone(cleanPhone);
+
+        if (phoneExists) {
+
+          return res.status(409).json({
+
+            success: false,
+
+            message:
+              "Wannan lambar waya tana da account."
+
+          });
+
+        }
+
+      }
+
+      /*
+      Check email
+      */
+
+      if (cleanEmail) {
+
+        const emailExists =
+          getUserByEmail(cleanEmail);
+
+        if (emailExists) {
+
+          return res.status(409).json({
+
+            success: false,
+
+            message:
+              "Wannan email yana da account."
+
+          });
+
+        }
+
+      }
+
+      const accountNumber =
+        generateAccountNumber();
+
+      const createUser =
+        db.transaction(() => {
+
+          const result =
+            db.prepare(
+              `
+              INSERT INTO users
+              (
+                name,
+                phone,
+                email,
+                account_number
+              )
+              VALUES (?, ?, ?, ?)
+              `
+            ).run(
+              cleanName,
+              cleanPhone,
+              cleanEmail,
+              accountNumber
+            );
+
+          const userId =
+            result.lastInsertRowid;
+
+          db.prepare(
+            `
+            INSERT INTO wallets
+            (
+              user_id,
+              balance,
+              currency
+            )
+            VALUES (?, 0, 'NGN')
+            `
+          ).run(userId);
+
+          return Number(userId);
+
+        });
+
+      const user =
+        getUser(createUser);
+
+      const wallet =
+        getWallet(createUser);
+
+      res.status(201).json({
+
+        success: true,
+
+        message:
+          "An ƙirƙiri account.",
+
+        user,
+
+        wallet
+
+      });
+
+    } catch (error) {
+
+      console.error(
+        "CREATE USER ERROR:",
+        error
+      );
+
+      res.status(500).json({
+
         success: false,
-        message: "Suna ya zama dole."
+
+        message:
+          "An samu matsala wajen ƙirƙirar account."
+
       });
 
     }
 
-    const accountNumber =
-      generateAccountNumber();
-
-    const result = db
-      .prepare(
-        `
-        INSERT INTO users
-        (
-          name,
-          phone,
-          email,
-          account_number
-        )
-        VALUES (?, ?, ?, ?)
-        `
-      )
-      .run(
-        name,
-        phone || null,
-        email || null,
-        accountNumber
-      );
-
-    const userId = result.lastInsertRowid;
-
-    db.prepare(
-      `
-      INSERT INTO wallets
-      (
-        user_id,
-        balance,
-        currency
-      )
-      VALUES (?, 0, 'NGN')
-      `
-    ).run(userId);
-
-    const user = getUser(userId);
-
-    res.status(201).json({
-      success: true,
-      message: "An ƙirƙiri account.",
-      user,
-      wallet: getWallet(userId)
-    });
-
-  } catch (error) {
-
-    console.error(error);
-
-    res.status(500).json({
-      success: false,
-      message: "An samu matsala wajen ƙirƙirar account."
-    });
-
   }
-
-});
+);
 
 
 /*
@@ -306,68 +616,183 @@ GET USER
 ==================================================
 */
 
-app.get("/api/users/:id", (req, res) => {
+app.get(
+  "/api/users/:id",
+  (req, res) => {
 
-  const userId = Number(req.params.id);
+    const userId =
+      Number(req.params.id);
 
-  const user = getUser(userId);
+    if (!Number.isInteger(userId)) {
 
-  if (!user) {
+      return res.status(400).json({
 
-    return res.status(404).json({
-      success: false,
-      message: "Ba a sami user ba."
+        success: false,
+
+        message:
+          "User ID bai yi daidai ba."
+
+      });
+
+    }
+
+    const user =
+      getUser(userId);
+
+    if (!user) {
+
+      return res.status(404).json({
+
+        success: false,
+
+        message:
+          "Ba a sami user ba."
+
+      });
+
+    }
+
+    res.json({
+
+      success: true,
+
+      user,
+
+      wallet:
+        getWallet(userId)
+
     });
 
   }
-
-  res.json({
-    success: true,
-    user,
-    wallet: getWallet(userId)
-  });
-
-});
+);
 
 
 /*
 ==================================================
-GET WALLET BALANCE
+GET USER BY ACCOUNT NUMBER
 ==================================================
 */
 
-app.get("/api/wallet/:userId", (req, res) => {
+app.get(
+  "/api/account/:accountNumber",
+  (req, res) => {
 
-  const userId = Number(req.params.userId);
+    const accountNumber =
+      String(
+        req.params.accountNumber
+      ).trim();
 
-  const user = getUser(userId);
+    const user =
+      getUserByAccountNumber(
+        accountNumber
+      );
 
-  if (!user) {
+    if (!user) {
 
-    return res.status(404).json({
-      success: false,
-      message: "User bai wanzu ba."
+      return res.status(404).json({
+
+        success: false,
+
+        message:
+          "Ba a sami account ba."
+
+      });
+
+    }
+
+    res.json({
+
+      success: true,
+
+      user,
+
+      wallet:
+        getWallet(user.id)
+
     });
 
   }
+);
 
-  const wallet = getWallet(userId);
 
-  res.json({
-    success: true,
+/*
+==================================================
+GET WALLET
+==================================================
+*/
 
-    wallet: {
-      userId: wallet.user_id,
-      balance: wallet.balance,
-      balanceFormatted:
-        "₦" + money(wallet.balance),
-      currency: wallet.currency,
-      accountNumber:
-        user.account_number
+app.get(
+  "/api/wallet/:userId",
+  (req, res) => {
+
+    const userId =
+      Number(req.params.userId);
+
+    const user =
+      getUser(userId);
+
+    if (!user) {
+
+      return res.status(404).json({
+
+        success: false,
+
+        message:
+          "User bai wanzu ba."
+
+      });
+
     }
-  });
 
-});
+    const wallet =
+      getWallet(userId);
+
+    if (!wallet) {
+
+      return res.status(404).json({
+
+        success: false,
+
+        message:
+          "Wallet bai wanzu ba."
+
+      });
+
+    }
+
+    res.json({
+
+      success: true,
+
+      wallet: {
+
+        userId:
+          wallet.user_id,
+
+        balance:
+          wallet.balance / 100,
+
+        balanceKobo:
+          wallet.balance,
+
+        balanceFormatted:
+          "₦" +
+          money(
+            wallet.balance / 100
+          ),
+
+        currency:
+          wallet.currency,
+
+        accountNumber:
+          user.account_number
+
+      }
+
+    });
+
+  }
+);
 
 
 /*
@@ -380,21 +805,27 @@ app.get(
   "/api/wallet/:userId/transactions",
   (req, res) => {
 
-    const userId = Number(req.params.userId);
+    const userId =
+      Number(req.params.userId);
 
-    const user = getUser(userId);
+    const user =
+      getUser(userId);
 
     if (!user) {
 
       return res.status(404).json({
+
         success: false,
-        message: "User bai wanzu ba."
+
+        message:
+          "User bai wanzu ba."
+
       });
 
     }
 
-    const transactions = db
-      .prepare(
+    const transactions =
+      db.prepare(
         `
         SELECT
           id,
@@ -412,12 +843,36 @@ app.get(
         ORDER BY id DESC
         LIMIT 100
         `
-      )
-      .all(userId);
+      ).all(userId);
 
     res.json({
+
       success: true,
-      transactions
+
+      transactions:
+        transactions.map(
+          transaction => ({
+
+            ...transaction,
+
+            amount:
+              transaction.amount / 100,
+
+            amountFormatted:
+              "₦" +
+              money(
+                transaction.amount / 100
+              ),
+
+            balanceBefore:
+              transaction.balance_before / 100,
+
+            balanceAfter:
+              transaction.balance_after / 100
+
+          })
+        )
+
     });
 
   }
@@ -429,11 +884,10 @@ app.get(
 TEST DEPOSIT
 ==================================================
 
-IMPORTANT:
-Wannan NA GWAJI ne kawai.
+GWAJI KAWAI.
 
-Kada a bar wannan endpoint
-a production/live money.
+KADA A BAR SHI A LIVE
+REAL MONEY SYSTEM.
 ==================================================
 */
 
@@ -451,62 +905,76 @@ app.post(
       const numericUserId =
         Number(userId);
 
-      const numericAmount =
-        Number(amount);
-
-      if (!numericUserId) {
-
-        return res.status(400).json({
-          success: false,
-          message: "userId ya zama dole."
-        });
-
-      }
-
       if (
-        !Number.isFinite(numericAmount) ||
-        numericAmount <= 0
+        !Number.isInteger(
+          numericUserId
+        ) ||
+        numericUserId <= 0
       ) {
 
         return res.status(400).json({
+
           success: false,
-          message: "Amount bai yi daidai ba."
+
+          message:
+            "userId ya zama dole."
+
         });
 
       }
 
-      /*
-      Muna amfani da Kobo a database.
-
-      ₦100 = 10000 kobo
-
-      Amma frontend zai nuna ₦100.00
-      */
-
       const amountKobo =
-        Math.round(numericAmount * 100);
+        convertToKobo(amount);
 
-      const user = getUser(
-        numericUserId
-      );
+      if (amountKobo === null) {
+
+        return res.status(400).json({
+
+          success: false,
+
+          message:
+            "Amount bai yi daidai ba."
+
+        });
+
+      }
+
+      const user =
+        getUser(numericUserId);
 
       if (!user) {
 
         return res.status(404).json({
+
           success: false,
-          message: "User bai wanzu ba."
+
+          message:
+            "User bai wanzu ba."
+
         });
 
       }
 
       const reference =
-        generateReference("TESTDEP");
+        generateReference(
+          "TESTDEP"
+        );
 
-      const transaction =
+      const result =
         db.transaction(() => {
 
           const wallet =
-            getWallet(numericUserId);
+            getWallet(
+              numericUserId
+            );
+
+          if (!wallet) {
+
+            throw new Error(
+              "WALLET_NOT_FOUND"
+            );
+
+          }
 
           const before =
             wallet.balance;
@@ -519,344 +987,6 @@ app.post(
             UPDATE wallets
             SET
               balance = ?,
-              updated_at = CURRENT_TIMESTAMP
-            WHERE user_id = ?
-            `
-          ).run(
-            after,
-            numericUserId
-          );
-
-          db.prepare(
-            `
-            INSERT INTO transactions
-            (
-              reference,
-              user_id,
-              type,
-              amount,
-              balance_before,
-              balance_after,
-              status,
-              description
-            )
-            VALUES
-            (?, ?, ?, ?, ?, ?, ?, ?)
-            `
-          ).run(
-            reference,
-            numericUserId,
-            "DEPOSIT",
-            amountKobo,
-            before,
-            after,
-            "SUCCESS",
-            "Test deposit"
-          );
-
-          return {
-            before,
-            after
-          };
-
-        });
-
-      res.json({
-
-        success: true,
-
-        message:
-          "An ƙara kuɗin TEST wallet.",
-
-        reference,
-
-        amount:
-          numericAmount,
-
-        balance:
-          transaction.after / 100,
-
-        balanceFormatted:
-          "₦" +
-          money(
-            transaction.after / 100
-          )
-
-      });
-
-    } catch (error) {
-
-      console.error(error);
-
-      res.status(500).json({
-        success: false,
-        message:
-          "An kasa ƙara kuɗi."
-      });
-
-    }
-
-  }
-);
-
-
-/*
-==================================================
-SPEND FROM WALLET
-==================================================
-
-Za mu yi amfani da wannan daga baya
-ga Airtime / Data / Electricity.
-==================================================
-*/
-
-function debitWallet({
-  userId,
-  amountKobo,
-  type,
-  description,
-  metadata = {}
-}) {
-
-  const transaction =
-    db.transaction(() => {
-
-      const wallet =
-        getWallet(userId);
-
-      if (!wallet) {
-
-        throw new Error(
-          "WALLET_NOT_FOUND"
-        );
-
-      }
-
-      if (
-        amountKobo <= 0
-      ) {
-
-        throw new Error(
-          "INVALID_AMOUNT"
-        );
-
-      }
-
-      if (
-        wallet.balance < amountKobo
-      ) {
-
-        throw new Error(
-          "INSUFFICIENT_BALANCE"
-        );
-
-      }
-
-      const before =
-        wallet.balance;
-
-      const after =
-        before - amountKobo;
-
-      const reference =
-        generateReference(type);
-
-      db.prepare(
-        `
-        UPDATE wallets
-        SET
-          balance = ?,
-          updated_at = CURRENT_TIMESTAMP
-        WHERE user_id = ?
-        `
-      ).run(
-        after,
-        userId
-      );
-
-      db.prepare(
-        `
-        INSERT INTO transactions
-        (
-          reference,
-          user_id,
-          type,
-          amount,
-          balance_before,
-          balance_after,
-          status,
-          description,
-          metadata
-        )
-        VALUES
-        (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `
-      ).run(
-        reference,
-        userId,
-        type,
-        amountKobo,
-        before,
-        after,
-        "SUCCESS",
-        description || null,
-        JSON.stringify(metadata)
-      );
-
-      return {
-        reference,
-        before,
-        after
-      };
-
-    });
-
-  return transaction;
-}
-
-
-/*
-==================================================
-TEST WITHDRAW / DEBIT
-
-NA GWAJI NE.
-
-Daga baya Airtime/Transfer/Withdrawal
-zai yi amfani da secure provider.
-==================================================
-*/
-
-app.post(
-  "/api/test/debit",
-  (req, res) => {
-
-    try {
-
-      const {
-        userId,
-        amount
-      } = req.body;
-
-      const numericUserId =
-        Number(userId);
-
-      const numericAmount =
-        Number(amount);
-
-      if (!numericUserId) {
-
-        return res.status(400).json({
-          success: false,
-          message:
-            "userId ya zama dole."
-        });
-
-      }
-
-      if (
-        !Number.isFinite(numericAmount) ||
-        numericAmount <= 0
-      ) {
-
-        return res.status(400).json({
-          success: false,
-          message:
-            "Amount bai yi daidai ba."
-        });
-
-      }
-
-      const amountKobo =
-        Math.round(
-          numericAmount * 100
-        );
-
-      const result =
-        debitWallet({
-
-          userId:
-            numericUserId,
-
-          amountKobo,
-
-          type:
-            "TEST_DEBIT",
-
-          description:
-            "Test wallet debit"
-
-        });
-
-      res.json({
-
-        success: true,
-
-        message:
-          "An cire kuɗi daga TEST wallet.",
-
-        reference:
-          result.reference,
-
-        amount:
-          numericAmount,
-
-        balance:
-          result.after / 100,
-
-        balanceFormatted:
-          "₦" +
-          money(
-            result.after / 100
-          )
-
-      });
-
-    } catch (error) {
-
-      console.error(error);
-
-      if (
-        error.message ===
-        "INSUFFICIENT_BALANCE"
-      ) {
-
-        return res.status(400).json({
-          success: false,
-          message:
-            "Kuɗin wallet bai isa ba."
-        });
-
-      }
-
-      res.status(500).json({
-        success: false,
-        message:
-          "An kasa cire kuɗi."
-      });
-
-    }
-
-  }
-);
-
-
-/*
-==================================================
-START SERVER
-==================================================
-*/
-
-app.listen(
-  PORT,
-  () => {
-
-    console.log(
-      `MMA Bank server yana aiki a port ${PORT}`
-    );
-
-    console.log(
-      `http://localhost:${PORT}`
-    );
-
-  }
-);
+              updated_at =
+                CURRENT_TIMESTAMP
+           
