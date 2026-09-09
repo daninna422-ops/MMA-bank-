@@ -17,7 +17,7 @@ DATABASE
 ==================================================
 */
 
-const db = new Database("./data/mma-bank.db");
+const db = new Database("./mma-bank.db");
 
 db.pragma("journal_mode = WAL");
 db.pragma("foreign_keys = ON");
