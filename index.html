@@ -1,2989 +1,922 @@
 <!DOCTYPE html>
 <html lang="ha">
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no">
 
-<title>MMA BANK</title>
+<title>MMA Bank</title>
 
 <style>
-
-/* =========================
-   VARIABLES
-========================= */
-
-:root{
-  --blue:#0066FF;
-  --darkblue:#0044B3;
-  --light:#F4F7FE;
-  --white:#FFFFFF;
-  --text:#202B55;
-  --gray:#8993AD;
-  --green:#05B989;
-  --red:#E94F45;
-}
-
-
-/* =========================
-   RESET
-========================= */
-
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
-  font-family:Arial,Segoe UI,sans-serif;
+  font-family:Arial, sans-serif;
 }
 
-html,
-body{
+html,body{
   width:100%;
   min-height:100%;
   overflow-x:hidden;
 }
 
 body{
-  background:var(--light);
-  color:var(--text);
+  background:#f4f7fe;
+  color:#202b55;
 }
 
-
 /* =========================
-   HEADER
+   MAIN APP
 ========================= */
 
-.header{
+.app{
   width:100%;
-  background:linear-gradient(
-    135deg,
-    var(--blue),
-    var(--darkblue)
-  );
-
-  color:white;
-
-  padding:25px 20px 35px;
-
-  border-bottom-left-radius:45px;
-  border-bottom-right-radius:45px;
+  min-height:100vh;
 }
-
-
-/* =========================
-   TOP
-========================= */
-
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo{
-  font-size:22px;
-  font-weight:bold;
-}
-
-.profile{
-  width:48px;
-  height:48px;
-
-  border-radius:50%;
-
-  background:white;
-  color:var(--blue);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:20px;
-  font-weight:bold;
-}
-
 
 /* =========================
    WELCOME
 ========================= */
 
-.welcome{
-  margin-top:35px;
+.screen{
+  width:100%;
+  min-height:100vh;
+  display:none;
+  padding:25px 20px;
 }
 
-.welcome small{
-  font-size:17px;
-  opacity:.8;
+.screen.active{
+  display:flex;
 }
 
-.welcome h2{
-  margin-top:8px;
-  font-size:36px;
+#welcomeScreen{
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(
+    145deg,
+    #0066ff,
+    #0044b3
+  );
+  color:white;
 }
 
+.logo-circle{
+  width:100px;
+  height:100px;
+  border-radius:30px;
+  background:white;
+  color:#0066ff;
 
-/* =========================
-   BALANCE CARD
-========================= */
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-.balance-card{
-
-  margin-top:25px;
-
-  background:rgba(255,255,255,.14);
-
-  border:1px solid rgba(255,255,255,.25);
-
-  padding:25px;
-
-  border-radius:25px;
-
-  box-shadow:
-    0 10px 30px rgba(0,0,0,.08);
-}
-
-.balance-title{
-  font-size:18px;
-  opacity:.85;
-}
-
-.balance{
-
-  font-size:44px;
-
+  font-size:35px;
   font-weight:bold;
 
-  margin:10px 0 20px;
+  box-shadow:0 15px 35px rgba(0,0,0,.2);
+  margin-bottom:25px;
 }
 
-.account{
-
-  font-size:16px;
-
-  opacity:.9;
+#welcomeScreen h1{
+  font-size:32px;
+  margin-bottom:10px;
 }
 
+#welcomeScreen p{
+  font-size:15px;
+  opacity:.85;
+  line-height:1.5;
+  margin-bottom:35px;
+}
 
 /* =========================
-   QUICK BUTTONS
+   BUTTONS
 ========================= */
 
-.quick{
+.btn{
+  width:100%;
+  max-width:400px;
 
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:12px;
-
-  margin-top:22px;
-}
-
-.quick button{
+  height:54px;
 
   border:none;
-
-  border-radius:18px;
-
-  padding:16px 5px;
-
-  background:rgba(255,255,255,.18);
-
-  color:white;
-
-  font-size:15px;
-
-  font-weight:bold;
-
-  cursor:pointer;
-
-  transition:.2s;
-}
-
-.quick button:active{
-  transform:scale(.96);
-}
-
-
-/* =========================
-   SECTION TITLE
-========================= */
-
-.title{
-
-  margin:30px 20px 15px;
-
-  font-size:27px;
-
-  font-weight:bold;
-}
-
-
-/* =========================
-   SERVICES
-========================= */
-
-.services{
-
-  width:100%;
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(4,minmax(0,1fr));
-
-  gap:14px;
-
-  padding:0 20px;
-}
-
-
-.service{
-
-  min-width:0;
-
-  height:180px;
-
-  background:white;
-
-  border-radius:25px;
-
-  padding:20px 5px;
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-
-  justify-content:center;
-
-  text-align:center;
-
-  box-shadow:
-    0 5px 18px rgba(0,0,0,.04);
-
-  cursor:pointer;
-
-  transition:.2s;
-}
-
-.service:active{
-  transform:scale(.96);
-}
-
-.service-icon{
-
-  display:block;
-
-  font-size:40px;
-
-  margin-bottom:15px;
-}
-
-.service-name{
+  border-radius:15px;
 
   font-size:16px;
-
   font-weight:bold;
 
-  color:var(--gray);
+  cursor:pointer;
+  margin-top:12px;
 }
 
+.btn-primary{
+  background:#0066ff;
+  color:white;
+}
+
+.btn-white{
+  background:white;
+  color:#0066ff;
+}
+
+.btn-outline{
+  background:transparent;
+  color:#0066ff;
+  border:2px solid #0066ff;
+}
 
 /* =========================
-   TRANSACTIONS
+   AUTH SCREEN
 ========================= */
 
-.transactions{
-
-  background:white;
-
-  width:calc(100% - 40px);
-
-  margin:0 20px 30px;
-
-  border-radius:25px;
-
-  padding:20px;
+#authScreen{
+  flex-direction:column;
+  justify-content:flex-start;
+  background:#f4f7fe;
 }
 
-.transaction{
+.auth-header{
+  text-align:center;
+  margin:15px 0 25px;
+}
+
+.auth-logo{
+  width:65px;
+  height:65px;
+  border-radius:20px;
+
+  background:#0066ff;
+  color:white;
 
   display:flex;
-
-  justify-content:space-between;
-
   align-items:center;
-
-  padding:18px 0;
-
-  border-bottom:1px solid #eee;
-}
-
-.transaction:last-child{
-  border-bottom:none;
-}
-
-.tx-name{
-
-  font-weight:bold;
-
-  font-size:17px;
-}
-
-.tx-date{
-
-  font-size:13px;
-
-  color:var(--gray);
-
-  margin-top:5px;
-}
-
-.in{
-
-  color:var(--green);
-
-  font-size:17px;
-
-  font-weight:bold;
-}
-
-.out{
-
-  color:var(--red);
-
-  font-size:17px;
-
-  font-weight:bold;
-}
-
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-
-  display:none;
-
-  position:fixed;
-
-  inset:0;
-
-  width:100%;
-  height:100%;
-
-  background:rgba(0,0,0,.60);
-
-  z-index:99999;
-
-  align-items:center;
-
   justify-content:center;
 
-  padding:20px;
+  margin:0 auto 12px;
+
+  font-size:22px;
+  font-weight:bold;
 }
 
+.auth-header h2{
+  font-size:25px;
+}
+
+.auth-header p{
+  color:#8993ad;
+  margin-top:6px;
+}
 
 /* =========================
-   MODAL CONTENT
+   TABS
 ========================= */
 
-.modal-content{
-
+.tabs{
   width:100%;
-
   max-width:500px;
 
-  max-height:90vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
 
-  overflow-y:auto;
+  background:#e5ebf7;
+  border-radius:14px;
 
-  background:white;
-
-  border-radius:30px;
-
-  padding:30px;
-
-  position:relative;
-
-  box-shadow:
-    0 20px 50px rgba(0,0,0,.3);
-
-  animation:modalOpen .2s ease;
+  padding:4px;
+  margin:0 auto 20px;
 }
 
+.tab{
+  border:none;
+  background:transparent;
 
-@keyframes modalOpen{
+  padding:13px;
 
-  from{
-    transform:scale(.9);
-    opacity:0;
-  }
+  border-radius:11px;
 
-  to{
-    transform:scale(1);
-    opacity:1;
-  }
-}
-
-
-/* =========================
-   CLOSE
-========================= */
-
-.close-btn{
-
-  position:absolute;
-
-  top:15px;
-
-  right:20px;
-
-  font-size:38px;
-
-  color:#999;
+  font-weight:bold;
+  color:#8993ad;
 
   cursor:pointer;
 }
 
-
-/* =========================
-   MODAL TITLE
-========================= */
-
-.modal-content h3{
-
-  color:var(--blue);
-
-  font-size:32px;
-
-  margin:5px 40px 25px 0;
+.tab.active{
+  background:white;
+  color:#0066ff;
+  box-shadow:0 3px 10px rgba(0,0,0,.08);
 }
-
 
 /* =========================
    FORM
 ========================= */
 
-.form-group{
+.form{
+  width:100%;
+  max-width:500px;
+  margin:auto;
+}
 
-  margin-bottom:20px;
+.form-group{
+  margin-bottom:16px;
 }
 
 .form-group label{
-
   display:block;
 
+  font-size:14px;
   font-weight:bold;
 
-  font-size:18px;
-
-  color:#203B72;
-
-  margin-bottom:8px;
+  margin-bottom:7px;
+  color:#203b72;
 }
 
-
-.form-group input,
-.form-group select{
-
+.input{
   width:100%;
-
-  padding:17px;
+  height:52px;
 
   border:2px solid #dce3f0;
+  border-radius:14px;
 
-  border-radius:18px;
-
-  font-size:18px;
-
-  outline:none;
+  padding:0 15px;
 
   background:white;
+
+  font-size:16px;
+  color:#202b55;
+
+  outline:none;
 }
 
-.form-group input:focus,
-.form-group select:focus{
-
-  border-color:var(--blue);
+.input:focus{
+  border-color:#0066ff;
 }
-
 
 /* =========================
-   SUBMIT BUTTON
+   PHONE
 ========================= */
 
-.submit-btn{
+.phone-row{
+  display:flex;
+  gap:8px;
+}
 
-  width:100%;
+.country{
+  width:105px;
+  height:52px;
 
-  padding:18px;
+  border:2px solid #dce3f0;
+  border-radius:14px;
 
+  background:white;
+
+  padding:0 8px;
+
+  font-size:15px;
+  outline:none;
+}
+
+.phone-input{
+  flex:1;
+}
+
+/* =========================
+   PIN
+========================= */
+
+.pin-input{
+  letter-spacing:8px;
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+}
+
+/* =========================
+   FORGOT
+========================= */
+
+.forgot{
+  text-align:right;
+  margin:4px 0 15px;
+}
+
+.forgot button{
   border:none;
+  background:none;
 
-  border-radius:18px;
-
-  background:var(--blue);
-
-  color:white;
-
-  font-size:19px;
-
+  color:#0066ff;
   font-weight:bold;
 
   cursor:pointer;
-
-  margin-top:5px;
 }
-
-.submit-btn:active{
-  transform:scale(.98);
-}
-
 
 /* =========================
-   MESSAGE
+   REGISTER
 ========================= */
 
-.message{
-
-  margin-top:15px;
-
-  padding:12px;
-
-  border-radius:12px;
-
-  font-weight:bold;
-
+#registerForm{
   display:none;
 }
 
-.message.error{
-
+#loginForm{
   display:block;
-
-  background:#ffe9e7;
-
-  color:var(--red);
 }
 
-.message.success{
+.small-note{
+  text-align:center;
 
-  display:block;
+  font-size:12px;
+  color:#8993ad;
 
-  background:#e5fff7;
-
-  color:var(--green);
+  margin-top:15px;
+  line-height:1.5;
 }
-
 
 /* =========================
-   MOBILE
-========================= */
-
-@media(max-width:600px){
-
-  .header{
-
-    padding:
-      25px
-      20px
-      35px;
-  }
-
-  .logo{
-    font-size:20px;
-  }
-
-  .profile{
-
-    width:45px;
-    height:45px;
-  }
-
-  .welcome h2{
-    font-size:34px;
-  }
-
-  .balance{
-
-    font-size:40px;
-  }
-
-  .quick{
-
-    gap:10px;
-  }
-
-  .quick button{
-
-    font-size:14px;
-
-    padding:15px 4px;
-  }
-
-  .title{
-
-    font-size:25px;
-
-    margin-left:20px;
-  }
-
-  .services{
-
-    grid-template-columns:
-      repeat(4,minmax(0,1fr));
-
-    gap:10px;
-
-    padding:
-      0 20px;
-  }
-
-  .service{
-
-    height:170px;
-
-    border-radius:23px;
-
-    padding:15px 3px;
-  }
-
-  .service-icon{
-
-    font-size:34px;
-
-    margin-bottom:13px;
-  }
-
-  .service-name{
-
-    font-size:14px;
-  }
-
-  .transactions{
-
-    width:calc(100% - 40px);
-
-    margin-left:20px;
-    margin-right:20px;
-  }
-
-  .modal{
-
-    padding:12px;
-  }
-
-  .modal-content{
-
-    padding:25px 20px;
-
-    border-radius:28px;
-  }
-
-  .modal-content h3{
-
-    font-size:29px;
-  }
-
-}
-
-
-/* =========================
-   SMALL PHONE
+   RESPONSIVE
 ========================= */
 
 @media(max-width:380px){
 
-  .services{
-
-    gap:7px;
-
-    padding:0 12px;
+  .screen{
+    padding:20px 15px;
   }
 
-  .service{
-
-    height:145px;
+  #welcomeScreen h1{
+    font-size:28px;
   }
 
-  .service-icon{
-    font-size:29px;
+  .input,
+  .country{
+    height:50px;
   }
 
-  .service-name{
-    font-size:12px;
-  }
-
-  .title{
-    margin-left:12px;
-  }
-
-  .transactions{
-
-    width:calc(100% - 24px);
-
-    margin-left:12px;
-    margin-right:12px;
+  .btn{
+    height:52px;
   }
 }
-
-/* ==============================
-   PHONE SCREEN FIX
-============================== */
-
-html {
-  width: 100%;
-  min-height: 100%;
-  overflow-x: hidden;
-}
-
-body {
-  width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-text-size-adjust: 100%;
-}
-
-/* Kada wani abu ya fita daga screen */
-* {
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-/* ==============================
-   MODAL PHONE FIX
-============================== */
-
-.modal {
-  position: fixed;
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  display: none;
-
-  align-items: center;
-  justify-content: center;
-
-  padding: 15px;
-
-  background: rgba(0, 0, 0, 0.60);
-
-  z-index: 99999;
-
-  overflow-y: auto;
-}
-
-/* Modal box */
-.modal-content,
-.modal-box {
-  width: 100%;
-  max-width: 500px;
-
-  max-height: 90vh;
-
-  background: white;
-
-  border-radius: 28px;
-
-  padding: 25px;
-
-  position: relative;
-
-  overflow-y: auto;
-
-  margin: auto;
-}
-
-/* ==============================
-   INPUTS
-============================== */
-
-.form-group input,
-.form-group select,
-.input {
-  width: 100%;
-
-  max-width: 100%;
-
-  padding: 16px;
-
-  font-size: 17px;
-
-  border: 2px solid #dce3f0;
-
-  border-radius: 18px;
-
-  outline: none;
-}
-
-/* ==============================
-   BUTTON
-============================== */
-
-.submit-btn,
-.submit {
-  width: 100%;
-
-  max-width: 100%;
-
-  padding: 17px;
-
-  border: none;
-
-  border-radius: 18px;
-
-  background: #0066ff;
-
-  color: white;
-
-  font-size: 18px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-/* ==============================
-   MOBILE
-============================== */
-
-@media (max-width: 600px) {
-
-  body {
-    font-size: 16px;
-  }
-
-  .header {
-    width: 100%;
-    padding: 20px;
-  }
-
-  .balance-card {
-    width: 100%;
-  }
-
-  .services {
-    width: 100% !important;
-
-    display: grid !important;
-
-    grid-template-columns:
-      repeat(4, minmax(0, 1fr)) !important;
-
-    gap: 10px !important;
-
-    padding: 0 20px !important;
-
-    margin: 0 !important;
-  }
-
-  .service {
-    width: 100% !important;
-
-    min-width: 0 !important;
-
-    height: 120px;
-
-    padding: 12px 3px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    overflow: hidden;
-  }
-
-  .service-icon {
-    font-size: 25px;
-  }
-
-  .service-name {
-    font-size: 11px;
-    line-height: 1.2;
-  }
-
-  .transactions {
-    width: calc(100% - 40px) !important;
-
-    margin-left: 20px !important;
-    margin-right: 20px !important;
-  }
-
-  /* AIRTIME MODAL */
-  .modal {
-    padding: 10px;
-    align-items: center;
-  }
-
-  .modal-content,
-  .modal-box {
-    width: 100%;
-
-    max-width: 100%;
-
-    max-height: 92vh;
-
-    padding: 24px 20px;
-
-    border-radius: 28px;
-
-    overflow-y: auto;
-  }
-
-  .modal-content h3,
-  .modal-box h3 {
-    font-size: 28px;
-    line-height: 1.2;
-  }
-
-  .close-btn,
-  .close {
-    top: 12px;
-    right: 18px;
-
-    font-size: 32px;
-  }
-      }</style>
-
+</style>
 </head>
-
 
 <body>
 
+<div class="app">
 
 <!-- ==================================================
-     HEADER
+     WELCOME SCREEN
 ================================================== -->
 
-<div class="header">
+<section id="welcomeScreen" class="screen active">
 
-
-  <!-- TOP -->
-
-  <div class="top">
-
-    <div class="logo">
-      🏦 MMA BANK
-    </div>
-
-    <div class="profile">
-      M
-    </div>
-
+  <div class="logo-circle">
+    MMA
   </div>
 
+  <h1>MMA BANK</h1>
 
-  <!-- WELCOME -->
+  <p>
+    Barka da zuwa MMA Bank.<br>
+    Bankin ku na zamani.
+  </p>
 
-  <div class="welcome">
+  <button
+    class="btn btn-white"
+    onclick="showAuth('login')">
+    LOGIN
+  </button>
 
-    <small>
-      Barka da zuwa
-    </small>
+  <button
+    class="btn btn-outline"
+    style="color:white;border-color:white;"
+    onclick="showAuth('register')">
+    REGISTER
+  </button>
 
-    <h2>
-      Mubarak 👋
+</section>
+
+
+<!-- ==================================================
+     AUTH SCREEN
+================================================== -->
+
+<section id="authScreen" class="screen">
+
+  <div class="auth-header">
+
+    <div class="auth-logo">
+      MMA
+    </div>
+
+    <h2 id="authTitle">
+      Welcome Back
     </h2>
 
-  </div>
-
-
-  <!-- BALANCE -->
-
-  <div class="balance-card">
-
-    <div class="balance-title">
-      Wallet Balance
-    </div>
-
-    <div
-      class="balance"
-      id="userBalance">
-      ₦1,000.00
-    </div>
-
-    <div class="account">
-      Account Number:
-      8123456789
-    </div>
-
-
-    <!-- QUICK ACTION -->
-
-    <div class="quick">
-
-      <button
-        onclick="openModal('depositModal')">
-
-        📥<br>
-        Add Money
-
-      </button>
-
-
-      <button
-        onclick="openModal('transferModal')">
-
-        💸<br>
-        Transfer
-
-      </button>
-
-
-      <button
-        onclick="openModal('withdrawModal')">
-
-        📤<br>
-        Withdraw
-
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-
-<!-- ==================================================
-     SERVICES
-================================================== -->
-
-<div class="title">
-  Ayyukan Banki
-</div>
-
-
-<div class="services">
-
-
-  <!-- TRANSFER -->
-
-  <div
-    class="service"
-    onclick="openModal('transferModal')">
-
-    <span class="service-icon">
-      💸
-    </span>
-
-    <span class="service-name">
-      Transfer
-    </span>
+    <p id="authSubtitle">
+      Shiga MMA Bank account ɗinka
+    </p>
 
   </div>
 
 
-  <!-- DEPOSIT -->
+  <!-- TABS -->
 
-  <div
-    class="service"
-    onclick="openModal('depositModal')">
+  <div class="tabs">
 
-    <span class="service-icon">
-      📥
-    </span>
+    <button
+      id="loginTab"
+      class="tab active"
+      onclick="switchTab('login')">
+      LOGIN
+    </button>
 
-    <span class="service-name">
-      Deposit
-    </span>
-
-  </div>
-
-
-  <!-- WITHDRAW -->
-
-  <div
-    class="service"
-    onclick="openModal('withdrawModal')">
-
-    <span class="service-icon">
-      📤
-    </span>
-
-    <span class="service-name">
-      Withdraw
-    </span>
+    <button
+      id="registerTab"
+      class="tab"
+      onclick="switchTab('register')">
+      REGISTER
+    </button>
 
   </div>
 
 
-  <!-- AIRTIME -->
-
-  <div
-    class="service"
-    onclick="openModal('airtimeModal')">
-
-    <span class="service-icon">
-      📱
-    </span>
-
-    <span class="service-name">
-      Airtime
-    </span>
-
-  </div>
-
-
-  <!-- DATA -->
-
-  <div
-    class="service"
-    onclick="demoService('Data')">
-
-    <span class="service-icon">
-      📶
-    </span>
-
-    <span class="service-name">
-      Data
-    </span>
-
-  </div>
-
-
-  <!-- ELECTRICITY -->
-
-  <div
-    class="service"
-    onclick="demoService('Electricity')">
-
-    <span class="service-icon">
-      💡
-    </span>
-
-    <span class="service-name">
-      Electricity
-    </span>
-
-  </div>
-
-
-  <!-- TV -->
-
-  <div
-    class="service"
-    onclick="demoService('TV')">
-
-    <span class="service-icon">
-      📺
-    </span>
-
-    <span class="service-name">
-      TV
-    </span>
-
-  </div>
-
-
-  <!-- CARDS -->
-
-  <div
-    class="service"
-    onclick="demoService('Cards')">
-
-    <span class="service-icon">
-      💳
-    </span>
-
-    <span class="service-name">
-      Cards
-    </span>
-
-  </div>
-
-
-  <!-- SAVINGS -->
-
-  <div
-    class="service"
-    onclick="demoService('Savings')">
-
-    <span class="service-icon">
-      💰
-    </span>
-
-    <span class="service-name">
-      Savings
-    </span>
-
-  </div>
-
-
-  <!-- LOAN -->
-
-  <div
-    class="service"
-    onclick="demoService('Loan')">
-
-    <span class="service-icon">
-      🏦
-    </span>
-
-    <span class="service-name">
-      Loan
-    </span>
-
-  </div>
-
-
-  <!-- SUPPORT -->
-
-  <div
-    class="service"
-    onclick="demoService('Support')">
-
-    <span class="service-icon">
-      🎧
-    </span>
-
-    <span class="service-name">
-      Support
-    </span>
-
-  </div>
-
-
-</div>
-
-
-
-<!-- ==================================================
-     RECENT TRANSACTIONS
-================================================== -->
-
-<div class="title">
-  Recent Transactions
-</div>
-
-
-<div
-  class="transactions"
-  id="transactionsList">
-
-
-  <div class="transaction">
-
-    <div>
-
-      <div class="tx-name">
-        Babu Transaction
-      </div>
-
-      <div class="tx-date">
-        Babu mu'amala
-      </div>
-
-    </div>
-
-    <div class="in">
-      +₦0.00
-    </div>
-
-  </div>
-
-
-  <div class="transaction">
-
-    <div>
-
-      <div class="tx-name">
-        Babu Transaction
-      </div>
-
-      <div class="tx-date">
-        Babu mu'amala
-      </div>
-
-    </div>
-
-    <div class="out">
-      -₦0.00
-    </div>
-
-  </div>
-
-
-</div>
-
-
-
-<!-- ==================================================
-     TRANSFER MODAL
-================================================== -->
-
-<div
-  class="modal"
-  id="transferModal">
-
-
-  <div class="modal-content">
-
-
-    <span
-      class="close-btn"
-      onclick="closeModal('transferModal')">
-
-      ×
-
-    </span>
-
-
-    <h3>
-      💸 Transfer Money
-    </h3>
-
-
-    <form
-      onsubmit="transferMoney(event)">
-
-
-      <div class="form-group">
-
-        <label>
-          Account Number
-        </label>
+  <!-- ==================================================
+       LOGIN FORM
+  ================================================== -->
+
+  <form
+    id="loginForm"
+    class="form"
+    onsubmit="loginDemo(event)">
+
+    <div class="form-group">
+
+      <label>
+        Phone Number
+      </label>
+
+      <div class="phone-row">
+
+        <select class="country">
+          <option value="+234">
+            🇳🇬 +234
+          </option>
+
+          <option value="+233">
+            🇬🇭 +233
+          </option>
+
+          <option value="+254">
+            🇰🇪 +254
+          </option>
+
+          <option value="+27">
+            🇿🇦 +27
+          </option>
+
+          <option value="+1">
+            🇺🇸 +1
+          </option>
+
+          <option value="+44">
+            🇬🇧 +44
+          </option>
+        </select>
 
         <input
-          id="transferAccount"
-          type="text"
-          inputmode="numeric"
-          placeholder="8123456789"
-          required>
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>
-          Adadin Kuɗi (₦)
-        </label>
-
-        <input
-          id="transferAmount"
-          type="number"
-          min="1"
-          placeholder="100"
-          required>
-
-      </div>
-
-
-      <div
-        id="transferMessage"
-        class="message">
-      </div>
-
-
-      <button
-        class="submit-btn"
-        type="submit">
-
-        💸 Transfer
-
-      </button>
-
-    </form>
-
-  </div>
-
-</div>
-
-
-
-<!-- ==================================================
-     DEPOSIT MODAL
-================================================== -->
-
-<div
-  class="modal"
-  id="depositModal">
-
-
-  <div class="modal-content">
-
-
-    <span
-      class="close-btn"
-      onclick="closeModal('depositModal')">
-
-      ×
-
-    </span>
-
-
-    <h3>
-      📥 Add Money
-    </h3>
-
-
-    <form
-      onsubmit="depositMoney(event)">
-
-
-      <div class="form-group">
-
-        <label>
-          Adadin Kuɗi (₦)
-        </label>
-
-        <input
-          id="depositAmount"
-          type="number"
-          min="1"
-          placeholder="1000"
-          required>
-
-      </div>
-
-
-      <div
-        id="depositMessage"
-        class="message">
-      </div>
-
-
-      <button
-        class="submit-btn"
-        type="submit">
-
-        📥 Add Money
-
-      </button>
-
-    </form>
-
-  </div>
-
-</div>
-
-
-
-<!-- ==================================================
-     WITHDRAW MODAL
-================================================== -->
-
-<div
-  class="modal"
-  id="withdrawModal">
-
-
-  <div class="modal-content">
-
-
-    <span
-      class="close-btn"
-      onclick="closeModal('withdrawModal')">
-
-      ×
-
-    </span>
-
-
-    <h3>
-      📤 Withdraw Money
-    </h3>
-
-
-    <form
-      onsubmit="withdrawMoney(event)">
-
-
-      <div class="form-group">
-
-        <label>
-          Adadin Kuɗi (₦)
-        </label>
-
-        <input
-          id="withdrawAmount"
-          type="number"
-          min="1"
-          placeholder="100"
-          required>
-
-      </div>
-
-
-      <div
-        id="withdrawMessage"
-        class="message">
-      </div>
-
-
-      <button
-        class="submit-btn"
-        type="submit">
-
-        📤 Withdraw
-
-      </button>
-
-    </form>
-
-  </div>
-
-</div>
-
-
-
-<!-- ==================================================
-     AIRTIME MODAL
-================================================== -->
-
-<div
-  class="modal"
-  id="airtimeModal">
-
-
-  <div class="modal-content">
-
-
-    <span
-      class="close-btn"
-      onclick="closeModal('airtimeModal')">
-
-      ×
-
-    </span>
-
-
-    <h3>
-      📱 Sayi Airtime
-    </h3>
-
-
-    <form
-      onsubmit="buyAirtime(event)">
-
-
-      <!-- PHONE -->
-
-      <div class="form-group">
-
-        <label>
-          Lambar Waya
-        </label>
-
-        <input
-          id="airtimePhone"
+          id="loginPhone"
+          class="input phone-input"
           type="tel"
-          inputmode="numeric"
-          maxlength="11"
-          placeholder="08012345678"
+          placeholder="8012345678"
+          maxlength="15"
           required>
 
       </div>
 
+    </div>
 
-      <!-- NETWORK -->
 
-      <div class="form-group">
+    <div class="form-group">
 
-        <label>
-          Network
-        </label>
+      <label>
+        PIN 6
+      </label>
+
+      <input
+        id="loginPin"
+        class="input pin-input"
+        type="password"
+        inputmode="numeric"
+        maxlength="6"
+        placeholder="••••••"
+        required>
+
+    </div>
+
+
+    <div class="forgot">
+
+      <button
+        type="button"
+        onclick="forgotPassword()">
+        Forgot Password?
+      </button>
+
+    </div>
+
+
+    <button
+      class="btn btn-primary"
+      type="submit">
+      LOGIN
+    </button>
+
+    <p class="small-note">
+      Demo ne kawai a wannan matakin.
+    </p>
+
+  </form>
+
+
+  <!-- ==================================================
+       REGISTER FORM
+  ================================================== -->
+
+  <form
+    id="registerForm"
+    class="form"
+    onsubmit="registerDemo(event)">
+
+    <div class="form-group">
+
+      <label>
+        First Name
+      </label>
+
+      <input
+        id="firstName"
+        class="input"
+        type="text"
+        placeholder="Saka suna"
+        required>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Last Name
+      </label>
+
+      <input
+        id="lastName"
+        class="input"
+        type="text"
+        placeholder="Saka sunan mahaifi"
+        required>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Country & Phone Number
+      </label>
+
+      <div class="phone-row">
 
         <select
-          id="airtimeNetwork"
-          required>
+          id="registerCountry"
+          class="country">
 
-          <option value="">
-            -- Zaɓi Network --
+          <option value="+234">
+            🇳🇬 +234
           </option>
 
-          <option value="MTN">
-            MTN
+          <option value="+233">
+            🇬🇭 +233
           </option>
 
-          <option value="Airtel">
-            Airtel
+          <option value="+254">
+            🇰🇪 +254
           </option>
 
-          <option value="Glo">
-            Glo
+          <option value="+27">
+            🇿🇦 +27
           </option>
 
-          <option value="9mobile">
-            9mobile
+          <option value="+1">
+            🇺🇸 +1
+          </option>
+
+          <option value="+44">
+            🇬🇧 +44
           </option>
 
         </select>
 
-      </div>
-
-
-      <!-- AMOUNT -->
-
-      <div class="form-group">
-
-        <label>
-          Adadin Kuɗi (₦)
-        </label>
-
         <input
-          id="airtimeAmount"
-          type="number"
-          min="50"
-          placeholder="100"
+          id="registerPhone"
+          class="input phone-input"
+          type="tel"
+          inputmode="numeric"
+          placeholder="8012345678"
+          maxlength="15"
           required>
 
       </div>
 
-
-      <div
-        id="airtimeMessage"
-        class="message">
-      </div>
+    </div>
 
 
-      <button
-        class="submit-btn"
-        type="submit">
+    <div class="form-group">
 
-        📱 Sayi Airtime
+      <label>
+        Create PIN 6
+      </label>
 
-      </button>
+      <input
+        id="registerPin"
+        class="input pin-input"
+        type="password"
+        inputmode="numeric"
+        maxlength="6"
+        placeholder="••••••"
+        required>
+
+    </div>
 
 
-    </form>
+    <div class="form-group">
 
-  </div>
+      <label>
+        Confirm PIN 6
+      </label>
+
+      <input
+        id="confirmPin"
+        class="input pin-input"
+        type="password"
+        inputmode="numeric"
+        maxlength="6"
+        placeholder="••••••"
+        required>
+
+    </div>
+
+
+    <button
+      class="btn btn-primary"
+      type="submit">
+      REGISTER
+    </button>
+
+    <p class="small-note">
+      Ta hanyar Register, zaka ci gaba zuwa
+      OTP verification.
+    </p>
+
+  </form>
+
+</section>
 
 </div>
-
 
 
 <script>
 
 /* ==================================================
-   MMA BANK JAVASCRIPT
+   SCREEN CONTROL
 ================================================== */
 
+function showAuth(type){
 
-/* =========================
-   BALANCE
-========================= */
+  document
+    .getElementById("welcomeScreen")
+    .classList.remove("active");
 
-let balance = 1000;
+  document
+    .getElementById("authScreen")
+    .classList.add("active");
+
+  switchTab(type);
+}
 
 
-/* =========================
-   LOAD BALANCE
-========================= */
+/* ==================================================
+   SWITCH LOGIN / REGISTER
+================================================== */
 
-const savedBalance =
-  localStorage.getItem("mmaBankBalance");
+function switchTab(type){
 
-if(savedBalance !== null){
+  const loginForm =
+    document.getElementById("loginForm");
 
-  balance =
-    parseFloat(savedBalance);
+  const registerForm =
+    document.getElementById("registerForm");
+
+  const loginTab =
+    document.getElementById("loginTab");
+
+  const registerTab =
+    document.getElementById("registerTab");
+
+  const title =
+    document.getElementById("authTitle");
+
+  const subtitle =
+    document.getElementById("authSubtitle");
+
+
+  if(type === "login"){
+
+    loginForm.style.display = "block";
+    registerForm.style.display = "none";
+
+    loginTab.classList.add("active");
+    registerTab.classList.remove("active");
+
+    title.innerText =
+      "Welcome Back";
+
+    subtitle.innerText =
+      "Shiga MMA Bank account ɗinka";
+
+  }else{
+
+    loginForm.style.display = "none";
+    registerForm.style.display = "block";
+
+    loginTab.classList.remove("active");
+    registerTab.classList.add("active");
+
+    title.innerText =
+      "Create Account";
+
+    subtitle.innerText =
+      "Ƙirƙiri sabon MMA Bank account";
+
+  }
 
 }
 
 
-/* =========================
-   FORMAT MONEY
-========================= */
+/* ==================================================
+   REGISTER DEMO
+================================================== */
 
-function formatMoney(amount){
+function registerDemo(event){
 
-  return "₦" +
-    Number(amount).toLocaleString(
-      "en-NG",
-      {
-        minimumFractionDigits:2,
-        maximumFractionDigits:2
+  event.preventDefault();
+
+  const firstName =
+    document.getElementById("firstName").value.trim();
+
+  const lastName =
+    document.getElementById("lastName").value.trim();
+
+  const country =
+    document.getElementById("registerCountry").value;
+
+  const phone =
+    document.getElementById("registerPhone").value.trim();
+
+  const pin =
+    document.getElementById("registerPin").value;
+
+  const confirmPin =
+    document.getElementById("confirmPin").value;
+
+
+  /* PIN MUST BE 6 DIGITS */
+
+  if(!/^\d{6}$/.test(pin)){
+
+    alert(
+      "PIN dole ne ya zama lambobi 6."
+    );
+
+    return;
+  }
+
+
+  if(pin !== confirmPin){
+
+    alert(
+      "PIN biyu ba su yi daidai ba."
+    );
+
+    return;
+  }
+
+
+  if(phone.length < 7){
+
+    alert(
+      "Saka lambar waya daidai."
+    );
+
+    return;
+  }
+
+
+  alert(
+    "An karɓi bayanan registration.\n\n" +
+    "Suna: " + firstName + " " + lastName + "\n" +
+    "Phone: " + country + phone +
+    "\n\n" +
+    "Mataki na gaba: OTP verification."
+  );
+
+}
+
+
+/* ==================================================
+   LOGIN DEMO
+================================================== */
+
+function loginDemo(event){
+
+  event.preventDefault();
+
+  const phone =
+    document.getElementById("loginPhone").value.trim();
+
+  const pin =
+    document.getElementById("loginPin").value;
+
+
+  if(!/^\d{6}$/.test(pin)){
+
+    alert(
+      "PIN dole ne ya zama lambobi 6."
+    );
+
+    return;
+  }
+
+
+  if(phone.length < 7){
+
+    alert(
+      "Saka lambar waya daidai."
+    );
+
+    return;
+  }
+
+
+  alert(
+    "Login demo ne yanzu.\n\n" +
+    "Mataki na gaba za mu haɗa OTP " +
+    "da dashboard."
+  );
+
+}
+
+
+/* ==================================================
+   FORGOT PASSWORD
+================================================== */
+
+function forgotPassword(){
+
+  alert(
+    "Forgot Password\n\n" +
+    "A mataki na gaba za mu saka:\n" +
+    "1. Phone Number\n" +
+    "2. OTP\n" +
+    "3. Sabon PIN"
+  );
+
+}
+
+
+/* ==================================================
+   ONLY ALLOW NUMBERS IN PIN
+================================================== */
+
+document
+  .querySelectorAll(".pin-input")
+  .forEach(function(input){
+
+    input.addEventListener(
+      "input",
+      function(){
+
+        this.value =
+          this.value.replace(/\D/g,"");
+
       }
     );
 
-}
-
-
-/* =========================
-   UPDATE BALANCE
-========================= */
-
-function updateBalance(){
-
-  document.getElementById(
-    "userBalance"
-  ).innerText =
-    formatMoney(balance);
-
-
-  localStorage.setItem(
-    "mmaBankBalance",
-    balance
-  );
-
-}
-
-
-/* =========================
-   OPEN MODAL
-========================= */
-
-function openModal(id){
-
-  const modal =
-    document.getElementById(id);
-
-  if(modal){
-
-    modal.style.display = "flex";
-
-  }
-
-}
-
-
-/* =========================
-   CLOSE MODAL
-========================= */
-
-function closeModal(id){
-
-  const modal =
-    document.getElementById(id);
-
-  if(modal){
-
-    modal.style.display = "none";
-
-  }
-
-}
-
-
-/* =========================
-   CLOSE WHEN CLICK OUTSIDE
-========================= */
-
-window.addEventListener(
-  "click",
-  function(event){
-
-    if(event.target.classList.contains("modal")){
-
-      event.target.style.display = "none";
-
-    }
-
-  }
-);
-
-
-/* ==================================================
-   ADD TRANSACTION
-================================================== */
-
-function addTransaction(
-  name,
-  description,
-  amount,
-  type
-){
-
-  const list =
-    document.getElementById(
-      "transactionsList"
-    );
-
-
-  const transaction =
-    document.createElement("div");
-
-
-  transaction.className =
-    "transaction";
-
-
-  const sign =
-    type === "in"
-      ? "+"
-      : "-";
-
-
-  transaction.innerHTML = `
-
-    <div>
-
-      <div class="tx-name">
-        ${name}
-      </div>
-
-      <div class="tx-date">
-        ${description}
-      </div>
-
-    </div>
-
-    <div class="${type}">
-      ${sign}${formatMoney(amount)}
-    </div>
-
-  `;
-
-
-  list.prepend(transaction);
-
-}
-
-
-/* ==================================================
-   DEPOSIT
-================================================== */
-
-function depositMoney(event){
-
-  event.preventDefault();
-
-
-  const input =
-    document.getElementById(
-      "depositAmount"
-    );
-
-
-  const amount =
-    parseFloat(input.value);
-
-
-  const message =
-    document.getElementById(
-      "depositMessage"
-    );
-
-
-  if(!amount || amount <= 0){
-
-    message.className =
-      "message error";
-
-    message.innerText =
-      "Shigar da adadin kuɗi daidai.";
-
-    return;
-
-  }
-
-
-  balance += amount;
-
-
-  updateBalance();
-
-
-  addTransaction(
-    "Deposit",
-    "An ƙara kuɗi cikin wallet",
-    amount,
-    "in"
-  );
-
-
-  message.className =
-    "message success";
-
-  message.innerText =
-    "An ƙara " +
-    formatMoney(amount) +
-    " cikin wallet.";
-
-  input.value = "";
-
-
-  setTimeout(
-    function(){
-
-      closeModal("depositModal");
-
-      message.className =
-        "message";
-
-    },
-    1000
-  );
-
-}
-
-
-/* ==================================================
-   WITHDRAW
-================================================== */
-
-function withdrawMoney(event){
-
-  event.preventDefault();
-
-
-  const input =
-    document.getElementById(
-      "withdrawAmount"
-    );
-
-
-  const amount =
-    parseFloat(input.value);
-
-
-  const message =
-    document.getElementById(
-      "withdrawMessage"
-    );
-
-
-  if(!amount || amount <= 0){
-
-    message.className =
-      "message error";
-
-    message.innerText =
-      "Shigar da adadin kuɗi daidai.";
-
-    return;
-
-  }
-
-
-  if(amount > balance){
-
-    message.className =
-      "message error";
-
-    message.innerText =
-      "Kuɗin da ke wallet ɗinka bai isa ba!";
-
-    return;
-
-  }
-
-
-  balance -= amount;
-
-
-  updateBalance();
-
-
-  addTransaction(
-    "Withdraw",
-    "An cire kuɗi daga wallet",
-    amount,
-    "out"
-  );
-
-
-  message.className =
-    "message success";
-
-  message.innerText =
-    "An cire " +
-    formatMoney(amount) +
-    " daga wallet.";
-
-  input.value = "";
-
-
-  setTimeout(
-    function(){
-
-      closeModal("withdrawModal");
-
-      message.className =
-        "message";
-
-    },
-    1000
-  );
-
-}
-
-
-/* ==================================================
-   TRANSFER
-================================================== */
-
-function transferMoney(event){
-
-  event.preventDefault();
-
-
-  const account =
-    document.getElementById(
-      "transferAccount"
-    ).value.trim();
-
-
-  const input =
-    document.getElementById(
-      "transferAmount"
-    );
-
-
-  const amount =
-    parseFloat(input.value);
-
-
-  const message =
-    document.getElementById(
-      "transferMessage"
-    );
-
-
-  if(account.length < 10){
-
-    message.className =
-      "message error";
-
-    message.innerText =
-      "Shigar da Account Number mai inganci.";
-
-    return;
-
-  }
-
-
-  if(!amount || amount <= 0){
-
-    message.className =
-      "message error";
-
-    message.innerText =
-      "Shigar da adadin kuɗi daidai.";
-
-    return;
-
-  }
-
-
-  if(amount > balance){
-
-    message.className =
-      "message error";
-
-    message.innerText =
-      "Kuɗin da ke wallet ɗinka bai isa ba!";
-
-    return;
-
-  }
-
-
-  balance -= amount;
-
-
-  updateBalance();
-
-
-  addTransaction(
-    "Transfer",
-    "An aika zuwa " + account,
-    amount,
-    "out"
-  );
-
-
-  message.className =
-    "message success";
-
-  message.innerText =
-    "An yi Transfer na " +
-    formatMoney(amount) +
-    ".";
-
-  input.value = "";
-
-
-  setTimeout(
-    function(){
-
-      closeModal("transferModal");
-
-      message.className =
-        "message";
-
-    },
-    1000
-  );
-
-}
-
-
-/* ==================================================
-   BUY AIRTIME
-================================================== */
-
-function buyAirtime(event){
-
-  event.preventDefault();
-
-
-  const phone =
-    document.getElementById(
-      "airtimePhone"
-    ).value.trim();
-
-
-  const network =
-    document.getElementById(
-      "airtimeNetwork"
-    ).value;
-
-
-  const input =
-    document.getElementById(
-      "airtimeAmount"
-    );
-
-
-  const amount =
-    parseFloat(input.value);
-
-
-  const message =
-    document.getElementById(
-      "airtimeMessage"
-    );
-
-
-  /* PHONE VALIDATION */
-
-  if(!/^0[0-9]{10}$/.test(phone)){
-
-    message.className =
-      "message error";
-
-    message.innerText =
-      "Shigar da lambar waya mai lambobi 11.";
-
-    return;
-
-  }
-
-
-  /* NETWORK VALIDATION */
-
-  if(!network){
-
-    message.className =
-      "message error";
-
-    message.innerText =
-      "Da fatan zaɓi Network.";
-
-    return;
-
-  }
-
-
-  /* AMOUNT VALIDATION */
-
-  if(!amount || amount < 50){
-
-    message.className =
-      "message error";
-
-    message.innerText =
-      "Mafi ƙarancin Airtime shine ₦50.";
-
-    return;
-
-  }
-
-
-  /* BALANCE CHECK */
-
-  if(amount > balance){
-
-    message.className =
-      "message error";
-
-    message.innerText =
-      "Kuɗin da ke wallet ɗinka bai isa ba!";
-
-    return;
-
-  }
-
-
-  /* DEDUCT MONEY */
-
-  balance -= amount;
-
-
-  updateBalance();
-
-
-  /* ADD TRANSACTION */
-
-  addTransaction(
-    "Airtime - " + network,
-    "Airtime zuwa " + phone,
-    amount,
-    "out"
-  );
-
-
-  /* SUCCESS MESSAGE */
-
-  message.className =
-    "message success";
-
-  message.innerText =
-    "An yi nasarar sayen Airtime na " +
-    formatMoney(amount) +
-    " zuwa " +
-    phone +
-    ".";
-
-
-  input.value = "";
-
-
-  /* CLOSE */
-
-  setTimeout(
-    function(){
-
-      closeModal("airtimeModal");
-
-      message.className =
-        "message";
-
-    },
-    1500
-  );
-
-}
-
-
-/* ==================================================
-   OTHER SERVICES
-================================================== */
-
-function demoService(service){
-
-  alert(
-    service +
-    " service yana cikin DEMO.\n\n" +
-    "Za mu haɗa shi da backend/payment API daga baya."
-  );
-
-}
-
-
-/* ==================================================
-   INITIAL BALANCE
-================================================== */
-
-updateBalance();
-
-
-</script><script>
-
-async function loadAccount() {
-
-  try {
-
-    const response = await fetch("/api/account");
-
-    const data = await response.json();
-
-    if (!data.success) {
-      alert("An samu matsala.");
-      return;
-    }
-
-    document.getElementById("userName").textContent =
-      data.user.name;
-
-    document.getElementById("userBalance").textContent =
-      "₦" + data.user.balance.toLocaleString("en-NG", {
-        minimumFractionDigits: 2
-      });
-
-    document.getElementById("accountNumber").textContent =
-      data.user.accountNumber;
-
-    displayTransactions(data.transactions);
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("An kasa haɗawa da server.");
-
-  }
-
-}
-
-
-// ===============================
-// AIRTIME
-// ===============================
-
-async function buyAirtime(event) {
-
-  event.preventDefault();
-
-  const phone =
-    document.getElementById("airtimePhone").value;
-
-  const network =
-    document.getElementById("airtimeNetwork").value;
-
-  const amount =
-    Number(document.getElementById("airtimeAmount").value);
-
-
-  if (!phone) {
-    alert("Shigar da lambar waya.");
-    return;
-  }
-
-  if (!network) {
-    alert("Zaɓi Network.");
-    return;
-  }
-
-  if (!amount || amount <= 0) {
-    alert("Shigar da adadin kuɗi.");
-    return;
-  }
-
-
-  try {
-
-    const response = await fetch("/api/airtime", {
-
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        phone,
-        network,
-        amount
-      })
-
-    });
-
-
-    const data = await response.json();
-
-
-    if (!response.ok) {
-
-      alert(data.message);
-
-      return;
-
-    }
-
-
-    alert(
-      "An karɓi umarnin Airtime!\n\n" +
-      "Network: " + data.network + "\n" +
-      "Lamba: " + data.phone + "\n" +
-      "Adadi: ₦" + data.amount.toLocaleString()
-    );
-
-
-    closeModal("airtimeModal");
-
-    loadAccount();
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("An kasa haɗawa da server.");
-
-  }
-
-}
-
-
-// ===============================
-// ADD MONEY
-// ===============================
-
-async function depositMoney(event) {
-
-  event.preventDefault();
-
-  const amount =
-    Number(document.getElementById("depositAmount").value);
-
-
-  if (!amount || amount <= 0) {
-
-    alert("Shigar da adadin kuɗi.");
-
-    return;
-
-  }
-
-
-  try {
-
-    const response = await fetch("/api/deposit", {
-
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        amount
-      })
-
-    });
-
-
-    const data = await response.json();
-
-
-    if (!response.ok) {
-
-      alert(data.message);
-
-      return;
-
-    }
-
-
-    alert(data.message);
-
-    closeModal("depositModal");
-
-    loadAccount();
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("An kasa haɗawa da server.");
-
-  }
-
-}
-
-
-// ===============================
-// TRANSFER
-// ===============================
-
-async function transferMoney(event) {
-
-  event.preventDefault();
-
-
-  const accountNumber =
-    document.getElementById("transferAccount").value;
-
-  const amount =
-    Number(document.getElementById("transferAmount").value);
-
-
-  if (!accountNumber) {
-
-    alert("Shigar da Account Number.");
-
-    return;
-
-  }
-
-
-  if (!amount || amount <= 0) {
-
-    alert("Shigar da adadin kuɗi.");
-
-    return;
-
-  }
-
-
-  try {
-
-    const response = await fetch("/api/transfer", {
-
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        accountNumber,
-        amount
-      })
-
-    });
-
-
-    const data = await response.json();
-
-
-    if (!response.ok) {
-
-      alert(data.message);
-
-      return;
-
-    }
-
-
-    alert(
-      data.message +
-      "\n\nAccount: " +
-      data.accountNumber +
-      "\nAdadi: ₦" +
-      data.amount.toLocaleString()
-    );
-
-
-    closeModal("transferModal");
-
-    loadAccount();
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("An kasa haɗawa da server.");
-
-  }
-
-}
-
-
-// ===============================
-// WITHDRAW
-// ===============================
-
-async function withdrawMoney(event) {
-
-  event.preventDefault();
-
-
-  const amount =
-    Number(document.getElementById("withdrawAmount").value);
-
-
-  if (!amount || amount <= 0) {
-
-    alert("Shigar da adadin kuɗi.");
-
-    return;
-
-  }
-
-
-  try {
-
-    const response = await fetch("/api/withdraw", {
-
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        amount
-      })
-
-    });
-
-
-    const data = await response.json();
-
-
-    if (!response.ok) {
-
-      alert(data.message);
-
-      return;
-
-    }
-
-
-    alert(data.message);
-
-    closeModal("withdrawModal");
-
-    loadAccount();
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("An kasa haɗawa da server.");
-
-  }
-
-}
-
-
-// ===============================
-// TRANSACTIONS
-// ===============================
-
-function displayTransactions(transactions) {
-
-  const container =
-    document.getElementById("transactionsList");
-
-
-  container.innerHTML = "";
-
-
-  transactions.forEach(tx => {
-
-    const div =
-      document.createElement("div");
-
-    div.className = "transaction";
-
-
-    const sign =
-      tx.type === "credit" ? "+" : "-";
-
-
-    const colorClass =
-      tx.type === "credit" ? "in" : "out";
-
-
-    div.innerHTML = `
-
-      <div>
-
-        <div class="tx-name">
-          ${tx.name}
-        </div>
-
-        <div class="tx-date">
-          ${tx.description}
-        </div>
-
-      </div>
-
-      <div class="${colorClass}">
-        ${sign}₦${tx.amount.toLocaleString("en-NG", {
-          minimumFractionDigits: 2
-        })}
-      </div>
-
-    `;
-
-
-    container.appendChild(div);
-
   });
 
-}
-
-
-// ===============================
-// MODALS
-// ===============================
-
-function openModal(id) {
-
-  const modal =
-    document.getElementById(id);
-
-  if (modal) {
-
-    modal.style.display = "flex";
-
-  }
-
-}
-
-
-function closeModal(id) {
-
-  const modal =
-    document.getElementById(id);
-
-  if (modal) {
-
-    modal.style.display = "none";
-
-  }
-
-}
-
-
-// ===============================
-// START
-// ===============================
-
-document.addEventListener(
-  "DOMContentLoaded",
-  loadAccount
-);
-
-         /* ==============================
-   PHONE SCREEN FIX
-============================== */
-
-html {
-  width: 100%;
-  min-height: 100%;
-  overflow-x: hidden;
-}
-
-body {
-  width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-text-size-adjust: 100%;
-}
-
-/* Kada wani abu ya fita daga screen */
-* {
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-/* ==============================
-   MODAL PHONE FIX
-============================== */
-
-.modal {
-  position: fixed;
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  display: none;
-
-  align-items: center;
-  justify-content: center;
-
-  padding: 15px;
-
-  background: rgba(0, 0, 0, 0.60);
-
-  z-index: 99999;
-
-  overflow-y: auto;
-}
-
-/* Modal box */
-.modal-content,
-.modal-box {
-  width: 100%;
-  max-width: 500px;
-
-  max-height: 90vh;
-
-  background: white;
-
-  border-radius: 28px;
-
-  padding: 25px;
-
-  position: relative;
-
-  overflow-y: auto;
-
-  margin: auto;
-}
-
-/* ==============================
-   INPUTS
-============================== */
-
-.form-group input,
-.form-group select,
-.input {
-  width: 100%;
-
-  max-width: 100%;
-
-  padding: 16px;
-
-  font-size: 17px;
-
-  border: 2px solid #dce3f0;
-
-  border-radius: 18px;
-
-  outline: none;
-}
-
-/* ==============================
-   BUTTON
-============================== */
-
-.submit-btn,
-.submit {
-  width: 100%;
-
-  max-width: 100%;
-
-  padding: 17px;
-
-  border: none;
-
-  border-radius: 18px;
-
-  background: #0066ff;
-
-  color: white;
-
-  font-size: 18px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-/* ==============================
-   MOBILE
-============================== */
-
-@media (max-width: 600px) {
-
-  body {
-    font-size: 16px;
-  }
-
-  .header {
-    width: 100%;
-    padding: 20px;
-  }
-
-  .balance-card {
-    width: 100%;
-  }
-
-  .services {
-    width: 100% !important;
-
-    display: grid !important;
-
-    grid-template-columns:
-      repeat(4, minmax(0, 1fr)) !important;
-
-    gap: 10px !important;
-
-    padding: 0 20px !important;
-
-    margin: 0 !important;
-  }
-
-  .service {
-    width: 100% !important;
-
-    min-width: 0 !important;
-
-    height: 120px;
-
-    padding: 12px 3px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    overflow: hidden;
-  }
-
-  .service-icon {
-    font-size: 25px;
-  }
-
-  .service-name {
-    font-size: 11px;
-    line-height: 1.2;
-  }
-
-  .transactions {
-    width: calc(100% - 40px) !important;
-
-    margin-left: 20px !important;
-    margin-right: 20px !important;
-  }
-
-  /* AIRTIME MODAL */
-  .modal {
-    padding: 10px;
-    align-items: center;
-  }
-
-  .modal-content,
-  .modal-box {
-    width: 100%;
-
-    max-width: 100%;
-
-    max-height: 92vh;
-
-    padding: 24px 20px;
-
-    border-radius: 28px;
-
-    overflow-y: auto;
-  }
-
-  .modal-content h3,
-  .modal-box h3 {
-    font-size: 28px;
-    line-height: 1.2;
-  }
-
-  .close-btn,
-  .close {
-    top: 12px;
-    right: 18px;
-
-    font-size: 32px;
-  }
-      } </script>
-
+</script>
 
 </body>
 </html>
