@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no">
+
+<title>MMA Bank - Dashboard</title>
+
+<style>
+
+/* =====================================================
+   MMA BANK DASHBOARD
+   FRONTEND ONLY
+===================================================== */
+
+:root{
+  --blue:#0066FF;
+  --darkblue:#0044B3;
+  --light:#F4F7FE;
+  --white:#FFFFFF;
+  --text:#202B55;
+  --gray:#8993AD;
+  --green:#05B989;
+  --red:#E94F45;
+  --border:#E4E9F2;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Segoe UI,sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+  width:100%;
+  min-height:100%;
+  background:var(--light);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+body{
+  padding-bottom:25px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+  width:100%;
+  background:linear-gradient(
+    135deg,
+    var(--blue),
+    var(--darkblue)
+  );
+
+  color:white;
+
+  padding:
+    18px
+    18px
+    22px;
+
+  border-bottom-left-radius:28px;
+  border-bottom-right-radius:28px;
+}
+
+.top{
+  width:100%;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:bold;
+  letter-spacing:.3px;
+}
+
+.profile{
+  width:40px;
+  height:40px;
+
+  border-radius:50%;
+
+  background:white;
+  color:var(--blue);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:16px;
+  font-weight:bold;
+}
+
+
+/* =====================================================
+   WELCOME
+===================================================== */
+
+.welcome{
+  margin-top:18px;
+}
+
+.welcome small{
+  display:block;
+  font-size:13px;
+  opacity:.8;
+}
+
+.welcome h2{
+  margin-top:5px;
+  font-size:22px;
+}
+
+
+/* =====================================================
+   BALANCE CARD
+===================================================== */
+
+.balance-card{
+  margin-top:17px;
+
+  background:rgba(255,255,255,.14);
+
+  border:1px solid rgba(255,255,255,.20);
+
+  padding:18px;
+
+  border-radius:20px;
+}
+
+.balance-title{
+  font-size:13px;
+  opacity:.85;
+}
+
+.balance{
+  font-size:29px;
+  font-weight:bold;
+
+  margin:
+    7px
+    0
+    15px;
+}
+
+.account{
+  font-size:12px;
+  opacity:.9;
+}
+
+
+/* =====================================================
+   QUICK ACTIONS
+===================================================== */
+
+.quick{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:9px;
+
+  margin-top:16px;
+}
+
+.quick button{
+  border:none;
+
+  border-radius:12px;
+
+  padding:10px 4px;
+
+  background:
+    rgba(255,255,255,.18);
+
+  color:white;
+
+  font-weight:bold;
+  font-size:12px;
+
+  cursor:pointer;
+}
+
+.quick button:active{
+  transform:scale(.97);
+}
+
+
+/* =====================================================
+   SECTION TITLE
+===================================================== */
+
+.title{
+  margin:
+    20px
+    20px
+    12px;
+
+  font-size:17px;
+  font-weight:bold;
+}
+
+
+/* =====================================================
+   SERVICES
+===================================================== */
+
+.services{
+  width:100%;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,minmax(0,1fr));
+
+  gap:10px;
+
+  padding:
+    0
+    20px;
+}
+
+.service{
+  width:100%;
+  min-width:0;
+
+  min-height:88px;
+
+  background:white;
+
+  border-radius:16px;
+
+  padding:11px 3px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  text-align:center;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0,0,0,.04);
+
+  cursor:pointer;
+
+  transition:
+    transform .15s;
+}
+
+.service:active{
+  transform:scale(.95);
+}
+
+.service-icon{
+  display:block;
+
+  font-size:24px;
+
+  line-height:1;
+
+  margin-bottom:7px;
+}
+
+.service-name{
+  display:block;
+
+  font-size:10px;
+
+  line-height:12px;
+
+  font-weight:bold;
+
+  color:var(--gray);
+
+  word-break:break-word;
+}
+
+
+/* =====================================================
+   TRANSACTIONS
+===================================================== */
+
+.transactions{
+  width:calc(100% - 40px);
+
+  margin:
+    0
+    20px
+    25px;
+
+  background:white;
+
+  border-radius:18px;
+
+  padding:
+    8px
+    15px;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0,0,0,.03);
+}
+
+.transaction{
+  width:100%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:10px;
+
+  padding:
+    13px
+    0;
+
+  border-bottom:
+    1px solid #eee;
+}
+
+.transaction:last-child{
+  border-bottom:none;
+}
+
+.tx-left{
+  min-width:0;
+}
+
+.tx-name{
+  font-size:14px;
+  font-weight:bold;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.tx-date{
+  margin-top:3px;
+
+  font-size:11px;
+
+  color:var(--gray);
+}
+
+.tx-amount{
+  flex-shrink:0;
+
+  font-size:13px;
+  font-weight:bold;
+}
+
+.in{
+  color:var(--green);
+}
+
+.out{
+  color:var(--red);
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal{
+  display:none;
+
+  position:fixed;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  z-index:99999;
+
+  background:
+    rgba(0,0,0,.55);
+
+  align-items:center;
+  justify-content:center;
+
+  padding:18px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-content{
+  width:100%;
+  max-width:430px;
+
+  max-height:
+    calc(100vh - 36px);
+
+  overflow-y:auto;
+
+  background:white;
+
+  border-radius:24px;
+
+  padding:23px;
+
+  position:relative;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0,0,0,.25);
+}
+
+.close-btn{
+  position:absolute;
+
+  right:17px;
+  top:11px;
+
+  border:none;
+  background:none;
+
+  font-size:31px;
+
+  color:#999;
+
+  cursor:pointer;
+}
+
+.modal-content h3{
+  color:var(--blue);
+
+  font-size:23px;
+
+  margin:
+    4px
+    35px
+    20px
+    0;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+
+  font-size:13px;
+
+  font-weight:bold;
+
+  color:#203B72;
+
+  margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select{
+  width:100%;
+
+  padding:14px;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:13px;
+
+  background:#F8FAFF;
+
+  outline:none;
+
+  font-size:16px;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+  border-color:var(--blue);
+}
+
+.submit-btn{
+  width:100%;
+
+  padding:14px;
+
+  border:none;
+
+  border-radius:13px;
+
+  background:var(--blue);
+
+  color:white;
+
+  font-size:16px;
+
+  font-weight:bold;
+
+  cursor:pointer;
+}
+
+.cancel-btn{
+  width:100%;
+
+  padding:13px;
+
+  margin-top:9px;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:13px;
+
+  background:white;
+
+  color:var(--text);
+
+  font-weight:bold;
+
+  cursor:pointer;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.message{
+  display:none;
+
+  margin-top:13px;
+
+  padding:12px;
+
+  border-radius:10px;
+
+  font-size:13px;
+
+  text-align:center;
+}
+
+.message.show{
+  display:block;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:600px){
+
+  .header{
+    padding:
+      17px
+      16px
+      20px;
+  }
+
+  .logo{
+    font-size:18px;
+  }
+
+  .welcome h2{
+    font-size:20px;
+  }
+
+  .balance{
+    font-size:27px;
+  }
+
+  .services{
+    padding:
+      0
+      16px;
+
+    gap:9px;
+  }
+
+  .service{
+    min-height:82px;
+    border-radius:15px;
+  }
+
+  .service-icon{
+    font-size:22px;
+  }
+
+  .service-name{
+    font-size:9px;
+  }
+
+  .transactions{
+    width:
+      calc(100% - 32px);
+
+    margin-left:16px;
+    margin-right:16px;
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL PHONE
+===================================================== */
+
+@media(max-width:360px){
+
+  .services{
+    grid-template-columns:
+      repeat(4,minmax(0,1fr));
+
+    gap:7px;
+    padding:0 12px;
+  }
+
+  .service{
+    min-height:76px;
+  }
+
+  .service-icon{
+    font-size:20px;
+  }
+
+  .service-name{
+    font-size:8px;
+  }
+
+  .title{
+    margin-left:12px;
+    margin-right:12px;
+  }
+
+  .transactions{
+    width:
+      calc(100% - 24px);
+
+    margin-left:12px;
+    margin-right:12px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+  <div class="top">
+
+    <div class="logo">
+      🏦 MMA BANK
+    </div>
+
+    <div
+      class="profile"
+      onclick="openModal('profileModal')"
+    >
+      M
+    </div>
+
+  </div>
+
+
+  <div class="welcome">
+
+    <small>
+      Barka da zuwa
+    </small>
+
+    <h2>
+      Mubarak 👋
+    </h2>
+
+  </div>
+
+
+  <!-- BALANCE -->
+
+  <div class="balance-card">
+
+    <div class="balance-title">
+      Wallet Balance
+    </div>
+
+    <div
+      class="balance"
+      id="userBalance"
+    >
+      ₦0.00
+    </div>
+
+    <div class="account">
+      Account Number:
+      <strong id="accountNumber">
+        8123456789
+      </strong>
+    </div>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <div class="quick">
+
+      <button
+        onclick="openModal('depositModal')"
+      >
+        📥<br>
+        Add Money
+      </button>
+
+      <button
+        onclick="openModal('transferModal')"
+      >
+        💸<br>
+        Transfer
+      </button>
+
+      <button
+        onclick="openModal('withdrawModal')"
+      >
+        📤<br>
+        Withdraw
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
+
+<div class="title">
+  Ayyukan Banki
+</div>
+
+
+<div class="services">
+
+
+  <!-- TRANSFER -->
+
+  <div
+    class="service"
+    onclick="openModal('transferModal')"
+  >
+
+    <span class="service-icon">
+      💸
+    </span>
+
+    <span class="service-name">
+      Transfer
+    </span>
+
+  </div>
+
+
+  <!-- DEPOSIT -->
+
+  <div
+    class="service"
+    onclick="openModal('depositModal')"
+  >
+
+    <span class="service-icon">
+      📥
+    </span>
+
+    <span class="service-name">
+      Deposit
+    </span>
+
+  </div>
+
+
+  <!-- WITHDRAW -->
+
+  <div
+    class="service"
+    onclick="openModal('withdrawModal')"
+  >
+
+    <span class="service-icon">
+      📤
+    </span>
+
+    <span class="service-name">
+      Withdraw
+    </span>
+
+  </div>
+
+
+  <!-- AIRTIME -->
+
+  <div
+    class="service"
+    onclick="openModal('airtimeModal')"
+  >
+
+    <span class="service-icon">
+      📱
+    </span>
+
+    <span class="service-name">
+      Airtime
+    </span>
+
+  </div>
+
+
+  <!-- DATA -->
+
+  <div
+    class="service"
+    onclick="demoService('Data')"
+  >
+
+    <span class="service-icon">
+      📶
+    </span>
+
+    <span class="service-name">
+      Data
+    </span>
+
+  </div>
+
+
+  <!-- ELECTRICITY -->
+
+  <div
+    class="service"
+    onclick="demoService('Electricity')"
+  >
+
+    <span class="service-icon">
+      💡
+    </span>
+
+    <span class="service-name">
+      Electricity
+    </span>
+
+  </div>
+
+
+  <!-- TV -->
+
+  <div
+    class="service"
+    onclick="demoService('TV')"
+  >
+
+    <span class="service-icon">
+      📺
+    </span>
+
+    <span class="service-name">
+      TV
+    </span>
+
+  </div>
+
+
+  <!-- CARDS -->
+
+  <div
+    class="service"
+    onclick="demoService('Cards')"
+  >
+
+    <span class="service-icon">
+      💳
+    </span>
+
+    <span class="service-name">
+      Cards
+    </span>
+
+  </div>
+
+
+  <!-- SAVINGS -->
+
+  <div
+    class="service"
+    onclick="demoService('Savings')"
+  >
+
+    <span class="service-icon">
+      💰
+    </span>
+
+    <span class="service-name">
+      Savings
+    </span>
+
+  </div>
+
+
+  <!-- LOAN -->
+
+  <div
+    class="service"
+    onclick="demoService('Loan')"
+  >
+
+    <span class="service-icon">
+      🏦
+    </span>
+
+    <span class="service-name">
+      Loan
+    </span>
+
+  </div>
+
+
+  <!-- SUPPORT -->
+
+  <div
+    class="service"
+    onclick="demoService('Support')"
+  >
+
+    <span class="service-icon">
+      🎧
+    </span>
+
+    <span class="service-name">
+      Support
+    </span>
+
+  </div>
+
+
+  <!-- SECURITY -->
+
+  <div
+    class="service"
+    onclick="demoService('Security')"
+  >
+
+    <span class="service-icon">
+      🔐
+    </span>
+
+    <span class="service-name">
+      Security
+    </span>
+
+  </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     TRANSACTIONS
+===================================================== -->
+
+<div class="title">
+  Recent Transactions
+</div>
+
+
+<div
+  class="transactions"
+  id="transactions"
+>
+
+  <div class="transaction">
+
+    <div class="tx-left">
+
+      <div class="tx-name">
+        Babu Transaction
+      </div>
+
+      <div class="tx-date">
+        Babu mu'amala
+      </div>
+
+    </div>
+
+    <div class="tx-amount">
+      ₦0.00
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     DEPOSIT MODAL
+===================================================== -->
+
+<div
+  class="modal"
+  id="depositModal"
+>
+
+  <div class="modal-content">
+
+    <button
+      class="close-btn"
+      onclick="closeModal('depositModal')"
+    >
+      ×
+    </button>
+
+    <h3>
+      📥 Add Money
+    </h3>
+
+
+    <div class="form-group">
+
+      <label>
+        Adadin Kuɗi
+      </label>
+
+      <input
+        type="number"
+        id="depositAmount"
+        placeholder="₦ 0.00"
+        min="1"
+      >
+
+    </div>
+
+
+    <button
+      class="submit-btn"
+      onclick="demoDeposit()"
+    >
+      Continue
+    </button>
+
+    <button
+      class="cancel-btn"
+      onclick="closeModal('depositModal')"
+    >
+      Cancel
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     TRANSFER MODAL
+===================================================== -->
+
+<div
+  class="modal"
+  id="transferModal"
+>
+
+  <div class="modal-content">
+
+    <button
+      class="close-btn"
+      onclick="closeModal('transferModal')"
+    >
+      ×
+    </button>
+
+    <h3>
+      💸 Transfer Money
+    </h3>
+
+
+    <div class="form-group">
+
+      <label>
+        Account Number
+      </label>
+
+      <input
+        type="number"
+        id="transferAccount"
+        placeholder="Lambar asusu"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Adadin Kuɗi
+      </label>
+
+      <input
+        type="number"
+        id="transferAmount"
+        placeholder="₦ 0.00"
+        min="1"
+      >
+
+    </div>
+
+
+    <button
+      class="submit-btn"
+      onclick="demoTransfer()"
+    >
+      Continue
+    </button>
+
+    <button
+      class="cancel-btn"
+      onclick="closeModal('transferModal')"
+    >
+      Cancel
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     WITHDRAW MODAL
+===================================================== -->
+
+<div
+  class="modal"
+  id="withdrawModal"
+>
+
+  <div class="modal-content">
+
+    <button
+      class="close-btn"
+      onclick="closeModal('withdrawModal')"
+    >
+      ×
+    </button>
+
+    <h3>
+      📤 Withdraw Money
+    </h3>
+
+
+    <div class="form-group">
+
+      <label>
+        Adadin Kuɗi
+      </label>
+
+      <input
+        type="number"
+        id="withdrawAmount"
+        placeholder="₦ 0.00"
+        min="1"
+      >
+
+    </div>
+
+
+    <button
+      class="submit-btn"
+      onclick="demoWithdraw()"
+    >
+      Continue
+    </button>
+
+    <button
+      class="cancel-btn"
+      onclick="closeModal('withdrawModal')"
+    >
+      Cancel
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     AIRTIME MODAL
+===================================================== -->
+
+<div
+  class="modal"
+  id="airtimeModal"
+>
+
+  <div class="modal-content">
+
+    <button
+      class="close-btn"
+      onclick="closeModal('airtimeModal')"
+    >
+      ×
+    </button>
+
+    <h3>
+      📱 Sayi Airtime
+    </h3>
+
+
+    <div class="form-group">
+
+      <label>
+        Network
+      </label>
+
+      <select id="airtimeNetwork">
+
+        <option value="">
+          Zaɓi Network
+        </option>
+
+        <option value="MTN">
+          MTN
+        </option>
+
+        <option value="Airtel">
+          Airtel
+        </option>
+
+        <option value="Glo">
+          Glo
+        </option>
+
+        <option value="9mobile">
+          9mobile
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Lambar Waya
+      </label>
+
+      <input
+        type="tel"
+        id="airtimePhone"
+        placeholder="08012345678"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Adadin Kuɗi
+      </label>
+
+      <input
+        type="number"
+        id="airtimeAmount"
+        placeholder="₦ 0.00"
+        min="50"
+      >
+
+    </div>
+
+
+    <button
+      class="submit-btn"
+      onclick="buyAirtime()"
+    >
+      Sayi Airtime
+    </button>
+
+    <button
+      class="cancel-btn"
+      onclick="closeModal('airtimeModal')"
+    >
+      Cancel
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     PROFILE MODAL
+===================================================== -->
+
+<div
+  class="modal"
+  id="profileModal"
+>
+
+  <div class="modal-content">
+
+    <button
+      class="close-btn"
+      onclick="closeModal('profileModal')"
+    >
+      ×
+    </button>
+
+    <h3>
+      👤 Profile
+    </h3>
+
+    <div class="form-group">
+
+      <label>
+        Suna
+      </label>
+
+      <input
+        type="text"
+        value="Mubarak"
+        readonly
+      >
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        Account Number
+      </label>
+
+      <input
+        type="text"
+        value="8123456789"
+        readonly
+      >
+
+    </div>
+
+    <button
+      class="cancel-btn"
+      onclick="closeModal('profileModal')"
+    >
+      Rufe
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   MMA BANK DASHBOARD JAVASCRIPT
+===================================================== */
+
+
+/* -----------------------------------------------------
+   OPEN MODAL
+----------------------------------------------------- */
+
+function openModal(id){
+
+  const modal =
+    document.getElementById(id);
+
+  if(!modal){
+    return;
+  }
+
+  modal.classList.add("show");
+}
+
+
+/* -----------------------------------------------------
+   CLOSE MODAL
+----------------------------------------------------- */
+
+function closeModal(id){
+
+  const modal =
+    document.getElementById(id);
+
+  if(!modal){
+    return;
+  }
+
+  modal.classList.remove("show");
+}
+
+
+/* -----------------------------------------------------
+   CLOSE WHEN CLICK OUTSIDE
+----------------------------------------------------- */
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target.classList.contains("modal")
+    ){
+
+      event.target.classList.remove("show");
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   DEMO DEPOSIT
+===================================================== */
+
+function demoDeposit(){
+
+  const amount =
+    Number(
+      document.getElementById(
+        "depositAmount"
+      ).value
+    );
+
+  if(
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ){
+
+    alert(
+      "Da fatan shigar da adadin kuɗi."
+    );
+
+    return;
+  }
+
+
+  alert(
+    "Add Money yana cikin DEMO yanzu.\n\n" +
+    "Daga baya za mu haɗa shi da real payment system."
+  );
+
+  closeModal("depositModal");
+
+}
+
+
+/* =====================================================
+   DEMO TRANSFER
+===================================================== */
+
+function demoTransfer(){
+
+  const account =
+    document.getElementById(
+      "transferAccount"
+    ).value.trim();
+
+  const amount =
+    Number(
+      document.getElementById(
+        "transferAmount"
+      ).value
+    );
+
+
+  if(!account){
+
+    alert(
+      "Da fatan shigar da Account Number."
+    );
+
+    return;
+  }
+
+
+  if(
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ){
+
+    alert(
+      "Da fatan shigar da adadin kuɗi."
+    );
+
+    return;
+  }
+
+
+  alert(
+    "Transfer yana cikin DEMO yanzu.\n\n" +
+    "Daga baya za mu haɗa shi da backend."
+  );
+
+  closeModal("transferModal");
+
+}
+
+
+/* =====================================================
+   DEMO WITHDRAW
+===================================================== */
+
+function demoWithdraw(){
+
+  const amount =
+    Number(
+      document.getElementById(
+        "withdrawAmount"
+      ).value
+    );
+
+
+  if(
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ){
+
+    alert(
+      "Da fatan shigar da adadin kuɗi."
+    );
+
+    return;
+  }
+
+
+  alert(
+    "Withdraw yana cikin DEMO yanzu.\n\n" +
+    "Daga baya za mu haɗa shi da real wallet system."
+  );
+
+  closeModal("withdrawModal");
+
+}
+
+
+/* =====================================================
+   AIRTIME DEMO
+===================================================== */
+
+function buyAirtime(){
+
+  const network =
+    document.getElementById(
+      "airtimeNetwork"
+    ).value;
+
+  const phone =
+    document.getElementById(
+      "airtimePhone"
+    ).value.trim();
+
+  const amount =
+    Number(
+      document.getElementById(
+        "airtimeAmount"
+      ).value
+    );
+
+
+  if(!network){
+
+    alert(
+      "Da fatan zaɓi Network."
+    );
+
+    return;
+  }
+
+
+  if(!phone){
+
+    alert(
+      "Da fatan shigar da lambar waya."
+    );
+
+    return;
+  }
+
+
+  if(
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ){
+
+    alert(
+      "Da fatan shigar da adadin kuɗi."
+    );
+
+    return;
+  }
+
+
+  alert(
+    "Airtime yana cikin DEMO yanzu.\n\n" +
+
+    "Network: " +
+    network +
+
+    "\nLamba: " +
+    phone +
+
+    "\nAdadi: ₦" +
+    amount.toLocaleString("en-NG")
+  );
+
+
+  closeModal("airtimeModal");
+
+}
+
+
+/* =====================================================
+   OTHER SERVICES
+===================================================== */
+
+function demoService(service){
+
+  alert(
+    service +
+    " yana nan amma yana cikin DEMO yanzu.\n\n" +
+
+    "Za mu gina wannan service daga baya."
+  );
+
+}
+
+
+/* =====================================================
+   PREVENT NEGATIVE INPUT
+===================================================== */
+
+document.addEventListener(
+  "input",
+  function(event){
+
+    if(
+      event.target.type === "number"
+    ){
+
+      if(
+        Number(event.target.value) < 0
+      ){
+
+        event.target.value = "";
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Escape"){
+
+      document
+        .querySelectorAll(".modal.show")
+        .forEach(
+          modal =>
+            modal.classList.remove("show")
+        );
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
