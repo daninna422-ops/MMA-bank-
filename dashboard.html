@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MMA Bank - Dashboard</title>
+<title>MMA Bank</title>
 
 <style>
 *{
@@ -13,12 +13,31 @@
   font-family:Arial,Segoe UI,sans-serif;
 }
 
-body{
+html,body{
+  width:100%;
+  min-height:100%;
   background:#F4F7FE;
   color:#202B55;
-  padding-bottom:30px;
   overflow-x:hidden;
 }
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:100vh;
+  margin:auto;
+  background:#F4F7FE;
+}
+
+/* ================= HEADER ================= */
 
 .header{
   background:linear-gradient(135deg,#0066FF,#0044B3);
@@ -67,7 +86,6 @@ body{
   padding:20px;
   border-radius:20px;
   background:rgba(255,255,255,.15);
-  border:1px solid rgba(255,255,255,.2);
 }
 
 .balance-title{
@@ -100,8 +118,45 @@ body{
   background:rgba(255,255,255,.18);
   color:white;
   font-weight:bold;
-  cursor:pointer;
 }
+
+/* ================= SCREEN ================= */
+
+.screen{
+  display:none;
+  padding-bottom:30px;
+}
+
+.screen.active{
+  display:block;
+}
+
+.page{
+  padding:20px;
+}
+
+.page-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:22px;
+}
+
+.back{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:13px;
+  background:white;
+  font-size:22px;
+}
+
+.page-title{
+  font-size:23px;
+  font-weight:bold;
+}
+
+/* ================= SERVICES ================= */
 
 .section-title{
   margin:22px 20px 12px;
@@ -111,23 +166,23 @@ body{
 
 .services{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(4,minmax(0,1fr));
   gap:10px;
   padding:0 20px;
 }
 
 .service{
-  background:white;
+  min-width:0;
   min-height:105px;
-  border-radius:16px;
-  padding:13px 4px;
+  background:white;
+  border-radius:17px;
+  padding:12px 4px;
   display:flex;
   flex-direction:column;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   text-align:center;
   box-shadow:0 4px 12px rgba(0,0,0,.05);
-  cursor:pointer;
   transition:.15s;
 }
 
@@ -145,6 +200,173 @@ body{
   font-weight:bold;
   color:#8993AD;
 }
+
+/* ================= FORMS ================= */
+
+.card{
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 5px 18px rgba(0,0,0,.05);
+}
+
+.form-group{
+  margin-bottom:17px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  font-size:14px;
+  margin-bottom:8px;
+  color:#203B72;
+}
+
+.input,
+select{
+  width:100%;
+  padding:15px;
+  border:2px solid #DCE3F0;
+  border-radius:14px;
+  outline:none;
+  background:white;
+  color:#202B55;
+}
+
+.input:focus,
+select:focus{
+  border-color:#0066FF;
+}
+
+.primary{
+  width:100%;
+  padding:16px;
+  border:0;
+  border-radius:14px;
+  background:#0066FF;
+  color:white;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.secondary{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:14px;
+  background:#EEF3FF;
+  color:#0066FF;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+/* ================= CONFIRM ================= */
+
+.confirm-row{
+  display:flex;
+  justify-content:space-between;
+  padding:14px 0;
+  border-bottom:1px solid #eee;
+}
+
+.confirm-row:last-child{
+  border-bottom:0;
+}
+
+.confirm-label{
+  color:#8993AD;
+  font-size:13px;
+}
+
+.confirm-value{
+  font-weight:bold;
+  text-align:right;
+  max-width:60%;
+  word-break:break-word;
+}
+
+.pin-box{
+  text-align:center;
+}
+
+.pin-dots{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin:25px 0;
+}
+
+.dot{
+  width:15px;
+  height:15px;
+  border:2px solid #0066FF;
+  border-radius:50%;
+}
+
+.dot.filled{
+  background:#0066FF;
+}
+
+.pin-input{
+  width:100%;
+  padding:16px;
+  border:2px solid #DCE3F0;
+  border-radius:15px;
+  text-align:center;
+  font-size:25px;
+  letter-spacing:10px;
+  outline:none;
+}
+
+/* ================= SUCCESS ================= */
+
+.success{
+  text-align:center;
+  padding:35px 20px;
+}
+
+.success-icon{
+  width:85px;
+  height:85px;
+  margin:auto;
+  border-radius:50%;
+  background:#05B989;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:45px;
+}
+
+.success h2{
+  margin:20px 0 10px;
+}
+
+.success p{
+  color:#8993AD;
+}
+
+.receipt{
+  margin-top:25px;
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  text-align:left;
+}
+
+.receipt-row{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+
+.receipt-row:last-child{
+  border-bottom:0;
+}
+
+/* ================= TRANSACTIONS ================= */
 
 .transactions{
   background:white;
@@ -186,132 +408,51 @@ body{
   font-weight:bold;
 }
 
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:9999;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-}
+/* ================= INFO ================= */
 
-.modal-box{
-  background:white;
-  width:100%;
-  max-width:430px;
-  max-height:90vh;
-  overflow-y:auto;
-  border-radius:24px;
-  padding:24px;
-  position:relative;
-}
-
-.close{
-  position:absolute;
-  right:18px;
-  top:10px;
-  font-size:32px;
-  color:#999;
-  cursor:pointer;
-}
-
-.modal-title{
-  color:#0066FF;
-  font-size:23px;
-  margin-bottom:20px;
-  padding-right:30px;
-}
-
-.form-group{
-  margin-bottom:15px;
-}
-
-.form-group label{
-  display:block;
-  font-weight:bold;
-  font-size:14px;
-  margin-bottom:7px;
-}
-
-.input,
-select{
-  width:100%;
-  padding:14px;
-  border:2px solid #DCE3F0;
-  border-radius:14px;
-  font-size:16px;
-  outline:none;
-  background:white;
-}
-
-.input:focus,
-select:focus{
-  border-color:#0066FF;
-}
-
-.submit{
-  width:100%;
-  padding:15px;
-  border:0;
-  border-radius:14px;
-  background:#0066FF;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:5px;
-}
-
-.secondary{
-  background:#EEF3FF;
-  color:#0066FF;
-  margin-top:10px;
-}
-
-.info-box{
+.info{
   background:#F4F7FE;
-  border-radius:14px;
-  padding:15px;
-  margin-bottom:15px;
+  padding:16px;
+  border-radius:15px;
   line-height:1.7;
+  margin-bottom:18px;
 }
 
-.success{
-  text-align:center;
-  padding:10px;
-}
-
-.success-icon{
-  font-size:55px;
-  margin-bottom:10px;
-}
+/* ================= MOBILE ================= */
 
 @media(max-width:380px){
-  .services{
-    gap:7px;
-    padding:0 12px;
-  }
 
-  .service{
-    min-height:95px;
+  .services{
+    padding:0 12px;
+    gap:7px;
   }
 
   .section-title{
     margin-left:12px;
   }
 
+  .service{
+    min-height:95px;
+  }
+
   .transactions{
     margin:0 12px;
   }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
+<div class="app">
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section id="dashboard" class="screen active">
+
 <div class="header">
 
   <div class="top">
@@ -326,7 +467,9 @@ select:focus{
 
   <div class="balance-card">
 
-    <div class="balance-title">Wallet Balance</div>
+    <div class="balance-title">
+      Wallet Balance
+    </div>
 
     <div class="balance" id="balance">
       ₦0.00
@@ -338,15 +481,15 @@ select:focus{
 
     <div class="quick">
 
-      <button onclick="openModal('depositModal')">
+      <button onclick="showScreen('depositPage')">
         📥<br>Add Money
       </button>
 
-      <button onclick="openModal('transferModal')">
+      <button onclick="showScreen('transferPage')">
         💸<br>Transfer
       </button>
 
-      <button onclick="openModal('withdrawModal')">
+      <button onclick="showScreen('withdrawPage')">
         📤<br>Withdraw
       </button>
 
@@ -355,85 +498,83 @@ select:focus{
   </div>
 </div>
 
-
-<!-- SERVICES -->
 <div class="section-title">
   Ayyukan Banki
 </div>
 
 <div class="services">
 
-  <div class="service" onclick="openModal('transferModal')">
+  <div class="service" onclick="showScreen('transferPage')">
     <span class="icon">💸</span>
     <span class="service-name">Transfer</span>
   </div>
 
-  <div class="service" onclick="openModal('depositModal')">
+  <div class="service" onclick="showScreen('depositPage')">
     <span class="icon">📥</span>
     <span class="service-name">Deposit</span>
   </div>
 
-  <div class="service" onclick="openModal('withdrawModal')">
+  <div class="service" onclick="showScreen('withdrawPage')">
     <span class="icon">📤</span>
     <span class="service-name">Withdraw</span>
   </div>
 
-  <div class="service" onclick="openModal('airtimeModal')">
+  <div class="service" onclick="showScreen('airtimePage')">
     <span class="icon">📱</span>
     <span class="service-name">Airtime</span>
   </div>
 
-  <div class="service" onclick="openModal('dataModal')">
+  <div class="service" onclick="showScreen('dataPage')">
     <span class="icon">📶</span>
     <span class="service-name">Data</span>
   </div>
 
-  <div class="service" onclick="openModal('electricityModal')">
+  <div class="service" onclick="showScreen('electricityPage')">
     <span class="icon">💡</span>
     <span class="service-name">Electricity</span>
   </div>
 
-  <div class="service" onclick="openModal('tvModal')">
+  <div class="service" onclick="showScreen('tvPage')">
     <span class="icon">📺</span>
     <span class="service-name">TV</span>
   </div>
 
-  <div class="service" onclick="openModal('cardsModal')">
+  <div class="service" onclick="showScreen('cardsPage')">
     <span class="icon">💳</span>
     <span class="service-name">Cards</span>
   </div>
 
-  <div class="service" onclick="openModal('savingsModal')">
+  <div class="service" onclick="showScreen('savingsPage')">
     <span class="icon">💰</span>
     <span class="service-name">Savings</span>
   </div>
 
-  <div class="service" onclick="openModal('loanModal')">
+  <div class="service" onclick="showScreen('loanPage')">
     <span class="icon">🏦</span>
     <span class="service-name">Loan</span>
   </div>
 
-  <div class="service" onclick="openModal('supportModal')">
+  <div class="service" onclick="showScreen('supportPage')">
     <span class="icon">🎧</span>
     <span class="service-name">Support</span>
   </div>
 
-  <div class="service" onclick="openModal('historyModal')">
+  <div class="service" onclick="showScreen('historyPage')">
     <span class="icon">📜</span>
     <span class="service-name">History</span>
   </div>
 
-  <div class="service" onclick="openModal('settingsModal')">
+  <div class="service" onclick="showScreen('settingsPage')">
     <span class="icon">⚙️</span>
     <span class="service-name">Settings</span>
   </div>
 
-  <div class="service" onclick="openModal('securityModal')">
+  <div class="service" onclick="showScreen('securityPage')">
     <span class="icon">🔐</span>
     <span class="service-name">Security</span>
   </div>
 
-  <div class="service" onclick="openModal('qrModal')">
+  <div class="service" onclick="showScreen('qrPage')">
     <span class="icon">▣</span>
     <span class="service-name">QR Pay</span>
   </div>
@@ -445,58 +586,44 @@ select:focus{
 
 </div>
 
-
-<!-- TRANSACTIONS -->
 <div class="section-title">
   Recent Transactions
 </div>
 
 <div class="transactions" id="transactions">
-
   <div class="transaction">
     <div>
       <div class="tx-name">Babu Transaction</div>
       <div class="tx-date">Babu mu'amala tukuna</div>
     </div>
-
     <div>₦0.00</div>
   </div>
-
 </div>
 
+</section>
 
-<!-- ================= DEPOSIT ================= -->
-<div class="modal" id="depositModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('depositModal')">×</span>
+<!-- =====================================================
+     TRANSFER PAGE
+===================================================== -->
 
-<h3 class="modal-title">📥 Add Money</h3>
+<section id="transferPage" class="screen">
 
-<div class="form-group">
-<label>Adadin Kuɗi</label>
-<input id="depositAmount" class="input" type="number" placeholder="₦">
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">💸 Transfer</h2>
 </div>
 
-<button class="submit" onclick="depositMoney()">
-Ƙara Kuɗi
-</button>
-
-</div>
-</div>
-
-
-<!-- ================= TRANSFER ================= -->
-<div class="modal" id="transferModal">
-<div class="modal-box">
-
-<span class="close" onclick="closeModal('transferModal')">×</span>
-
-<h3 class="modal-title">💸 Transfer Money</h3>
+<div class="card">
 
 <div class="form-group">
 <label>Account Number</label>
-<input id="transferAccount" class="input" type="number" placeholder="Lambar account">
+<input id="transferAccount"
+class="input"
+type="number"
+placeholder="Shigar da account number">
 </div>
 
 <div class="form-group">
@@ -509,55 +636,282 @@ select:focus{
 <option>UBA</option>
 <option>FirstBank</option>
 <option>Access Bank</option>
+<option>Kuda Bank</option>
 </select>
 </div>
 
 <div class="form-group">
 <label>Adadin Kuɗi</label>
-<input id="transferAmount" class="input" type="number" placeholder="₦">
+<input id="transferAmount"
+class="input"
+type="number"
+placeholder="₦0.00">
 </div>
 
-<button class="submit" onclick="transferMoney()">
+<button class="primary" onclick="prepareTransfer()">
 Ci gaba
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= WITHDRAW ================= -->
-<div class="modal" id="withdrawModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('withdrawModal')">×</span>
+<!-- =====================================================
+     TRANSFER CONFIRM
+===================================================== -->
 
-<h3 class="modal-title">📤 Withdraw Money</h3>
+<section id="transferConfirm" class="screen">
 
-<div class="form-group">
-<label>Account / Phone</label>
-<input class="input" placeholder="Account ko phone">
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('transferPage')">←</button>
+<h2 class="page-title">Confirm Transfer</h2>
+</div>
+
+<div class="card">
+
+<div class="confirm-row">
+<span class="confirm-label">Bank</span>
+<span class="confirm-value" id="confirmBank"></span>
+</div>
+
+<div class="confirm-row">
+<span class="confirm-label">Account</span>
+<span class="confirm-value" id="confirmAccount"></span>
+</div>
+
+<div class="confirm-row">
+<span class="confirm-label">Amount</span>
+<span class="confirm-value" id="confirmAmount"></span>
+</div>
+
+<br>
+
+<button class="primary" onclick="showScreen('pinPage')">
+Confirm & Continue
+</button>
+
+<button class="secondary" onclick="showScreen('transferPage')">
+Gyara
+</button>
+
+</div>
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     PIN PAGE
+===================================================== -->
+
+<section id="pinPage" class="screen">
+
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('transferConfirm')">←</button>
+<h2 class="page-title">🔐 Enter PIN</h2>
+</div>
+
+<div class="card pin-box">
+
+<p>
+Shigar da PIN ɗinka domin tabbatar da transfer.
+</p>
+
+<div class="pin-dots">
+<span class="dot" id="dot1"></span>
+<span class="dot" id="dot2"></span>
+<span class="dot" id="dot3"></span>
+<span class="dot" id="dot4"></span>
+</div>
+
+<input
+id="pinInput"
+class="pin-input"
+type="password"
+inputmode="numeric"
+maxlength="4"
+placeholder="••••"
+oninput="updatePinDots()">
+
+<br><br>
+
+<button class="primary" onclick="confirmTransfer()">
+Tura Kuɗi
+</button>
+
+</div>
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     SUCCESS
+===================================================== -->
+
+<section id="successPage" class="screen">
+
+<div class="page">
+
+<div class="success">
+
+<div class="success-icon">
+✓
+</div>
+
+<h2>Transfer Successful</h2>
+
+<p>
+An kammala DEMO transaction.
+</p>
+
+<div class="receipt">
+
+<div class="receipt-row">
+<span>Bank</span>
+<b id="successBank"></b>
+</div>
+
+<div class="receipt-row">
+<span>Account</span>
+<b id="successAccount"></b>
+</div>
+
+<div class="receipt-row">
+<span>Amount</span>
+<b id="successAmount"></b>
+</div>
+
+<div class="receipt-row">
+<span>Reference</span>
+<b id="successReference"></b>
+</div>
+
+</div>
+
+<br>
+
+<button class="primary" onclick="showScreen('dashboard')">
+Komawa Dashboard
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     DEPOSIT
+===================================================== -->
+
+<section id="depositPage" class="screen">
+
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">📥 Add Money</h2>
+</div>
+
+<div class="card">
+
+<div class="info">
+Wannan tsarin DEMO ne. Za mu haɗa payment gateway daga baya.
 </div>
 
 <div class="form-group">
 <label>Adadin Kuɗi</label>
-<input id="withdrawAmount" class="input" type="number" placeholder="₦">
+<input id="depositAmount"
+class="input"
+type="number"
+placeholder="₦0.00">
 </div>
 
-<button class="submit" onclick="withdrawMoney()">
-Ci gaba
+<button class="primary" onclick="depositMoney()">
+Add Money
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= AIRTIME ================= -->
-<div class="modal" id="airtimeModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('airtimeModal')">×</span>
+<!-- =====================================================
+     WITHDRAW
+===================================================== -->
 
-<h3 class="modal-title">📱 Sayi Airtime</h3>
+<section id="withdrawPage" class="screen">
+
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">📤 Withdraw</h2>
+</div>
+
+<div class="card">
+
+<div class="form-group">
+<label>Bank</label>
+<select id="withdrawBank">
+<option value="">Zaɓi Banki</option>
+<option>UBA</option>
+<option>FirstBank</option>
+<option>Access Bank</option>
+<option>OPay</option>
+<option>Palmpay</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Account Number</label>
+<input id="withdrawAccount"
+class="input"
+type="number"
+placeholder="Account Number">
+</div>
+
+<div class="form-group">
+<label>Amount</label>
+<input id="withdrawAmount"
+class="input"
+type="number"
+placeholder="₦0.00">
+</div>
+
+<button class="primary" onclick="withdrawMoney()">
+Continue
+</button>
+
+</div>
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     AIRTIME
+===================================================== -->
+
+<section id="airtimePage" class="screen">
+
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">📱 Airtime</h2>
+</div>
+
+<div class="card">
 
 <div class="form-group">
 <label>Network</label>
@@ -572,29 +926,44 @@ Ci gaba
 
 <div class="form-group">
 <label>Phone Number</label>
-<input id="airtimePhone" class="input" type="tel" placeholder="08012345678">
+<input id="airtimePhone"
+class="input"
+type="tel"
+placeholder="08012345678">
 </div>
 
 <div class="form-group">
 <label>Amount</label>
-<input id="airtimeAmount" class="input" type="number" placeholder="₦">
+<input id="airtimeAmount"
+class="input"
+type="number"
+placeholder="₦0.00">
 </div>
 
-<button class="submit" onclick="buyAirtime()">
-Sayi Airtime
+<button class="primary" onclick="buyAirtime()">
+Continue
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= DATA ================= -->
-<div class="modal" id="dataModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('dataModal')">×</span>
+<!-- =====================================================
+     DATA
+===================================================== -->
 
-<h3 class="modal-title">📶 Data</h3>
+<section id="dataPage" class="screen">
+
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">📶 Data</h2>
+</div>
+
+<div class="card">
 
 <div class="form-group">
 <label>Network</label>
@@ -621,30 +990,39 @@ Sayi Airtime
 </select>
 </div>
 
-<button class="submit" onclick="demoService('Data')">
-Ci gaba
+<button class="primary" onclick="demoService('Data')">
+Continue
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= ELECTRICITY ================= -->
-<div class="modal" id="electricityModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('electricityModal')">×</span>
+<!-- =====================================================
+     ELECTRICITY
+===================================================== -->
 
-<h3 class="modal-title">💡 Electricity</h3>
+<section id="electricityPage" class="screen">
+
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">💡 Electricity</h2>
+</div>
+
+<div class="card">
 
 <div class="form-group">
 <label>Provider</label>
 <select>
-<option>IKEDC</option>
-<option>EKEDC</option>
-<option>ABUJA DISCO</option>
 <option>KEDCO</option>
 <option>JED</option>
+<option>ABUJA DISCO</option>
+<option>IKEDC</option>
+<option>EKEDC</option>
 </select>
 </div>
 
@@ -655,24 +1033,33 @@ Ci gaba
 
 <div class="form-group">
 <label>Amount</label>
-<input class="input" type="number" placeholder="₦">
+<input class="input" type="number" placeholder="₦0.00">
 </div>
 
-<button class="submit" onclick="demoService('Electricity')">
-Ci gaba
+<button class="primary" onclick="demoService('Electricity')">
+Continue
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= TV ================= -->
-<div class="modal" id="tvModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('tvModal')">×</span>
+<!-- =====================================================
+     TV
+===================================================== -->
 
-<h3 class="modal-title">📺 TV Subscription</h3>
+<section id="tvPage" class="screen">
+
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">📺 TV Subscription</h2>
+</div>
+
+<div class="card">
 
 <div class="form-group">
 <label>Provider</label>
@@ -697,125 +1084,198 @@ Ci gaba
 </select>
 </div>
 
-<button class="submit" onclick="demoService('TV Subscription')">
-Ci gaba
+<button class="primary" onclick="demoService('TV Subscription')">
+Continue
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= CARDS ================= -->
-<div class="modal" id="cardsModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('cardsModal')">×</span>
+<!-- =====================================================
+     CARDS
+===================================================== -->
 
-<h3 class="modal-title">💳 Cards</h3>
+<section id="cardsPage" class="screen">
 
-<div class="info-box">
-<b>MMA Virtual Card</b><br>
-Status: Ba a ƙirƙira ba tukuna.<br><br>
-Za mu haɗa card system daga baya.
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">💳 Cards</h2>
 </div>
 
-<button class="submit" onclick="demoService('Card')">
+<div class="card">
+
+<div class="info">
+<b>MMA Virtual Card</b><br>
+Status: Ba a ƙirƙira ba tukuna.
+</div>
+
+<button class="primary" onclick="demoService('Card Request')">
 Request Card
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= SAVINGS ================= -->
-<div class="modal" id="savingsModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('savingsModal')">×</span>
+<!-- =====================================================
+     SAVINGS
+===================================================== -->
 
-<h3 class="modal-title">💰 Savings</h3>
+<section id="savingsPage" class="screen">
 
-<div class="info-box">
-A nan za ka iya ajiye kuɗi domin Savings.
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">💰 Savings</h2>
+</div>
+
+<div class="card">
+
+<div class="info">
+Ajiye kuɗi domin Savings.
 </div>
 
 <div class="form-group">
 <label>Adadin Kuɗi</label>
-<input class="input" type="number" placeholder="₦">
+<input class="input" type="number" placeholder="₦0.00">
 </div>
 
-<button class="submit" onclick="demoService('Savings')">
+<button class="primary" onclick="demoService('Savings')">
 Ajiye Kuɗi
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= LOAN ================= -->
-<div class="modal" id="loanModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('loanModal')">×</span>
+<!-- =====================================================
+     LOAN
+===================================================== -->
 
-<h3 class="modal-title">🏦 Loan</h3>
+<section id="loanPage" class="screen">
 
-<div class="info-box">
-Loan service zai kasance a nan. Za mu ƙara eligibility da application daga baya.
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">🏦 Loan</h2>
 </div>
 
-<button class="submit" onclick="demoService('Loan')">
-Apply for Loan
+<div class="card">
+
+<div class="info">
+A nan za mu ƙara Loan application da eligibility daga baya.
+</div>
+
+<div class="form-group">
+<label>Adadin Loan</label>
+<input class="input" type="number" placeholder="₦0.00">
+</div>
+
+<div class="form-group">
+<label>Dalilin Loan</label>
+<select>
+<option>Business</option>
+<option>Education</option>
+<option>Emergency</option>
+<option>Other</option>
+</select>
+</div>
+
+<button class="primary" onclick="demoService('Loan Application')">
+Apply
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= SUPPORT ================= -->
-<div class="modal" id="supportModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('supportModal')">×</span>
+<!-- =====================================================
+     SUPPORT
+===================================================== -->
 
-<h3 class="modal-title">🎧 Support</h3>
+<section id="supportPage" class="screen">
 
-<div class="info-box">
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">🎧 Support</h2>
+</div>
+
+<div class="card">
+
+<div class="info">
 <b>MMA Bank Support</b><br><br>
 Muna nan domin taimaka maka.
 </div>
 
-<button class="submit" onclick="alert('Za mu haɗa live support daga baya.')">
-Contact Support
+<div class="form-group">
+<label>Saƙonka</label>
+<textarea id="supportMessage"
+class="input"
+rows="5"
+placeholder="Rubuta saƙonka..."></textarea>
+</div>
+
+<button class="primary" onclick="sendSupport()">
+Send Message
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= HISTORY ================= -->
-<div class="modal" id="historyModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('historyModal')">×</span>
+<!-- =====================================================
+     HISTORY
+===================================================== -->
 
-<h3 class="modal-title">📜 Transaction History</h3>
+<section id="historyPage" class="screen">
 
-<div id="historyList" class="info-box">
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">📜 History</h2>
+</div>
+
+<div class="transactions" id="fullHistory">
 Babu transaction tukuna.
 </div>
 
 </div>
+
+</section>
+
+
+<!-- =====================================================
+     SETTINGS
+===================================================== -->
+
+<section id="settingsPage" class="screen">
+
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">⚙️ Settings</h2>
 </div>
 
-
-<!-- ================= SETTINGS ================= -->
-<div class="modal" id="settingsModal">
-<div class="modal-box">
-
-<span class="close" onclick="closeModal('settingsModal')">×</span>
-
-<h3 class="modal-title">⚙️ Settings</h3>
+<div class="card">
 
 <div class="form-group">
 <label>Full Name</label>
@@ -823,143 +1283,200 @@ Babu transaction tukuna.
 </div>
 
 <div class="form-group">
-<label>Phone</label>
+<label>Phone Number</label>
 <input class="input" placeholder="Phone Number">
 </div>
 
-<button class="submit" onclick="alert('An ajiye Settings.')">
-Save Settings
+<div class="form-group">
+<label>Email</label>
+<input class="input" type="email" placeholder="Email">
+</div>
+
+<button class="primary" onclick="saveSettings()">
+Save Changes
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= SECURITY ================= -->
-<div class="modal" id="securityModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('securityModal')">×</span>
+<!-- =====================================================
+     SECURITY
+===================================================== -->
 
-<h3 class="modal-title">🔐 Security</h3>
+<section id="securityPage" class="screen">
 
-<div class="info-box">
-PIN, password da sauran security settings za mu ƙara su a mataki na gaba.
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">🔐 Security</h2>
 </div>
 
-<button class="submit" onclick="alert('Security settings za su zo daga baya.')">
-Continue
+<div class="card">
+
+<div class="info">
+Ka kiyaye PIN da password ɗinka. Kada ka ba kowa.
+</div>
+
+<div class="form-group">
+<label>Change PIN</label>
+<input class="input"
+type="password"
+inputmode="numeric"
+maxlength="4"
+placeholder="Sabon PIN">
+</div>
+
+<div class="form-group">
+<label>Confirm PIN</label>
+<input class="input"
+type="password"
+inputmode="numeric"
+maxlength="4"
+placeholder="Sake shigar da PIN">
+</div>
+
+<button class="primary" onclick="saveSecurity()">
+Update Security
 </button>
 
 </div>
 </div>
 
+</section>
 
-<!-- ================= QR ================= -->
-<div class="modal" id="qrModal">
-<div class="modal-box">
 
-<span class="close" onclick="closeModal('qrModal')">×</span>
+<!-- =====================================================
+     QR PAY
+===================================================== -->
 
-<h3 class="modal-title">▣ QR Pay</h3>
+<section id="qrPage" class="screen">
 
-<div class="info-box" style="text-align:center;font-size:80px;">
+<div class="page">
+
+<div class="page-header">
+<button class="back" onclick="showScreen('dashboard')">←</button>
+<h2 class="page-title">▣ QR Pay</h2>
+</div>
+
+<div class="card" style="text-align:center">
+
+<div style="font-size:130px;margin:20px">
 ▦
 </div>
 
-<button class="submit" onclick="demoService('QR Pay')">
-Scan / Pay
+<p>
+QR Pay zai ba ka damar biyan kuɗi ta QR.
+</p>
+
+<br>
+
+<button class="primary" onclick="demoService('QR Pay')">
+Scan QR
 </button>
 
 </div>
+</div>
+
+</section>
+
+
 </div>
 
 
 <script>
 
-/* =========================
-   STATE
-========================= */
+/* =====================================================
+   APP STATE
+===================================================== */
 
 let balance = 0;
 
 let transactions = [];
 
-
-/* =========================
-   MODAL
-========================= */
-
-function openModal(id){
-  const modal = document.getElementById(id);
-
-  if(modal){
-    modal.style.display = "flex";
-  }
-}
+let transferData = {};
 
 
-function closeModal(id){
-  const modal = document.getElementById(id);
+/* =====================================================
+   SHOW SCREEN
+===================================================== */
 
-  if(modal){
-    modal.style.display = "none";
-  }
-}
+function showScreen(id){
 
-
-/* Close when clicking outside */
-
-document.querySelectorAll(".modal").forEach(function(modal){
-
-  modal.addEventListener("click",function(e){
-
-    if(e.target === modal){
-      modal.style.display = "none";
-    }
-
+  document.querySelectorAll(".screen").forEach(function(screen){
+    screen.classList.remove("active");
   });
 
-});
+  const screen = document.getElementById(id);
+
+  if(screen){
+    screen.classList.add("active");
+    window.scrollTo(0,0);
+  }
+
+}
 
 
-/* =========================
-   BALANCE
-========================= */
+/* =====================================================
+   FORMAT MONEY
+===================================================== */
+
+function formatMoney(amount){
+
+  return "₦" + Number(amount).toLocaleString(
+    "en-NG",
+    {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }
+  );
+
+}
+
+
+/* =====================================================
+   UPDATE BALANCE
+===================================================== */
 
 function updateBalance(){
 
   document.getElementById("balance").innerText =
-    "₦" +
-    balance.toLocaleString("en-NG",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    });
+    formatMoney(balance);
 
 }
 
 
-/* =========================
+/* =====================================================
    ADD TRANSACTION
-========================= */
+===================================================== */
 
-function addTransaction(name, amount, type){
+function addTransaction(name,amount,type){
 
   transactions.unshift({
+
     name:name,
-    amount:amount,
+
+    amount:Number(amount),
+
     type:type,
+
     date:new Date().toLocaleString("en-NG")
+
   });
 
   renderTransactions();
+
   renderHistory();
+
 }
 
 
-/* =========================
-   RENDER TRANSACTIONS
-========================= */
+/* =====================================================
+   RECENT TRANSACTIONS
+===================================================== */
 
 function renderTransactions(){
 
@@ -969,10 +1486,13 @@ function renderTransactions(){
   if(transactions.length === 0){
 
     box.innerHTML =
-      "<div class='transaction'>"+
-      "<div>Babu transaction tukuna</div>"+
-      "<div>₦0.00</div>"+
-      "</div>";
+      `<div class="transaction">
+        <div>
+          <div class="tx-name">Babu Transaction</div>
+          <div class="tx-date">Babu mu'amala tukuna</div>
+        </div>
+        <div>₦0.00</div>
+      </div>`;
 
     return;
   }
@@ -988,34 +1508,36 @@ function renderTransactions(){
       tx.type === "in" ? "in" : "out";
 
     box.innerHTML +=
-      "<div class='transaction'>"+
-        "<div>"+
-          "<div class='tx-name'>"+tx.name+"</div>"+
-          "<div class='tx-date'>"+tx.date+"</div>"+
-        "</div>"+
-        "<div class='"+cls+"'>"+
-          sign+"₦"+tx.amount.toLocaleString("en-NG",{minimumFractionDigits:2})+
-        "</div>"+
-      "</div>";
+      `<div class="transaction">
+        <div>
+          <div class="tx-name">${tx.name}</div>
+          <div class="tx-date">${tx.date}</div>
+        </div>
+        <div class="${cls}">
+          ${sign}${formatMoney(tx.amount)}
+        </div>
+      </div>`;
 
   });
 
 }
 
 
-/* =========================
-   HISTORY
-========================= */
+/* =====================================================
+   FULL HISTORY
+===================================================== */
 
 function renderHistory(){
 
   const box =
-    document.getElementById("historyList");
+    document.getElementById("fullHistory");
 
   if(transactions.length === 0){
 
     box.innerHTML =
-      "Babu transaction tukuna.";
+      `<div style="padding:20px;text-align:center">
+        Babu transaction tukuna.
+      </div>`;
 
     return;
   }
@@ -1027,23 +1549,28 @@ function renderHistory(){
     const sign =
       tx.type === "in" ? "+" : "-";
 
+    const cls =
+      tx.type === "in" ? "in" : "out";
+
     box.innerHTML +=
-      "<div style='padding:10px 0;border-bottom:1px solid #ddd;'>"+
-      "<b>"+tx.name+"</b><br>"+
-      "<small>"+tx.date+"</small><br>"+
-      "<strong>"+sign+"₦"+
-      tx.amount.toLocaleString("en-NG",{minimumFractionDigits:2})+
-      "</strong>"+
-      "</div>";
+      `<div class="transaction">
+        <div>
+          <div class="tx-name">${tx.name}</div>
+          <div class="tx-date">${tx.date}</div>
+        </div>
+        <div class="${cls}">
+          ${sign}${formatMoney(tx.amount)}
+        </div>
+      </div>`;
 
   });
 
 }
 
 
-/* =========================
+/* =====================================================
    DEPOSIT
-========================= */
+===================================================== */
 
 function depositMoney(){
 
@@ -1052,45 +1579,42 @@ function depositMoney(){
 
   if(!amount || amount <= 0){
 
-    alert("Shigar da adadin kuɗi daidai.");
+    alert("Shigar da amount daidai.");
 
     return;
   }
-
-  /*
-   FRONTEND DEMO ONLY
-  */
 
   balance += amount;
 
   updateBalance();
 
   addTransaction(
-    "Add Money",
+    "DEMO Add Money",
     amount,
     "in"
   );
 
   document.getElementById("depositAmount").value = "";
 
-  closeModal("depositModal");
-
   alert(
-    "An ƙara ₦"+
-    amount.toLocaleString("en-NG",{minimumFractionDigits:2})+
+    "An ƙara " +
+    formatMoney(amount) +
     " a DEMO wallet."
   );
+
+  showScreen("dashboard");
+
 }
 
 
-/* =========================
-   TRANSFER
-========================= */
+/* =====================================================
+   TRANSFER STEP 1
+===================================================== */
 
-function transferMoney(){
+function prepareTransfer(){
 
   const account =
-    document.getElementById("transferAccount").value;
+    document.getElementById("transferAccount").value.trim();
 
   const bank =
     document.getElementById("transferBank").value;
@@ -1105,4 +1629,360 @@ function transferMoney(){
     return;
   }
 
-  if(!ban
+  if(!bank){
+
+    alert("Zaɓi banki.");
+
+    return;
+  }
+
+  if(!amount || amount <= 0){
+
+    alert("Shigar da amount.");
+
+    return;
+  }
+
+  if(amount > balance){
+
+    alert("Kuɗin wallet bai isa ba.");
+
+    return;
+  }
+
+  transferData = {
+
+    account:account,
+
+    bank:bank,
+
+    amount:amount
+
+  };
+
+  document.getElementById("confirmBank").innerText =
+    bank;
+
+  document.getElementById("confirmAccount").innerText =
+    account;
+
+  document.getElementById("confirmAmount").innerText =
+    formatMoney(amount);
+
+  showScreen("transferConfirm");
+
+}
+
+
+/* =====================================================
+   PIN DOTS
+===================================================== */
+
+function updatePinDots(){
+
+  const value =
+    document.getElementById("pinInput").value;
+
+  for(let i=1;i<=4;i++){
+
+    const dot =
+      document.getElementById("dot"+i);
+
+    if(i <= value.length){
+      dot.classList.add("filled");
+    }else{
+      dot.classList.remove("filled");
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   TRANSFER CONFIRM
+===================================================== */
+
+function confirmTransfer(){
+
+  const pin =
+    document.getElementById("pinInput").value;
+
+  if(!/^\d{4}$/.test(pin)){
+
+    alert("Shigar da PIN mai lamba 4.");
+
+    return;
+  }
+
+  if(transferData.amount > balance){
+
+    alert("Kuɗin wallet bai isa ba.");
+
+    showScreen("transferPage");
+
+    return;
+  }
+
+  /*
+    FRONTEND DEMO ONLY.
+    Ba a tabbatar da PIN na gaske ba.
+  */
+
+  balance -= transferData.amount;
+
+  updateBalance();
+
+  addTransaction(
+    "Transfer → " + transferData.bank,
+    transferData.amount,
+    "out"
+  );
+
+  const reference =
+    "MMA" +
+    Date.now().toString().slice(-8);
+
+  document.getElementById("successBank").innerText =
+    transferData.bank;
+
+  document.getElementById("successAccount").innerText =
+    transferData.account;
+
+  document.getElementById("successAmount").innerText =
+    formatMoney(transferData.amount);
+
+  document.getElementById("successReference").innerText =
+    reference;
+
+  document.getElementById("pinInput").value = "";
+
+  updatePinDots();
+
+  showScreen("successPage");
+
+}
+
+
+/* =====================================================
+   WITHDRAW
+===================================================== */
+
+function withdrawMoney(){
+
+  const bank =
+    document.getElementById("withdrawBank").value;
+
+  const account =
+    document.getElementById("withdrawAccount").value;
+
+  const amount =
+    Number(document.getElementById("withdrawAmount").value);
+
+  if(!bank){
+
+    alert("Zaɓi banki.");
+
+    return;
+  }
+
+  if(!account){
+
+    alert("Shigar da account number.");
+
+    return;
+  }
+
+  if(!amount || amount <= 0){
+
+    alert("Shigar da amount.");
+
+    return;
+  }
+
+  if(amount > balance){
+
+    alert("Kuɗin wallet bai isa ba.");
+
+    return;
+  }
+
+  balance -= amount;
+
+  updateBalance();
+
+  addTransaction(
+    "DEMO Withdraw → "+bank,
+    amount,
+    "out"
+  );
+
+  alert(
+    "Withdraw DEMO an yi nasara.\n\n"+
+    "Bank: "+bank+
+    "\nAccount: "+account+
+    "\nAmount: "+formatMoney(amount)
+  );
+
+  showScreen("dashboard");
+
+}
+
+
+/* =====================================================
+   AIRTIME
+===================================================== */
+
+function buyAirtime(){
+
+  const network =
+    document.getElementById("airtimeNetwork").value;
+
+  const phone =
+    document.getElementById("airtimePhone").value;
+
+  const amount =
+    Number(document.getElementById("airtimeAmount").value);
+
+  if(!network){
+
+    alert("Zaɓi Network.");
+
+    return;
+  }
+
+  if(!phone){
+
+    alert("Shigar da phone number.");
+
+    return;
+  }
+
+  if(!amount || amount <= 0){
+
+    alert("Shigar da amount.");
+
+    return;
+  }
+
+  if(amount > balance){
+
+    alert("Kuɗin wallet bai isa ba.");
+
+    return;
+  }
+
+  balance -= amount;
+
+  updateBalance();
+
+  addTransaction(
+    network+" Airtime",
+    amount,
+    "out"
+  );
+
+  alert(
+    "Airtime DEMO an saya.\n\n"+
+    "Network: "+network+
+    "\nPhone: "+phone+
+    "\nAmount: "+formatMoney(amount)
+  );
+
+  showScreen("dashboard");
+
+}
+
+
+/* =====================================================
+   OTHER SERVICES
+===================================================== */
+
+function demoService(service){
+
+  alert(
+    service+
+    " yana aiki a frontend DEMO yanzu.\n\n"+
+    "Za mu haɗa backend daga baya."
+  );
+
+}
+
+
+/* =====================================================
+   SUPPORT
+===================================================== */
+
+function sendSupport(){
+
+  const message =
+    document.getElementById("supportMessage").value.trim();
+
+  if(!message){
+
+    alert("Rubuta saƙonka.");
+
+    return;
+  }
+
+  alert("An karɓi saƙonka a DEMO.");
+
+  document.getElementById("supportMessage").value = "";
+
+}
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+function saveSettings(){
+
+  alert("An ajiye Settings a DEMO.");
+
+}
+
+
+/* =====================================================
+   SECURITY
+===================================================== */
+
+function saveSecurity(){
+
+  alert(
+    "Security settings DEMO an ajiye.\n"+
+    "Za mu haɗa real secure PIN system daga baya."
+  );
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout(){
+
+  if(confirm("Kana son fita daga MMA Bank?")){
+
+    window.location.href="index.html";
+
+  }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+updateBalance();
+
+renderTransactions();
+
+renderHistory();
+
+</script>
+
+</body>
+</html>
