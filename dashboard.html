@@ -2,460 +2,226 @@
 <html lang="ha">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0, user-scalable=no">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MMA Bank - Dashboard</title>
 
 <style>
-
-/* =====================================================
-   MMA BANK DASHBOARD
-   FRONTEND ONLY
-===================================================== */
-
-:root{
-  --blue:#0066FF;
-  --darkblue:#0044B3;
-  --light:#F4F7FE;
-  --white:#FFFFFF;
-  --text:#202B55;
-  --gray:#8993AD;
-  --green:#05B989;
-  --red:#E94F45;
-  --border:#E4E9F2;
-}
-
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
   font-family:Arial,Segoe UI,sans-serif;
-  -webkit-tap-highlight-color:transparent;
 }
 
-html,
 body{
-  width:100%;
-  min-height:100%;
-  background:var(--light);
-  color:var(--text);
+  background:#F4F7FE;
+  color:#202B55;
+  padding-bottom:30px;
   overflow-x:hidden;
 }
 
-body{
-  padding-bottom:25px;
-}
-
-
-/* =====================================================
-   HEADER
-===================================================== */
-
 .header{
-  width:100%;
-  background:linear-gradient(
-    135deg,
-    var(--blue),
-    var(--darkblue)
-  );
-
+  background:linear-gradient(135deg,#0066FF,#0044B3);
   color:white;
-
-  padding:
-    18px
-    18px
-    22px;
-
-  border-bottom-left-radius:28px;
-  border-bottom-right-radius:28px;
+  padding:20px;
+  border-radius:0 0 28px 28px;
 }
 
 .top{
-  width:100%;
-
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
 
 .logo{
   font-size:20px;
   font-weight:bold;
-  letter-spacing:.3px;
 }
 
 .profile{
-  width:40px;
-  height:40px;
-
+  width:42px;
+  height:42px;
   border-radius:50%;
-
   background:white;
-  color:var(--blue);
-
+  color:#0066FF;
   display:flex;
   align-items:center;
   justify-content:center;
-
-  font-size:16px;
   font-weight:bold;
 }
-
-
-/* =====================================================
-   WELCOME
-===================================================== */
 
 .welcome{
   margin-top:18px;
 }
 
 .welcome small{
-  display:block;
-  font-size:13px;
   opacity:.8;
 }
 
 .welcome h2{
   margin-top:5px;
-  font-size:22px;
 }
 
-
-/* =====================================================
-   BALANCE CARD
-===================================================== */
-
 .balance-card{
-  margin-top:17px;
-
-  background:rgba(255,255,255,.14);
-
-  border:1px solid rgba(255,255,255,.20);
-
-  padding:18px;
-
+  margin-top:18px;
+  padding:20px;
   border-radius:20px;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.2);
 }
 
 .balance-title{
   font-size:13px;
-  opacity:.85;
+  opacity:.8;
 }
 
 .balance{
-  font-size:29px;
+  font-size:30px;
   font-weight:bold;
-
-  margin:
-    7px
-    0
-    15px;
+  margin:8px 0;
 }
 
 .account{
   font-size:12px;
-  opacity:.9;
+  opacity:.85;
 }
-
-
-/* =====================================================
-   QUICK ACTIONS
-===================================================== */
 
 .quick{
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:9px;
-
-  margin-top:16px;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:18px;
 }
 
 .quick button{
-  border:none;
-
-  border-radius:12px;
-
-  padding:10px 4px;
-
-  background:
-    rgba(255,255,255,.18);
-
+  border:0;
+  border-radius:13px;
+  padding:12px 5px;
+  background:rgba(255,255,255,.18);
   color:white;
-
   font-weight:bold;
-  font-size:12px;
-
   cursor:pointer;
 }
 
-.quick button:active{
-  transform:scale(.97);
-}
-
-
-/* =====================================================
-   SECTION TITLE
-===================================================== */
-
-.title{
-  margin:
-    20px
-    20px
-    12px;
-
-  font-size:17px;
+.section-title{
+  margin:22px 20px 12px;
+  font-size:18px;
   font-weight:bold;
 }
 
-
-/* =====================================================
-   SERVICES
-===================================================== */
-
 .services{
-  width:100%;
-
   display:grid;
-
-  grid-template-columns:
-    repeat(4,minmax(0,1fr));
-
+  grid-template-columns:repeat(4,1fr);
   gap:10px;
-
-  padding:
-    0
-    20px;
+  padding:0 20px;
 }
 
 .service{
-  width:100%;
-  min-width:0;
-
-  min-height:88px;
-
   background:white;
-
+  min-height:105px;
   border-radius:16px;
-
-  padding:11px 3px;
-
+  padding:13px 4px;
   display:flex;
-
   flex-direction:column;
-
   align-items:center;
-
   justify-content:center;
-
   text-align:center;
-
-  box-shadow:
-    0 4px 12px
-    rgba(0,0,0,.04);
-
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
   cursor:pointer;
-
-  transition:
-    transform .15s;
+  transition:.15s;
 }
 
 .service:active{
-  transform:scale(.95);
+  transform:scale(.94);
 }
 
-.service-icon{
-  display:block;
-
-  font-size:24px;
-
-  line-height:1;
-
+.icon{
+  font-size:25px;
   margin-bottom:7px;
 }
 
 .service-name{
-  display:block;
-
   font-size:10px;
-
-  line-height:12px;
-
   font-weight:bold;
-
-  color:var(--gray);
-
-  word-break:break-word;
+  color:#8993AD;
 }
 
-
-/* =====================================================
-   TRANSACTIONS
-===================================================== */
-
 .transactions{
-  width:calc(100% - 40px);
-
-  margin:
-    0
-    20px
-    25px;
-
   background:white;
-
+  margin:0 20px;
   border-radius:18px;
-
-  padding:
-    8px
-    15px;
-
-  box-shadow:
-    0 4px 12px
-    rgba(0,0,0,.03);
+  padding:15px;
 }
 
 .transaction{
-  width:100%;
-
   display:flex;
-
-  align-items:center;
-
   justify-content:space-between;
-
-  gap:10px;
-
-  padding:
-    13px
-    0;
-
-  border-bottom:
-    1px solid #eee;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid #eee;
 }
 
 .transaction:last-child{
-  border-bottom:none;
-}
-
-.tx-left{
-  min-width:0;
+  border-bottom:0;
 }
 
 .tx-name{
-  font-size:14px;
   font-weight:bold;
-
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  font-size:14px;
 }
 
 .tx-date{
-  margin-top:3px;
-
+  color:#8993AD;
   font-size:11px;
-
-  color:var(--gray);
-}
-
-.tx-amount{
-  flex-shrink:0;
-
-  font-size:13px;
-  font-weight:bold;
+  margin-top:3px;
 }
 
 .in{
-  color:var(--green);
+  color:#05B989;
+  font-weight:bold;
 }
 
 .out{
-  color:var(--red);
+  color:#E94F45;
+  font-weight:bold;
 }
-
-
-/* =====================================================
-   MODAL
-===================================================== */
 
 .modal{
   display:none;
-
   position:fixed;
-
   inset:0;
-
-  width:100%;
-  height:100%;
-
-  z-index:99999;
-
-  background:
-    rgba(0,0,0,.55);
-
+  background:rgba(0,0,0,.55);
+  z-index:9999;
   align-items:center;
   justify-content:center;
-
   padding:18px;
 }
 
-.modal.show{
-  display:flex;
-}
-
-.modal-content{
+.modal-box{
+  background:white;
   width:100%;
   max-width:430px;
-
-  max-height:
-    calc(100vh - 36px);
-
+  max-height:90vh;
   overflow-y:auto;
-
-  background:white;
-
   border-radius:24px;
-
-  padding:23px;
-
+  padding:24px;
   position:relative;
-
-  box-shadow:
-    0 15px 40px
-    rgba(0,0,0,.25);
 }
 
-.close-btn{
+.close{
   position:absolute;
-
-  right:17px;
-  top:11px;
-
-  border:none;
-  background:none;
-
-  font-size:31px;
-
+  right:18px;
+  top:10px;
+  font-size:32px;
   color:#999;
-
   cursor:pointer;
 }
 
-.modal-content h3{
-  color:var(--blue);
-
+.modal-title{
+  color:#0066FF;
   font-size:23px;
-
-  margin:
-    4px
-    35px
-    20px
-    0;
+  margin-bottom:20px;
+  padding-right:30px;
 }
 
 .form-group{
@@ -464,1261 +230,879 @@ body{
 
 .form-group label{
   display:block;
-
-  font-size:13px;
-
   font-weight:bold;
-
-  color:#203B72;
-
+  font-size:14px;
   margin-bottom:7px;
 }
 
-.form-group input,
-.form-group select{
+.input,
+select{
   width:100%;
-
   padding:14px;
-
-  border:
-    1px solid
-    var(--border);
-
-  border-radius:13px;
-
-  background:#F8FAFF;
-
+  border:2px solid #DCE3F0;
+  border-radius:14px;
+  font-size:16px;
   outline:none;
-
-  font-size:16px;
-}
-
-.form-group input:focus,
-.form-group select:focus{
-  border-color:var(--blue);
-}
-
-.submit-btn{
-  width:100%;
-
-  padding:14px;
-
-  border:none;
-
-  border-radius:13px;
-
-  background:var(--blue);
-
-  color:white;
-
-  font-size:16px;
-
-  font-weight:bold;
-
-  cursor:pointer;
-}
-
-.cancel-btn{
-  width:100%;
-
-  padding:13px;
-
-  margin-top:9px;
-
-  border:
-    1px solid
-    var(--border);
-
-  border-radius:13px;
-
   background:white;
+}
 
-  color:var(--text);
+.input:focus,
+select:focus{
+  border-color:#0066FF;
+}
 
+.submit{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:14px;
+  background:#0066FF;
+  color:white;
+  font-size:16px;
   font-weight:bold;
-
   cursor:pointer;
+  margin-top:5px;
 }
 
+.secondary{
+  background:#EEF3FF;
+  color:#0066FF;
+  margin-top:10px;
+}
 
-/* =====================================================
-   MESSAGE
-===================================================== */
+.info-box{
+  background:#F4F7FE;
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:15px;
+  line-height:1.7;
+}
 
-.message{
-  display:none;
-
-  margin-top:13px;
-
-  padding:12px;
-
-  border-radius:10px;
-
-  font-size:13px;
-
+.success{
   text-align:center;
+  padding:10px;
 }
 
-.message.show{
-  display:block;
+.success-icon{
+  font-size:55px;
+  margin-bottom:10px;
 }
 
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media(max-width:600px){
-
-  .header{
-    padding:
-      17px
-      16px
-      20px;
-  }
-
-  .logo{
-    font-size:18px;
-  }
-
-  .welcome h2{
-    font-size:20px;
-  }
-
-  .balance{
-    font-size:27px;
-  }
-
+@media(max-width:380px){
   .services{
-    padding:
-      0
-      16px;
-
-    gap:9px;
-  }
-
-  .service{
-    min-height:82px;
-    border-radius:15px;
-  }
-
-  .service-icon{
-    font-size:22px;
-  }
-
-  .service-name{
-    font-size:9px;
-  }
-
-  .transactions{
-    width:
-      calc(100% - 32px);
-
-    margin-left:16px;
-    margin-right:16px;
-  }
-
-}
-
-
-/* =====================================================
-   VERY SMALL PHONE
-===================================================== */
-
-@media(max-width:360px){
-
-  .services{
-    grid-template-columns:
-      repeat(4,minmax(0,1fr));
-
     gap:7px;
     padding:0 12px;
   }
 
   .service{
-    min-height:76px;
+    min-height:95px;
   }
 
-  .service-icon{
-    font-size:20px;
-  }
-
-  .service-name{
-    font-size:8px;
-  }
-
-  .title{
+  .section-title{
     margin-left:12px;
-    margin-right:12px;
   }
 
   .transactions{
-    width:
-      calc(100% - 24px);
-
-    margin-left:12px;
-    margin-right:12px;
+    margin:0 12px;
   }
-
 }
-
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="header">
+<!-- HEADER -->
+<div class="header">
 
   <div class="top">
-
-    <div class="logo">
-      🏦 MMA BANK
-    </div>
-
-    <div
-      class="profile"
-      onclick="openModal('profileModal')"
-    >
-      M
-    </div>
-
+    <div class="logo">🏦 MMA BANK</div>
+    <div class="profile">M</div>
   </div>
-
 
   <div class="welcome">
-
-    <small>
-      Barka da zuwa
-    </small>
-
-    <h2>
-      Mubarak 👋
-    </h2>
-
+    <small>Barka da zuwa</small>
+    <h2>Mubarak 👋</h2>
   </div>
-
-
-  <!-- BALANCE -->
 
   <div class="balance-card">
 
-    <div class="balance-title">
-      Wallet Balance
-    </div>
+    <div class="balance-title">Wallet Balance</div>
 
-    <div
-      class="balance"
-      id="userBalance"
-    >
+    <div class="balance" id="balance">
       ₦0.00
     </div>
 
     <div class="account">
-      Account Number:
-      <strong id="accountNumber">
-        8123456789
-      </strong>
+      Account Number: 8123456789
     </div>
-
-
-    <!-- QUICK ACTIONS -->
 
     <div class="quick">
 
-      <button
-        onclick="openModal('depositModal')"
-      >
-        📥<br>
-        Add Money
+      <button onclick="openModal('depositModal')">
+        📥<br>Add Money
       </button>
 
-      <button
-        onclick="openModal('transferModal')"
-      >
-        💸<br>
-        Transfer
+      <button onclick="openModal('transferModal')">
+        💸<br>Transfer
       </button>
 
-      <button
-        onclick="openModal('withdrawModal')"
-      >
-        📤<br>
-        Withdraw
+      <button onclick="openModal('withdrawModal')">
+        📤<br>Withdraw
       </button>
 
     </div>
 
   </div>
-
-</header>
-
+</div>
 
 
-<!-- =====================================================
-     SERVICES
-===================================================== -->
-
-<div class="title">
+<!-- SERVICES -->
+<div class="section-title">
   Ayyukan Banki
 </div>
 
-
 <div class="services">
 
-
-  <!-- TRANSFER -->
-
-  <div
-    class="service"
-    onclick="openModal('transferModal')"
-  >
-
-    <span class="service-icon">
-      💸
-    </span>
-
-    <span class="service-name">
-      Transfer
-    </span>
-
+  <div class="service" onclick="openModal('transferModal')">
+    <span class="icon">💸</span>
+    <span class="service-name">Transfer</span>
   </div>
 
-
-  <!-- DEPOSIT -->
-
-  <div
-    class="service"
-    onclick="openModal('depositModal')"
-  >
-
-    <span class="service-icon">
-      📥
-    </span>
-
-    <span class="service-name">
-      Deposit
-    </span>
-
+  <div class="service" onclick="openModal('depositModal')">
+    <span class="icon">📥</span>
+    <span class="service-name">Deposit</span>
   </div>
 
-
-  <!-- WITHDRAW -->
-
-  <div
-    class="service"
-    onclick="openModal('withdrawModal')"
-  >
-
-    <span class="service-icon">
-      📤
-    </span>
-
-    <span class="service-name">
-      Withdraw
-    </span>
-
+  <div class="service" onclick="openModal('withdrawModal')">
+    <span class="icon">📤</span>
+    <span class="service-name">Withdraw</span>
   </div>
 
-
-  <!-- AIRTIME -->
-
-  <div
-    class="service"
-    onclick="openModal('airtimeModal')"
-  >
-
-    <span class="service-icon">
-      📱
-    </span>
-
-    <span class="service-name">
-      Airtime
-    </span>
-
+  <div class="service" onclick="openModal('airtimeModal')">
+    <span class="icon">📱</span>
+    <span class="service-name">Airtime</span>
   </div>
 
-
-  <!-- DATA -->
-
-  <div
-    class="service"
-    onclick="demoService('Data')"
-  >
-
-    <span class="service-icon">
-      📶
-    </span>
-
-    <span class="service-name">
-      Data
-    </span>
-
+  <div class="service" onclick="openModal('dataModal')">
+    <span class="icon">📶</span>
+    <span class="service-name">Data</span>
   </div>
 
-
-  <!-- ELECTRICITY -->
-
-  <div
-    class="service"
-    onclick="demoService('Electricity')"
-  >
-
-    <span class="service-icon">
-      💡
-    </span>
-
-    <span class="service-name">
-      Electricity
-    </span>
-
+  <div class="service" onclick="openModal('electricityModal')">
+    <span class="icon">💡</span>
+    <span class="service-name">Electricity</span>
   </div>
 
-
-  <!-- TV -->
-
-  <div
-    class="service"
-    onclick="demoService('TV')"
-  >
-
-    <span class="service-icon">
-      📺
-    </span>
-
-    <span class="service-name">
-      TV
-    </span>
-
+  <div class="service" onclick="openModal('tvModal')">
+    <span class="icon">📺</span>
+    <span class="service-name">TV</span>
   </div>
 
-
-  <!-- CARDS -->
-
-  <div
-    class="service"
-    onclick="demoService('Cards')"
-  >
-
-    <span class="service-icon">
-      💳
-    </span>
-
-    <span class="service-name">
-      Cards
-    </span>
-
+  <div class="service" onclick="openModal('cardsModal')">
+    <span class="icon">💳</span>
+    <span class="service-name">Cards</span>
   </div>
 
-
-  <!-- SAVINGS -->
-
-  <div
-    class="service"
-    onclick="demoService('Savings')"
-  >
-
-    <span class="service-icon">
-      💰
-    </span>
-
-    <span class="service-name">
-      Savings
-    </span>
-
+  <div class="service" onclick="openModal('savingsModal')">
+    <span class="icon">💰</span>
+    <span class="service-name">Savings</span>
   </div>
 
-
-  <!-- LOAN -->
-
-  <div
-    class="service"
-    onclick="demoService('Loan')"
-  >
-
-    <span class="service-icon">
-      🏦
-    </span>
-
-    <span class="service-name">
-      Loan
-    </span>
-
+  <div class="service" onclick="openModal('loanModal')">
+    <span class="icon">🏦</span>
+    <span class="service-name">Loan</span>
   </div>
 
-
-  <!-- SUPPORT -->
-
-  <div
-    class="service"
-    onclick="demoService('Support')"
-  >
-
-    <span class="service-icon">
-      🎧
-    </span>
-
-    <span class="service-name">
-      Support
-    </span>
-
+  <div class="service" onclick="openModal('supportModal')">
+    <span class="icon">🎧</span>
+    <span class="service-name">Support</span>
   </div>
 
-
-  <!-- SECURITY -->
-
-  <div
-    class="service"
-    onclick="demoService('Security')"
-  >
-
-    <span class="service-icon">
-      🔐
-    </span>
-
-    <span class="service-name">
-      Security
-    </span>
-
+  <div class="service" onclick="openModal('historyModal')">
+    <span class="icon">📜</span>
+    <span class="service-name">History</span>
   </div>
 
+  <div class="service" onclick="openModal('settingsModal')">
+    <span class="icon">⚙️</span>
+    <span class="service-name">Settings</span>
+  </div>
+
+  <div class="service" onclick="openModal('securityModal')">
+    <span class="icon">🔐</span>
+    <span class="service-name">Security</span>
+  </div>
+
+  <div class="service" onclick="openModal('qrModal')">
+    <span class="icon">▣</span>
+    <span class="service-name">QR Pay</span>
+  </div>
+
+  <div class="service" onclick="logout()">
+    <span class="icon">🚪</span>
+    <span class="service-name">Logout</span>
+  </div>
 
 </div>
 
 
-
-<!-- =====================================================
-     TRANSACTIONS
-===================================================== -->
-
-<div class="title">
+<!-- TRANSACTIONS -->
+<div class="section-title">
   Recent Transactions
 </div>
 
-
-<div
-  class="transactions"
-  id="transactions"
->
+<div class="transactions" id="transactions">
 
   <div class="transaction">
-
-    <div class="tx-left">
-
-      <div class="tx-name">
-        Babu Transaction
-      </div>
-
-      <div class="tx-date">
-        Babu mu'amala
-      </div>
-
+    <div>
+      <div class="tx-name">Babu Transaction</div>
+      <div class="tx-date">Babu mu'amala tukuna</div>
     </div>
 
-    <div class="tx-amount">
-      ₦0.00
-    </div>
-
+    <div>₦0.00</div>
   </div>
 
 </div>
 
 
+<!-- ================= DEPOSIT ================= -->
+<div class="modal" id="depositModal">
+<div class="modal-box">
 
-<!-- =====================================================
-     DEPOSIT MODAL
-===================================================== -->
+<span class="close" onclick="closeModal('depositModal')">×</span>
 
-<div
-  class="modal"
-  id="depositModal"
->
+<h3 class="modal-title">📥 Add Money</h3>
 
-  <div class="modal-content">
+<div class="form-group">
+<label>Adadin Kuɗi</label>
+<input id="depositAmount" class="input" type="number" placeholder="₦">
+</div>
 
-    <button
-      class="close-btn"
-      onclick="closeModal('depositModal')"
-    >
-      ×
-    </button>
+<button class="submit" onclick="depositMoney()">
+Ƙara Kuɗi
+</button>
 
-    <h3>
-      📥 Add Money
-    </h3>
-
-
-    <div class="form-group">
-
-      <label>
-        Adadin Kuɗi
-      </label>
-
-      <input
-        type="number"
-        id="depositAmount"
-        placeholder="₦ 0.00"
-        min="1"
-      >
-
-    </div>
-
-
-    <button
-      class="submit-btn"
-      onclick="demoDeposit()"
-    >
-      Continue
-    </button>
-
-    <button
-      class="cancel-btn"
-      onclick="closeModal('depositModal')"
-    >
-      Cancel
-    </button>
-
-  </div>
-
+</div>
 </div>
 
 
+<!-- ================= TRANSFER ================= -->
+<div class="modal" id="transferModal">
+<div class="modal-box">
 
-<!-- =====================================================
-     TRANSFER MODAL
-===================================================== -->
+<span class="close" onclick="closeModal('transferModal')">×</span>
 
-<div
-  class="modal"
-  id="transferModal"
->
+<h3 class="modal-title">💸 Transfer Money</h3>
 
-  <div class="modal-content">
+<div class="form-group">
+<label>Account Number</label>
+<input id="transferAccount" class="input" type="number" placeholder="Lambar account">
+</div>
 
-    <button
-      class="close-btn"
-      onclick="closeModal('transferModal')"
-    >
-      ×
-    </button>
+<div class="form-group">
+<label>Bank</label>
+<select id="transferBank">
+<option value="">Zaɓi Banki</option>
+<option>MMA Bank</option>
+<option>OPay</option>
+<option>Palmpay</option>
+<option>UBA</option>
+<option>FirstBank</option>
+<option>Access Bank</option>
+</select>
+</div>
 
-    <h3>
-      💸 Transfer Money
-    </h3>
+<div class="form-group">
+<label>Adadin Kuɗi</label>
+<input id="transferAmount" class="input" type="number" placeholder="₦">
+</div>
 
+<button class="submit" onclick="transferMoney()">
+Ci gaba
+</button>
 
-    <div class="form-group">
-
-      <label>
-        Account Number
-      </label>
-
-      <input
-        type="number"
-        id="transferAccount"
-        placeholder="Lambar asusu"
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>
-        Adadin Kuɗi
-      </label>
-
-      <input
-        type="number"
-        id="transferAmount"
-        placeholder="₦ 0.00"
-        min="1"
-      >
-
-    </div>
-
-
-    <button
-      class="submit-btn"
-      onclick="demoTransfer()"
-    >
-      Continue
-    </button>
-
-    <button
-      class="cancel-btn"
-      onclick="closeModal('transferModal')"
-    >
-      Cancel
-    </button>
-
-  </div>
-
+</div>
 </div>
 
 
+<!-- ================= WITHDRAW ================= -->
+<div class="modal" id="withdrawModal">
+<div class="modal-box">
 
-<!-- =====================================================
-     WITHDRAW MODAL
-===================================================== -->
+<span class="close" onclick="closeModal('withdrawModal')">×</span>
 
-<div
-  class="modal"
-  id="withdrawModal"
->
+<h3 class="modal-title">📤 Withdraw Money</h3>
 
-  <div class="modal-content">
+<div class="form-group">
+<label>Account / Phone</label>
+<input class="input" placeholder="Account ko phone">
+</div>
 
-    <button
-      class="close-btn"
-      onclick="closeModal('withdrawModal')"
-    >
-      ×
-    </button>
+<div class="form-group">
+<label>Adadin Kuɗi</label>
+<input id="withdrawAmount" class="input" type="number" placeholder="₦">
+</div>
 
-    <h3>
-      📤 Withdraw Money
-    </h3>
+<button class="submit" onclick="withdrawMoney()">
+Ci gaba
+</button>
 
-
-    <div class="form-group">
-
-      <label>
-        Adadin Kuɗi
-      </label>
-
-      <input
-        type="number"
-        id="withdrawAmount"
-        placeholder="₦ 0.00"
-        min="1"
-      >
-
-    </div>
-
-
-    <button
-      class="submit-btn"
-      onclick="demoWithdraw()"
-    >
-      Continue
-    </button>
-
-    <button
-      class="cancel-btn"
-      onclick="closeModal('withdrawModal')"
-    >
-      Cancel
-    </button>
-
-  </div>
-
+</div>
 </div>
 
 
+<!-- ================= AIRTIME ================= -->
+<div class="modal" id="airtimeModal">
+<div class="modal-box">
 
-<!-- =====================================================
-     AIRTIME MODAL
-===================================================== -->
+<span class="close" onclick="closeModal('airtimeModal')">×</span>
 
-<div
-  class="modal"
-  id="airtimeModal"
->
+<h3 class="modal-title">📱 Sayi Airtime</h3>
 
-  <div class="modal-content">
+<div class="form-group">
+<label>Network</label>
+<select id="airtimeNetwork">
+<option value="">Zaɓi Network</option>
+<option>MTN</option>
+<option>Airtel</option>
+<option>Glo</option>
+<option>9mobile</option>
+</select>
+</div>
 
-    <button
-      class="close-btn"
-      onclick="closeModal('airtimeModal')"
-    >
-      ×
-    </button>
+<div class="form-group">
+<label>Phone Number</label>
+<input id="airtimePhone" class="input" type="tel" placeholder="08012345678">
+</div>
 
-    <h3>
-      📱 Sayi Airtime
-    </h3>
+<div class="form-group">
+<label>Amount</label>
+<input id="airtimeAmount" class="input" type="number" placeholder="₦">
+</div>
 
+<button class="submit" onclick="buyAirtime()">
+Sayi Airtime
+</button>
 
-    <div class="form-group">
-
-      <label>
-        Network
-      </label>
-
-      <select id="airtimeNetwork">
-
-        <option value="">
-          Zaɓi Network
-        </option>
-
-        <option value="MTN">
-          MTN
-        </option>
-
-        <option value="Airtel">
-          Airtel
-        </option>
-
-        <option value="Glo">
-          Glo
-        </option>
-
-        <option value="9mobile">
-          9mobile
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>
-        Lambar Waya
-      </label>
-
-      <input
-        type="tel"
-        id="airtimePhone"
-        placeholder="08012345678"
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>
-        Adadin Kuɗi
-      </label>
-
-      <input
-        type="number"
-        id="airtimeAmount"
-        placeholder="₦ 0.00"
-        min="50"
-      >
-
-    </div>
-
-
-    <button
-      class="submit-btn"
-      onclick="buyAirtime()"
-    >
-      Sayi Airtime
-    </button>
-
-    <button
-      class="cancel-btn"
-      onclick="closeModal('airtimeModal')"
-    >
-      Cancel
-    </button>
-
-  </div>
-
+</div>
 </div>
 
 
+<!-- ================= DATA ================= -->
+<div class="modal" id="dataModal">
+<div class="modal-box">
 
-<!-- =====================================================
-     PROFILE MODAL
-===================================================== -->
+<span class="close" onclick="closeModal('dataModal')">×</span>
 
-<div
-  class="modal"
-  id="profileModal"
->
+<h3 class="modal-title">📶 Data</h3>
 
-  <div class="modal-content">
-
-    <button
-      class="close-btn"
-      onclick="closeModal('profileModal')"
-    >
-      ×
-    </button>
-
-    <h3>
-      👤 Profile
-    </h3>
-
-    <div class="form-group">
-
-      <label>
-        Suna
-      </label>
-
-      <input
-        type="text"
-        value="Mubarak"
-        readonly
-      >
-
-    </div>
-
-    <div class="form-group">
-
-      <label>
-        Account Number
-      </label>
-
-      <input
-        type="text"
-        value="8123456789"
-        readonly
-      >
-
-    </div>
-
-    <button
-      class="cancel-btn"
-      onclick="closeModal('profileModal')"
-    >
-      Rufe
-    </button>
-
-  </div>
-
+<div class="form-group">
+<label>Network</label>
+<select>
+<option>MTN</option>
+<option>Airtel</option>
+<option>Glo</option>
+<option>9mobile</option>
+</select>
 </div>
 
+<div class="form-group">
+<label>Phone Number</label>
+<input class="input" type="tel" placeholder="08012345678">
+</div>
+
+<div class="form-group">
+<label>Data Plan</label>
+<select>
+<option>500MB - ₦150</option>
+<option>1GB - ₦350</option>
+<option>2GB - ₦700</option>
+<option>5GB - ₦1,500</option>
+</select>
+</div>
+
+<button class="submit" onclick="demoService('Data')">
+Ci gaba
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= ELECTRICITY ================= -->
+<div class="modal" id="electricityModal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('electricityModal')">×</span>
+
+<h3 class="modal-title">💡 Electricity</h3>
+
+<div class="form-group">
+<label>Provider</label>
+<select>
+<option>IKEDC</option>
+<option>EKEDC</option>
+<option>ABUJA DISCO</option>
+<option>KEDCO</option>
+<option>JED</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Meter Number</label>
+<input class="input" placeholder="Meter Number">
+</div>
+
+<div class="form-group">
+<label>Amount</label>
+<input class="input" type="number" placeholder="₦">
+</div>
+
+<button class="submit" onclick="demoService('Electricity')">
+Ci gaba
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= TV ================= -->
+<div class="modal" id="tvModal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('tvModal')">×</span>
+
+<h3 class="modal-title">📺 TV Subscription</h3>
+
+<div class="form-group">
+<label>Provider</label>
+<select>
+<option>DStv</option>
+<option>GOtv</option>
+<option>Startimes</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Smart Card / IUC</label>
+<input class="input" placeholder="Lambar Smart Card">
+</div>
+
+<div class="form-group">
+<label>Package</label>
+<select>
+<option>Basic</option>
+<option>Standard</option>
+<option>Premium</option>
+</select>
+</div>
+
+<button class="submit" onclick="demoService('TV Subscription')">
+Ci gaba
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= CARDS ================= -->
+<div class="modal" id="cardsModal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('cardsModal')">×</span>
+
+<h3 class="modal-title">💳 Cards</h3>
+
+<div class="info-box">
+<b>MMA Virtual Card</b><br>
+Status: Ba a ƙirƙira ba tukuna.<br><br>
+Za mu haɗa card system daga baya.
+</div>
+
+<button class="submit" onclick="demoService('Card')">
+Request Card
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= SAVINGS ================= -->
+<div class="modal" id="savingsModal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('savingsModal')">×</span>
+
+<h3 class="modal-title">💰 Savings</h3>
+
+<div class="info-box">
+A nan za ka iya ajiye kuɗi domin Savings.
+</div>
+
+<div class="form-group">
+<label>Adadin Kuɗi</label>
+<input class="input" type="number" placeholder="₦">
+</div>
+
+<button class="submit" onclick="demoService('Savings')">
+Ajiye Kuɗi
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= LOAN ================= -->
+<div class="modal" id="loanModal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('loanModal')">×</span>
+
+<h3 class="modal-title">🏦 Loan</h3>
+
+<div class="info-box">
+Loan service zai kasance a nan. Za mu ƙara eligibility da application daga baya.
+</div>
+
+<button class="submit" onclick="demoService('Loan')">
+Apply for Loan
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= SUPPORT ================= -->
+<div class="modal" id="supportModal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('supportModal')">×</span>
+
+<h3 class="modal-title">🎧 Support</h3>
+
+<div class="info-box">
+<b>MMA Bank Support</b><br><br>
+Muna nan domin taimaka maka.
+</div>
+
+<button class="submit" onclick="alert('Za mu haɗa live support daga baya.')">
+Contact Support
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= HISTORY ================= -->
+<div class="modal" id="historyModal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('historyModal')">×</span>
+
+<h3 class="modal-title">📜 Transaction History</h3>
+
+<div id="historyList" class="info-box">
+Babu transaction tukuna.
+</div>
+
+</div>
+</div>
+
+
+<!-- ================= SETTINGS ================= -->
+<div class="modal" id="settingsModal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('settingsModal')">×</span>
+
+<h3 class="modal-title">⚙️ Settings</h3>
+
+<div class="form-group">
+<label>Full Name</label>
+<input class="input" value="Mubarak">
+</div>
+
+<div class="form-group">
+<label>Phone</label>
+<input class="input" placeholder="Phone Number">
+</div>
+
+<button class="submit" onclick="alert('An ajiye Settings.')">
+Save Settings
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= SECURITY ================= -->
+<div class="modal" id="securityModal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('securityModal')">×</span>
+
+<h3 class="modal-title">🔐 Security</h3>
+
+<div class="info-box">
+PIN, password da sauran security settings za mu ƙara su a mataki na gaba.
+</div>
+
+<button class="submit" onclick="alert('Security settings za su zo daga baya.')">
+Continue
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= QR ================= -->
+<div class="modal" id="qrModal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('qrModal')">×</span>
+
+<h3 class="modal-title">▣ QR Pay</h3>
+
+<div class="info-box" style="text-align:center;font-size:80px;">
+▦
+</div>
+
+<button class="submit" onclick="demoService('QR Pay')">
+Scan / Pay
+</button>
+
+</div>
+</div>
 
 
 <script>
 
-/* =====================================================
-   MMA BANK DASHBOARD JAVASCRIPT
-===================================================== */
+/* =========================
+   STATE
+========================= */
+
+let balance = 0;
+
+let transactions = [];
 
 
-/* -----------------------------------------------------
-   OPEN MODAL
------------------------------------------------------ */
+/* =========================
+   MODAL
+========================= */
 
 function openModal(id){
+  const modal = document.getElementById(id);
 
-  const modal =
-    document.getElementById(id);
-
-  if(!modal){
-    return;
+  if(modal){
+    modal.style.display = "flex";
   }
-
-  modal.classList.add("show");
 }
 
-
-/* -----------------------------------------------------
-   CLOSE MODAL
------------------------------------------------------ */
 
 function closeModal(id){
+  const modal = document.getElementById(id);
 
-  const modal =
-    document.getElementById(id);
-
-  if(!modal){
-    return;
+  if(modal){
+    modal.style.display = "none";
   }
-
-  modal.classList.remove("show");
 }
 
 
-/* -----------------------------------------------------
-   CLOSE WHEN CLICK OUTSIDE
------------------------------------------------------ */
+/* Close when clicking outside */
 
-document.addEventListener(
-  "click",
-  function(event){
+document.querySelectorAll(".modal").forEach(function(modal){
 
-    if(
-      event.target.classList.contains("modal")
-    ){
+  modal.addEventListener("click",function(e){
 
-      event.target.classList.remove("show");
-
+    if(e.target === modal){
+      modal.style.display = "none";
     }
 
-  }
-);
+  });
+
+});
 
 
-/* =====================================================
-   DEMO DEPOSIT
-===================================================== */
+/* =========================
+   BALANCE
+========================= */
 
-function demoDeposit(){
+function updateBalance(){
 
-  const amount =
-    Number(
-      document.getElementById(
-        "depositAmount"
-      ).value
-    );
+  document.getElementById("balance").innerText =
+    "₦" +
+    balance.toLocaleString("en-NG",{
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
 
-  if(
-    !Number.isFinite(amount) ||
-    amount <= 0
-  ){
+}
 
-    alert(
-      "Da fatan shigar da adadin kuɗi."
-    );
+
+/* =========================
+   ADD TRANSACTION
+========================= */
+
+function addTransaction(name, amount, type){
+
+  transactions.unshift({
+    name:name,
+    amount:amount,
+    type:type,
+    date:new Date().toLocaleString("en-NG")
+  });
+
+  renderTransactions();
+  renderHistory();
+}
+
+
+/* =========================
+   RENDER TRANSACTIONS
+========================= */
+
+function renderTransactions(){
+
+  const box =
+    document.getElementById("transactions");
+
+  if(transactions.length === 0){
+
+    box.innerHTML =
+      "<div class='transaction'>"+
+      "<div>Babu transaction tukuna</div>"+
+      "<div>₦0.00</div>"+
+      "</div>";
 
     return;
   }
 
+  box.innerHTML = "";
 
-  alert(
-    "Add Money yana cikin DEMO yanzu.\n\n" +
-    "Daga baya za mu haɗa shi da real payment system."
+  transactions.slice(0,5).forEach(function(tx){
+
+    const sign =
+      tx.type === "in" ? "+" : "-";
+
+    const cls =
+      tx.type === "in" ? "in" : "out";
+
+    box.innerHTML +=
+      "<div class='transaction'>"+
+        "<div>"+
+          "<div class='tx-name'>"+tx.name+"</div>"+
+          "<div class='tx-date'>"+tx.date+"</div>"+
+        "</div>"+
+        "<div class='"+cls+"'>"+
+          sign+"₦"+tx.amount.toLocaleString("en-NG",{minimumFractionDigits:2})+
+        "</div>"+
+      "</div>";
+
+  });
+
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function renderHistory(){
+
+  const box =
+    document.getElementById("historyList");
+
+  if(transactions.length === 0){
+
+    box.innerHTML =
+      "Babu transaction tukuna.";
+
+    return;
+  }
+
+  box.innerHTML = "";
+
+  transactions.forEach(function(tx){
+
+    const sign =
+      tx.type === "in" ? "+" : "-";
+
+    box.innerHTML +=
+      "<div style='padding:10px 0;border-bottom:1px solid #ddd;'>"+
+      "<b>"+tx.name+"</b><br>"+
+      "<small>"+tx.date+"</small><br>"+
+      "<strong>"+sign+"₦"+
+      tx.amount.toLocaleString("en-NG",{minimumFractionDigits:2})+
+      "</strong>"+
+      "</div>";
+
+  });
+
+}
+
+
+/* =========================
+   DEPOSIT
+========================= */
+
+function depositMoney(){
+
+  const amount =
+    Number(document.getElementById("depositAmount").value);
+
+  if(!amount || amount <= 0){
+
+    alert("Shigar da adadin kuɗi daidai.");
+
+    return;
+  }
+
+  /*
+   FRONTEND DEMO ONLY
+  */
+
+  balance += amount;
+
+  updateBalance();
+
+  addTransaction(
+    "Add Money",
+    amount,
+    "in"
   );
+
+  document.getElementById("depositAmount").value = "";
 
   closeModal("depositModal");
 
+  alert(
+    "An ƙara ₦"+
+    amount.toLocaleString("en-NG",{minimumFractionDigits:2})+
+    " a DEMO wallet."
+  );
 }
 
 
-/* =====================================================
-   DEMO TRANSFER
-===================================================== */
+/* =========================
+   TRANSFER
+========================= */
 
-function demoTransfer(){
+function transferMoney(){
 
   const account =
-    document.getElementById(
-      "transferAccount"
-    ).value.trim();
+    document.getElementById("transferAccount").value;
+
+  const bank =
+    document.getElementById("transferBank").value;
 
   const amount =
-    Number(
-      document.getElementById(
-        "transferAmount"
-      ).value
-    );
-
+    Number(document.getElementById("transferAmount").value);
 
   if(!account){
 
-    alert(
-      "Da fatan shigar da Account Number."
-    );
+    alert("Shigar da account number.");
 
     return;
   }
 
-
-  if(
-    !Number.isFinite(amount) ||
-    amount <= 0
-  ){
-
-    alert(
-      "Da fatan shigar da adadin kuɗi."
-    );
-
-    return;
-  }
-
-
-  alert(
-    "Transfer yana cikin DEMO yanzu.\n\n" +
-    "Daga baya za mu haɗa shi da backend."
-  );
-
-  closeModal("transferModal");
-
-}
-
-
-/* =====================================================
-   DEMO WITHDRAW
-===================================================== */
-
-function demoWithdraw(){
-
-  const amount =
-    Number(
-      document.getElementById(
-        "withdrawAmount"
-      ).value
-    );
-
-
-  if(
-    !Number.isFinite(amount) ||
-    amount <= 0
-  ){
-
-    alert(
-      "Da fatan shigar da adadin kuɗi."
-    );
-
-    return;
-  }
-
-
-  alert(
-    "Withdraw yana cikin DEMO yanzu.\n\n" +
-    "Daga baya za mu haɗa shi da real wallet system."
-  );
-
-  closeModal("withdrawModal");
-
-}
-
-
-/* =====================================================
-   AIRTIME DEMO
-===================================================== */
-
-function buyAirtime(){
-
-  const network =
-    document.getElementById(
-      "airtimeNetwork"
-    ).value;
-
-  const phone =
-    document.getElementById(
-      "airtimePhone"
-    ).value.trim();
-
-  const amount =
-    Number(
-      document.getElementById(
-        "airtimeAmount"
-      ).value
-    );
-
-
-  if(!network){
-
-    alert(
-      "Da fatan zaɓi Network."
-    );
-
-    return;
-  }
-
-
-  if(!phone){
-
-    alert(
-      "Da fatan shigar da lambar waya."
-    );
-
-    return;
-  }
-
-
-  if(
-    !Number.isFinite(amount) ||
-    amount <= 0
-  ){
-
-    alert(
-      "Da fatan shigar da adadin kuɗi."
-    );
-
-    return;
-  }
-
-
-  alert(
-    "Airtime yana cikin DEMO yanzu.\n\n" +
-
-    "Network: " +
-    network +
-
-    "\nLamba: " +
-    phone +
-
-    "\nAdadi: ₦" +
-    amount.toLocaleString("en-NG")
-  );
-
-
-  closeModal("airtimeModal");
-
-}
-
-
-/* =====================================================
-   OTHER SERVICES
-===================================================== */
-
-function demoService(service){
-
-  alert(
-    service +
-    " yana nan amma yana cikin DEMO yanzu.\n\n" +
-
-    "Za mu gina wannan service daga baya."
-  );
-
-}
-
-
-/* =====================================================
-   PREVENT NEGATIVE INPUT
-===================================================== */
-
-document.addEventListener(
-  "input",
-  function(event){
-
-    if(
-      event.target.type === "number"
-    ){
-
-      if(
-        Number(event.target.value) < 0
-      ){
-
-        event.target.value = "";
-
-      }
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   ESC KEY
-===================================================== */
-
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    if(event.key === "Escape"){
-
-      document
-        .querySelectorAll(".modal.show")
-        .forEach(
-          modal =>
-            modal.classList.remove("show")
-        );
-
-    }
-
-  }
-);
-
-</script>
-
-</body>
-</html>
+  if(!ban
