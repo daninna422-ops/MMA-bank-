@@ -10,6 +10,10 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+/* ==================================================
+   ENVIRONMENT
+================================================== */
+
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL is required");
 }
@@ -17,6 +21,10 @@ if (!process.env.DATABASE_URL) {
 if (!process.env.JWT_SECRET) {
   throw new Error("JWT_SECRET is required");
 }
+
+/* ==================================================
+   DATABASE
+================================================== */
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -26,14 +34,16 @@ const pool = new Pool({
       : false
 });
 
-app.use(cors());
-app.use(express.json());
+/* ==================================================
+   MIDDLEWARE
+================================================== */
 
-/*
-==================================================
-HELPERS
-==================================================
-*/
+app.use(cors());
+app.use(express.json({ limit: "1mb" }));
+
+/* ==================================================
+   HELPERS
+================================================== */
 
 function generateReference(prefix = "MMA") {
   return (
@@ -46,8 +56,9 @@ function generateReference(prefix = "MMA") {
 }
 
 function generateAccountNumber() {
-  const random =
-    Math.floor(10000000 + Math.random() * 90000000);
+  const random = Math.floor(
+    10000000 + Math.random() * 90000000
+  );
 
   return "81" + random;
 }
@@ -71,11 +82,9 @@ function signToken(user) {
   );
 }
 
-/*
-==================================================
-AUTH MIDDLEWARE
-==================================================
-*/
+/* ==================================================
+   AUTH MIDDLEWARE
+================================================== */
 
 function auth(req, res, next) {
   try {
@@ -106,11 +115,9 @@ function auth(req, res, next) {
   }
 }
 
-/*
-==================================================
-DATABASE INITIALIZATION
-==================================================
-*/
+/* ==================================================
+   DATABASE INITIALIZATION
+================================================== */
 
 async function initializeDatabase() {
   await pool.query(`
@@ -161,7 +168,7 @@ async function initializeDatabase() {
     CREATE TABLE IF NOT EXISTS transactions (
       id BIGSERIAL PRIMARY KEY,
 
-      reference VARCHAR(100) UNIQUE NOT NULL,
+      reference VARCHAR(150) UNIQUE NOT NULL,
 
       user_id BIGINT NOT NULL,
 
@@ -190,6 +197,12 @@ async function initializeDatabase() {
     CREATE INDEX IF NOT EXISTS idx_users_account
       ON users(account_number);
 
+    CREATE INDEX IF NOT EXISTS idx_users_phone
+      ON users(phone);
+
+    CREATE INDEX IF NOT EXISTS idx_users_email
+      ON users(email);
+
     CREATE INDEX IF NOT EXISTS idx_transactions_user
       ON transactions(user_id);
 
@@ -200,11 +213,9 @@ async function initializeDatabase() {
   console.log("Database initialized successfully.");
 }
 
-/*
-==================================================
-HOME
-==================================================
-*/
+/* ==================================================
+   HOME
+================================================== */
 
 app.get("/", (req, res) => {
   res.json({
@@ -215,11 +226,9 @@ app.get("/", (req, res) => {
   });
 });
 
-/*
-==================================================
-HEALTH
-==================================================
-*/
+/* ==================================================
+   HEALTH
+================================================== */
 
 app.get("/api/health", async (req, res) => {
   try {
@@ -242,11 +251,9 @@ app.get("/api/health", async (req, res) => {
   }
 });
 
-/*
-==================================================
-REGISTER
-==================================================
-*/
+/* ==================================================
+   REGISTER
+================================================== */
 
 app.post("/api/auth/register", async (req, res) => {
   const client = await pool.connect();
@@ -263,8 +270,7 @@ app.post("/api/auth/register", async (req, res) => {
     if (!name || !password || !pin) {
       return res.status(400).json({
         success: false,
-        message:
-          "Suna, password da PIN dole ne."
+        message: "Suna, password da PIN dole ne."
       });
     }
 
@@ -279,29 +285,33 @@ app.post("/api/auth/register", async (req, res) => {
     if (!/^[0-9]{4}$/.test(String(pin))) {
       return res.status(400).json({
         success: false,
-        message:
-          "PIN dole ya kasance lambobi 4."
+        message: "PIN dole ya kasance lambobi 4."
       });
     }
 
-    const passwordHash =
-      await bcrypt.hash(password, 12);
+    const passwordHash = await bcrypt.hash(
+      password,
+      12
+    );
 
-    const pinHash =
-      await bcrypt.hash(String(pin), 12);
+    const pinHash = await bcrypt.hash(
+      String(pin),
+      12
+    );
 
     await client.query("BEGIN");
 
-    let accountNumber;
+    let accountNumber = null;
 
     for (let i = 0; i < 20; i++) {
-      const candidate =
-        generateAccountNumber();
+      const candidate = generateAccountNumber();
 
       const exists = await client.query(
-        `SELECT id
-         FROM users
-         WHERE account_number = $1`,
+        `
+        SELECT id
+        FROM users
+        WHERE account_number = $1
+        `,
         [candidate]
       );
 
@@ -339,9 +349,9 @@ app.post("/api/auth/register", async (req, res) => {
         created_at
       `,
       [
-        name.trim(),
-        phone || null,
-        email || null,
+        String(name).trim(),
+        phone ? String(phone).trim() : null,
+        email ? String(email).trim() : null,
         passwordHash,
         pinHash,
         accountNumber
@@ -371,7 +381,9 @@ app.post("/api/auth/register", async (req, res) => {
       success: true,
       message: "An ƙirƙiri MMA Bank account.",
       token,
+
       user,
+
       wallet: {
         balance: 0,
         balanceFormatted: "₦0.00",
@@ -389,14 +401,13 @@ app.post("/api/auth/register", async (req, res) => {
       return res.status(409).json({
         success: false,
         message:
-          "Phone, email ko account number ya riga ya wanzu."
+          "Phone ko email ya riga ya wanzu."
       });
     }
 
     res.status(500).json({
       success: false,
-      message:
-        "An kasa ƙirƙirar account."
+      message: "An kasa ƙirƙirar account."
     });
 
   } finally {
@@ -404,11 +415,9 @@ app.post("/api/auth/register", async (req, res) => {
   }
 });
 
-/*
-==================================================
-LOGIN
-==================================================
-*/
+/* ==================================================
+   LOGIN
+================================================== */
 
 app.post("/api/auth/login", async (req, res) => {
   try {
@@ -421,7 +430,7 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(400).json({
         success: false,
         message:
-          "Saka phone/email da password."
+          "Saka phone/email/account number da password."
       });
     }
 
@@ -442,14 +451,13 @@ app.post("/api/auth/login", async (req, res) => {
          OR account_number = $1
       LIMIT 1
       `,
-      [identifier]
+      [String(identifier).trim()]
     );
 
     if (result.rowCount === 0) {
       return res.status(401).json({
         success: false,
-        message:
-          "Login details ba daidai ba ne."
+        message: "Login details ba daidai ba ne."
       });
     }
 
@@ -463,17 +471,15 @@ app.post("/api/auth/login", async (req, res) => {
       });
     }
 
-    const valid =
-      await bcrypt.compare(
-        password,
-        user.password_hash
-      );
+    const valid = await bcrypt.compare(
+      password,
+      user.password_hash
+    );
 
     if (!valid) {
       return res.status(401).json({
         success: false,
-        message:
-          "Login details ba daidai ba ne."
+        message: "Login details ba daidai ba ne."
       });
     }
 
@@ -498,11 +504,9 @@ app.post("/api/auth/login", async (req, res) => {
   }
 });
 
-/*
-==================================================
-CURRENT USER / DASHBOARD
-==================================================
-*/
+/* ==================================================
+   CURRENT USER / DASHBOARD
+================================================== */
 
 app.get("/api/me", auth, async (req, res) => {
   try {
@@ -516,12 +520,16 @@ app.get("/api/me", auth, async (req, res) => {
         u.account_number,
         u.status,
         u.created_at,
+
         w.balance,
         w.currency,
         w.updated_at AS wallet_updated_at
+
       FROM users u
+
       JOIN wallets w
         ON w.user_id = u.id
+
       WHERE u.id = $1
       `,
       [req.userId]
@@ -568,11 +576,9 @@ app.get("/api/me", auth, async (req, res) => {
   }
 });
 
-/*
-==================================================
-WALLET
-==================================================
-*/
+/* ==================================================
+   WALLET
+================================================== */
 
 app.get("/api/wallet", auth, async (req, res) => {
   try {
@@ -601,11 +607,15 @@ app.get("/api/wallet", auth, async (req, res) => {
 
     res.json({
       success: true,
+
       wallet: {
         balance: Number(wallet.balance),
+
         balanceFormatted:
           "₦" + money(Number(wallet.balance)),
+
         currency: wallet.currency,
+
         accountNumber:
           wallet.account_number
       }
@@ -621,11 +631,9 @@ app.get("/api/wallet", auth, async (req, res) => {
   }
 });
 
-/*
-==================================================
-TRANSACTION HISTORY
-==================================================
-*/
+/* ==================================================
+   TRANSACTION HISTORY
+================================================== */
 
 app.get(
   "/api/transactions",
@@ -645,9 +653,13 @@ app.get(
           description,
           metadata,
           created_at
+
         FROM transactions
+
         WHERE user_id = $1
+
         ORDER BY id DESC
+
         LIMIT 100
         `,
         [req.userId]
@@ -655,14 +667,31 @@ app.get(
 
       res.json({
         success: true,
+
         transactions:
           result.rows.map(tx => ({
-            ...tx,
+            id: tx.id,
+            reference: tx.reference,
+            type: tx.type,
+
             amount: Number(tx.amount),
-            balance_before:
+
+            amountFormatted:
+              "₦" + money(Number(tx.amount)),
+
+            balanceBefore:
               Number(tx.balance_before),
-            balance_after:
-              Number(tx.balance_after)
+
+            balanceAfter:
+              Number(tx.balance_after),
+
+            status: tx.status,
+
+            description: tx.description,
+
+            metadata: tx.metadata,
+
+            createdAt: tx.created_at
           }))
       });
 
@@ -678,17 +707,67 @@ app.get(
   }
 );
 
-/*
-==================================================
-INTERNAL MMA TRANSFER
-==================================================
+/* ==================================================
+   FIND ACCOUNT
+================================================== */
 
-Wannan transfer ne tsakanin users
-na MMA Bank kawai.
+app.get(
+  "/api/users/account/:accountNumber",
+  auth,
+  async (req, res) => {
+    try {
+      const accountNumber =
+        String(req.params.accountNumber).trim();
 
-Ba external bank transfer ba.
-==================================================
-*/
+      const result = await pool.query(
+        `
+        SELECT
+          id,
+          name,
+          account_number,
+          status
+        FROM users
+        WHERE account_number = $1
+          AND status = 'ACTIVE'
+        LIMIT 1
+        `,
+        [accountNumber]
+      );
+
+      if (result.rowCount === 0) {
+        return res.status(404).json({
+          success: false,
+          message:
+            "Ba a sami wannan account number ba."
+        });
+      }
+
+      const user = result.rows[0];
+
+      res.json({
+        success: true,
+
+        user: {
+          name: user.name,
+          accountNumber:
+            user.account_number
+        }
+      });
+
+    } catch (error) {
+      console.error(error);
+
+      res.status(500).json({
+        success: false,
+        message: "An kasa bincika account."
+      });
+    }
+  }
+);
+
+/* ==================================================
+   INTERNAL MMA TRANSFER
+================================================== */
 
 app.post(
   "/api/transfers/internal",
@@ -721,12 +800,11 @@ app.post(
         return res.status(400).json({
           success: false,
           message:
-            "PIN bai dace ba."
+            "PIN dole ya kasance lambobi 4."
         });
       }
 
-      const numericAmount =
-        Number(amount);
+      const numericAmount = Number(amount);
 
       if (
         !Number.isFinite(numericAmount) ||
@@ -742,11 +820,19 @@ app.post(
       const amountKobo =
         Math.round(numericAmount * 100);
 
+      if (amountKobo < 100) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "Mafi ƙarancin transfer shine ₦1."
+        });
+      }
+
       await client.query("BEGIN");
 
-      /*
-      Lock sender wallet.
-      */
+      /* ------------------------------------------
+         SENDER WALLET LOCK
+      ------------------------------------------ */
 
       const senderWallet =
         await client.query(
@@ -767,9 +853,9 @@ app.post(
         );
       }
 
-      /*
-      Check sender PIN.
-      */
+      /* ------------------------------------------
+         SENDER USER
+      ------------------------------------------ */
 
       const senderUser =
         await client.query(
@@ -784,6 +870,16 @@ app.post(
           `,
           [req.userId]
         );
+
+      if (senderUser.rowCount === 0) {
+        throw new Error(
+          "SENDER_USER_NOT_FOUND"
+        );
+      }
+
+      /* ------------------------------------------
+         CHECK PIN
+      ------------------------------------------ */
 
       const validPin =
         await bcrypt.compare(
@@ -800,9 +896,9 @@ app.post(
         });
       }
 
-      /*
-      Find receiver.
-      */
+      /* ------------------------------------------
+         RECEIVER
+      ------------------------------------------ */
 
       const receiver =
         await client.query(
@@ -814,8 +910,9 @@ app.post(
           FROM users
           WHERE account_number = $1
             AND status = 'ACTIVE'
+          LIMIT 1
           `,
-          [String(accountNumber)]
+          [String(accountNumber).trim()]
         );
 
       if (receiver.rowCount === 0) {
@@ -844,9 +941,9 @@ app.post(
         });
       }
 
-      /*
-      Lock receiver wallet.
-      */
+      /* ------------------------------------------
+         RECEIVER WALLET LOCK
+      ------------------------------------------ */
 
       const receiverWallet =
         await client.query(
@@ -873,6 +970,10 @@ app.post(
       const receiverBalance =
         Number(receiverWallet.rows[0].balance);
 
+      /* ------------------------------------------
+         BALANCE CHECK
+      ------------------------------------------ */
+
       if (senderBalance < amountKobo) {
         await client.query("ROLLBACK");
 
@@ -892,16 +993,18 @@ app.post(
       const reference =
         generateReference("TRF");
 
-      /*
-      Update sender.
-      */
+      /* ------------------------------------------
+         UPDATE SENDER
+      ------------------------------------------ */
 
       await client.query(
         `
         UPDATE wallets
+
         SET
           balance = $1,
           updated_at = NOW()
+
         WHERE user_id = $2
         `,
         [
@@ -910,16 +1013,18 @@ app.post(
         ]
       );
 
-      /*
-      Update receiver.
-      */
+      /* ------------------------------------------
+         UPDATE RECEIVER
+      ------------------------------------------ */
 
       await client.query(
         `
         UPDATE wallets
+
         SET
           balance = $1,
           updated_at = NOW()
+
         WHERE user_id = $2
         `,
         [
@@ -928,9 +1033,9 @@ app.post(
         ]
       );
 
-      /*
-      Sender transaction.
-      */
+      /* ------------------------------------------
+         SENDER TRANSACTION
+      ------------------------------------------ */
 
       await client.query(
         `
@@ -946,35 +1051,50 @@ app.post(
           description,
           metadata
         )
+
         VALUES
         (
-          $1,$2,'TRANSFER_OUT',
-          $3,$4,$5,'SUCCESS',
-          $6,$7
+          $1,
+          $2,
+          'TRANSFER_OUT',
+          $3,
+          $4,
+          $5,
+          'SUCCESS',
+          $6,
+          $7
         )
         `,
         [
           reference + "_OUT",
+
           req.userId,
+
           amountKobo,
+
           senderBalance,
+
           senderAfter,
+
           description ||
             `Transfer zuwa ${receiverUser.name}`,
+
           JSON.stringify({
             receiverAccount:
               receiverUser.account_number,
+
             receiverUserId:
               receiverUser.id,
+
             transferReference:
               reference
           })
         ]
       );
 
-      /*
-      Receiver transaction.
-      */
+      /* ------------------------------------------
+         RECEIVER TRANSACTION
+      ------------------------------------------ */
 
       await client.query(
         `
@@ -990,25 +1110,40 @@ app.post(
           description,
           metadata
         )
+
         VALUES
         (
-          $1,$2,'TRANSFER_IN',
-          $3,$4,$5,'SUCCESS',
-          $6,$7
+          $1,
+          $2,
+          'TRANSFER_IN',
+          $3,
+          $4,
+          $5,
+          'SUCCESS',
+          $6,
+          $7
         )
         `,
         [
           reference + "_IN",
+
           receiverUser.id,
+
           amountKobo,
+
           receiverBalance,
+
           receiverAfter,
+
           `An karɓi kuɗi daga ${senderUser.rows[0].name}`,
+
           JSON.stringify({
             senderAccount:
               senderUser.rows[0].account_number,
+
             senderUserId:
               req.userId,
+
             transferReference:
               reference
           })
@@ -1017,7 +1152,11 @@ app.post(
 
       await client.query("COMMIT");
 
-      res.json({
+      /* ------------------------------------------
+         SUCCESS
+      ------------------------------------------ */
+
+      return res.json({
         success: true,
 
         message:
@@ -1033,4 +1172,90 @@ app.post(
 
         receiver: {
           name:
- 
+            receiverUser.name,
+
+          accountNumber:
+            receiverUser.account_number
+        },
+
+        wallet: {
+          balance:
+            senderAfter,
+
+          balanceFormatted:
+            "₦" + money(senderAfter),
+
+          currency: "NGN"
+        }
+      });
+
+    } catch (error) {
+
+      try {
+        await client.query("ROLLBACK");
+      } catch (_) {}
+
+      console.error(error);
+
+      return res.status(500).json({
+        success: false,
+        message:
+          "An kasa kammala transfer."
+      });
+
+    } finally {
+      client.release();
+    }
+  }
+);
+
+/* ==================================================
+   404
+================================================== */
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route ba a samu ba.",
+    path: req.originalUrl
+  });
+});
+
+/* ==================================================
+   GLOBAL ERROR HANDLER
+================================================== */
+
+app.use((error, req, res, next) => {
+  console.error(error);
+
+  res.status(500).json({
+    success: false,
+    message: "Internal server error."
+  });
+});
+
+/* ==================================================
+   START SERVER
+================================================== */
+
+async function startServer() {
+  try {
+    await initializeDatabase();
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(
+        `MMA Bank server running on port ${PORT}`
+      );
+    });
+
+  } catch (error) {
+    console.error(
+      "SERVER START FAILED:",
+      error
+    );
+
+    process.exit(1);
+  }
+}
+
+startServer();
